@@ -1,0 +1,29 @@
+<div id="sidebar"><div id="sidebar-wrapper"> <!-- Sidebar with logo and menu -->
+			
+			<h1 id="sidebar-title"><a href="#">Simpla Admin</a></h1>
+		  
+			<!-- Logo (221px wide) -->
+			<a href="#"><img id="logo" src="/resources/images/logo.png" alt="Simpla Admin logo" /></a>
+		  
+			<!-- Sidebar Profile links -->
+			<div id="profile-links">
+				Hello, 罗劼 | <a href="/logout" title="Sign Out">退出</a>
+			</div>        
+			<br/>
+			<br/>
+			<ul id="main-nav">  <!-- Accordion Menu -->
+				
+				<li> 
+					<a href="#" class="current"> <!-- Add the class "current" to current menu item -->
+					</a>
+					<ul>
+						#foreach($menu in $menuList)
+							<li><a #if($!menu.isCurrent()) class="current" #end href="$!menu.menuEnum.route">$!menu.menuEnum.name</a></li>
+						#end
+					</ul>
+				</li>
+				
+				
+			</ul> <!-- End #main-nav -->
+			
+		</div></div> <!-- End #sidebar -->

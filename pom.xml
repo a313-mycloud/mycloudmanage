@@ -7,5 +7,6 @@
   <packaging>pom</packaging>
   <modules>
     <module>mycloudmanage-web</module>
+    <module>mycloudmanage-biz</module>
   </modules>
 </project>

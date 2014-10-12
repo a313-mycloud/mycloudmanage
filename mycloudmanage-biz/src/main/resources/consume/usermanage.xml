@@ -15,10 +15,10 @@
 		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
 		<property name="serviceUrl">
 			<value>
-				http://${serviceName}:${port}/${contextPath}/service/httpService
+				${userManageService-url}	
 			</value>
 		</property>
-		<property name="serviceInterface" value="com.netqin.baike.service.UcService">
+		<property name="serviceInterface" value="org.dlut.mycloudserver.client.service.usermanage.IUserManageService">
 		</property>
 	</bean>
 	<!-- <import resource="classpath*:usermanage-context.xml" /> -->

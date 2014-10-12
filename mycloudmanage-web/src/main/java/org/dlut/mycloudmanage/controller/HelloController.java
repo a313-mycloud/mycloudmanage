@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author luojie 2014年10月11日 下午11:02:56
  */
 @Controller
-@RequestMapping("/hello")
+@RequestMapping("/student/hello.do")
 public class HelloController {
 
     @Resource

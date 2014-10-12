@@ -16,6 +16,7 @@
 <body>
 	<div id="body-wrapper">
 		#parse("common/sidebar.vm")
+		#set($screen = $!screen + ".vm")
 		#parse($!screen)
 	</div>		
 </body>

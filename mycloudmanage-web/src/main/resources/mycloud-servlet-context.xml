@@ -21,14 +21,12 @@
 	<mvc:annotation-driven />
 
 	<!-- 拦截器 -->
-	<!-- <mvc:interceptors>
-
+	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/student/*" />如果不配置或/*,将拦截所有的Controller
-			<bean class="org.dlut.ucloud.web.interceptor.LoginInterceptor" />
+			<mvc:mapping path="/student/*" />     <!-- 如果不配置或/*,将拦截所有的Controller -->
+			<bean class="org.dlut.mycloudmanage.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
-
-	</mvc:interceptors> -->
+	</mvc:interceptors>
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">

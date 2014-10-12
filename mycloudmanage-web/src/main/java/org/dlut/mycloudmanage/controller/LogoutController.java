@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.dlut.mycloudmanage.common.constant.SessionConstant;
+import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 
  * @author luojie.lj 2014年9月24日 下午7:55:39
  */
-@RequestMapping("/logout")
+@RequestMapping(value = UrlConstant.LOGOUT_URL)
 @Controller
 public class LogoutController extends BaseController {
 

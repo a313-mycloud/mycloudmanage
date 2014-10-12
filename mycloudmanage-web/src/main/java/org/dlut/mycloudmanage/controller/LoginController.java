@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 
  * @author luojie.lj 2014年9月24日 下午7:55:39
  */
-@RequestMapping("/login")
+@RequestMapping(value = UrlConstant.LOGIN_URL)
 @Controller
 public class LoginController extends BaseController {
 

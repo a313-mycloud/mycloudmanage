@@ -11,17 +11,16 @@
            http://www.springframework.org/schema/mvc     
            http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<context:component-scan base-package="org.dlut.mycloudmanage" />
-
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location">
-			<value>classpath:config.properties</value>
+	<bean id="userManageService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>
+				http://${serviceName}:${port}/${contextPath}/service/httpService
+			</value>
+		</property>
+		<property name="serviceInterface" value="com.netqin.baike.service.UcService">
 		</property>
 	</bean>
-
-	<import resource="consume/*.xml" />
-
 	<!-- <import resource="classpath*:usermanage-context.xml" /> -->
 
 </beans>

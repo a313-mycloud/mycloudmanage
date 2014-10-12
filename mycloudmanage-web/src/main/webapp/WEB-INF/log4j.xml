@@ -45,6 +45,6 @@
     <root>  
         <priority value ="info"/>  
         <appender-ref ref="myConsole"/>  
-        <appender-ref ref="myFile"/>    
+      <!--   <appender-ref ref="myFile"/>     -->
     </root>  
 </log4j:configuration>  

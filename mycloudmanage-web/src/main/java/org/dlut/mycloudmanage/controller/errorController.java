@@ -7,27 +7,23 @@
  */
 package org.dlut.mycloudmanage.controller;
 
-import javax.annotation.Resource;
-
-import org.dlut.mycloudmanage.service.TestService;
+import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * 类HelloController.java的实现描述：TODO 类实现描述
+ * 类errorController.java的实现描述：TODO 类实现描述
  * 
- * @author luojie 2014年10月11日 下午11:02:56
+ * @author luojie 2014年10月10日 下午10:29:46
  */
+@RequestMapping(UrlConstant.ERROR_URL)
 @Controller
-public class HelloController {
+public class errorController extends BaseController {
 
-    @Resource
-    private TestService testService;
-
-    @RequestMapping("/student/hello.do")
-    public String sayHello(ModelMap model) {
-        model.put("message", testService.getMessage());
-        return "hello";
+    @RequestMapping()
+    public String error(String errorDesc, ModelMap model) {
+        model.put("errorDesc", errorDesc);
+        return "common/error";
     }
 }

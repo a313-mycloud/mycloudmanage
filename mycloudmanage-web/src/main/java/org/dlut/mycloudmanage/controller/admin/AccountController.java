@@ -38,10 +38,15 @@ public class AccountController extends BaseController {
 
     @RequestMapping(value = UrlConstant.ADMIN_ACCOUNT_STUDENT_LIST)
     public String accountStudentList(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-        this.setDefaultEnv(request, response, model);
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            log.warn(errorDesc);
+            this.goErrorPage(errorDesc);
+        }
         UserDTO userDTO = (UserDTO) model.get("loginUser");
 
-        this.setShowMenuList(userDTO.getRole(), MenuEnum.STUDENT_MENU_VM, model);
-        return "";
+        this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
+        model.put("screen", "admin/account_student_list");
+        return "default";
     }
 }

@@ -35,7 +35,7 @@ public class VMController extends BaseController {
         UserDTO userDTO = (UserDTO) model.get("loginUser");
 
         this.setShowMenuList(userDTO.getRole(), MenuEnum.STUDENT_MENU_VM, model);
-        model.put("screen", "student/vmlist");
+        model.put("screen", "student/vm_list");
         return "default";
     }
 

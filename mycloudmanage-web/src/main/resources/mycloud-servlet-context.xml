@@ -11,7 +11,7 @@
            http://www.springframework.org/schema/mvc     
            http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	
+
 
 	<!-- 激活自动检测注解，自动搜索@Controller和@RequstMapping注解的存在，包括其下面的子包 -->
 	<context:component-scan base-package="org.dlut.mycloudmanage.controller" />
@@ -23,7 +23,9 @@
 	<!-- 拦截器 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/student/*" />     <!-- 如果不配置或/*,将拦截所有的Controller -->
+			<mvc:mapping path="/student/**" />
+			<mvc:mapping path="/admin/**" />
+			<mvc:mapping path="/teacher/**" />
 			<bean class="org.dlut.mycloudmanage.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

@@ -297,7 +297,7 @@ a.remove-link:hover {
                 }
 
 ul.content-box-tabs {
-                float: right;
+                float: left;
                 padding: 12px 15px 0 0 !important;
 				margin: 0 !important;
                 }

@@ -41,12 +41,13 @@ public class AccountController extends BaseController {
         String errorDesc = this.setDefaultEnv(request, response, model);
         if (errorDesc != null) {
             log.warn(errorDesc);
-            this.goErrorPage(errorDesc);
+            return this.goErrorPage(errorDesc);
         }
         UserDTO userDTO = (UserDTO) model.get("loginUser");
 
         this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
         model.put("screen", "admin/account_student_list");
+        model.put("js", "admin/account_student_list");
         return "default";
     }
 }

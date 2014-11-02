@@ -13,6 +13,13 @@
 <script type="text/javascript" src="/resources/scripts/jquery.datePicker.js"></script>
 <script type="text/javascript" src="/resources/scripts/jquery.date.js"></script>
 
+<script type="text/javascript" src="/resources/scripts/common.js"></script>
+
+#if ($!js)
+	#set($js = $!js + ".js")
+	<script type="text/javascript" src="/resources/scripts/$!js"></script>
+#end
+
 <body>
 	<div id="body-wrapper">
 		#parse("common/sidebar.vm")

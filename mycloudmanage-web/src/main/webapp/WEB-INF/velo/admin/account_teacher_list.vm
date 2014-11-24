@@ -7,8 +7,7 @@
 					
 					
 					<ul class="content-box-tabs">
-						<li><a href="#tab2"class="default-tab">学生</a></li>
-
+						<li><a href="#tab1" class="default-tab">教师</a></li> <!-- href must be unique and match the id of target div -->
 					</ul>
 					
 					<div class="clear"></div>
@@ -19,15 +18,13 @@
 					
 					<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
 						
-						
-											
 						<table>
 							
 							<thead>
 								<tr>
 								   <th><input class="check-all" type="checkbox" /></th>
-								   <th>学生姓名</th>
-								   <th>学生帐号</th>
+								   <th>教师姓名</th>
+								   <th>教师帐号</th>
 								   <th>操作</th>
 								</tr>
 								
@@ -57,8 +54,8 @@
 							<tbody>
 								<tr>
 									<td><input type="checkbox" /></td>
-									<td>张三</td>
-									<td>23434354</td>
+									<td>小其</td>
+									<td><a href="#" title="title">34343</a></td>
 									<td>
 										<!-- Icons -->
 										 <a class="button" href="#">添加</a>
@@ -68,8 +65,8 @@
 								
 								<tr>
 									<td><input type="checkbox" /></td>
-									<td>李飼</td>
-									<td>323434</td>
+									<td>周八</td>
+									<td><a href="#" title="title">2233</a></td>
 
 									<td>
 										<!-- Icons -->
@@ -81,8 +78,7 @@
 							
 						</table>
 						
-					</div> <!-- End #tab1 -->    
-					    
+					</div> <!-- End #tab1 -->
 						
 				</div> <!-- End .content-box-content -->
 				

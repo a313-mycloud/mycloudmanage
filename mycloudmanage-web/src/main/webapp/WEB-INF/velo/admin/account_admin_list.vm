@@ -7,8 +7,7 @@
 					
 					
 					<ul class="content-box-tabs">
-						<li><a href="#tab2"class="default-tab">学生</a></li>
-
+						<li><a href="#tab3"class="default-tab">管理员</a></li>
 					</ul>
 					
 					<div class="clear"></div>
@@ -26,8 +25,8 @@
 							<thead>
 								<tr>
 								   <th><input class="check-all" type="checkbox" /></th>
-								   <th>学生姓名</th>
-								   <th>学生帐号</th>
+								   <th>管理员姓名</th>
+								   <th>管理员帐号</th>
 								   <th>操作</th>
 								</tr>
 								
@@ -57,8 +56,8 @@
 							<tbody>
 								<tr>
 									<td><input type="checkbox" /></td>
-									<td>张三</td>
-									<td>23434354</td>
+									<td>网无 dolor</td>
+									<td><a href="#" title="title">34343</a></td>
 									<td>
 										<!-- Icons -->
 										 <a class="button" href="#">添加</a>
@@ -68,8 +67,8 @@
 								
 								<tr>
 									<td><input type="checkbox" /></td>
-									<td>李飼</td>
-									<td>323434</td>
+									<td>张三 dolor</td>
+									<td><a href="#" title="title">3434</a></td>
 
 									<td>
 										<!-- Icons -->
@@ -81,9 +80,7 @@
 							
 						</table>
 						
-					</div> <!-- End #tab1 -->    
-					    
-						
+					</div> <!-- End #tab1 -->	
 				</div> <!-- End .content-box-content -->
 				
 			</div> <!-- End .content-box -->		

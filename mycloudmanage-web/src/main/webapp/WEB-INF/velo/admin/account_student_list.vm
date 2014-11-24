@@ -7,9 +7,9 @@
 					
 					
 					<ul class="content-box-tabs">
-						<li><a href="#tab1">教师</a></li>
-						<li><a href="#tab2"class="default-tab">学生</a></li>
-						<li><a href="#tab3">管理員</a></li>
+						<li><a href="/admin/account/list?role=2">教师</a></li>
+						<li><a href="/admin/account/list?role=1"class="default-tab">学生</a></li>
+						<li><a href="/admin/account/list?role=3">管理員</a></li>
 
 					</ul>
 					
@@ -70,7 +70,7 @@
 								</tr>
 								#end
 							</tbody>
-							s
+							
 						</table>
 						
 					</div> <!-- End #tab2 -->    

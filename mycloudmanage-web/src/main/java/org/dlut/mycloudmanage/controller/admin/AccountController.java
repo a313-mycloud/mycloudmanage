@@ -99,7 +99,13 @@ public class AccountController extends BaseController {
         model.put("userList", userList);
 
         this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
-        model.put("screen", "admin/account_student_list");
+        if (roleEnum == RoleEnum.ADMIN) {
+            model.put("screen", "admin/account_admin_list");
+        } else if (roleEnum == RoleEnum.STUDENT) {
+            model.put("screen", "admin/account_student_list");
+        } else if (roleEnum == RoleEnum.TEACHER) {
+            model.put("screen", "admin/account_teacher_list");
+        }
         model.put("js", "admin/account_student_list");
         return "default";
     }

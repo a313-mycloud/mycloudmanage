@@ -60,7 +60,7 @@
 									<td><a href="#" title="title">34343</a></td>
 									<td>
 										<!-- Icons -->
-										 <a class="button" href="#">添加</a>
+										 <a class="button" href="#">编辑</a>
 										 <a class="button" href="#">删除</a> 
 									</td>
 								</tr>
@@ -72,7 +72,7 @@
 
 									<td>
 										<!-- Icons -->
-										 <a class="button" href="#">添加</a>
+										 <a class="button" href="#">编辑</a>
 										 <a class="button" href="#">删除</a> 
 									</td>
 								</tr>

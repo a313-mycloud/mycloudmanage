@@ -63,7 +63,7 @@
 									<td>23434354</td>
 									<td>
 										<!-- Icons -->
-										 <a class="button" href="#">添加</a>
+										 <a class="button" href="#">编辑</a>
 										 <a class="button" href="#">删除</a> 
 									</td>
 								</tr>
@@ -75,7 +75,7 @@
 
 									<td>
 										<!-- Icons -->
-										 <a class="button" href="#">添加</a>
+										 <a class="button" href="#">编辑</a>
 										 <a class="button" href="#">删除</a> 
 									</td>
 								</tr>

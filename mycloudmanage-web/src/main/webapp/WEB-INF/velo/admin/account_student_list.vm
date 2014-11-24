@@ -7,7 +7,9 @@
 					
 					
 					<ul class="content-box-tabs">
+						<li><a href="#tab1">教师</a></li>
 						<li><a href="#tab2"class="default-tab">学生</a></li>
+						<li><a href="#tab3">管理員</a></li>
 
 					</ul>
 					
@@ -17,7 +19,7 @@
 				
 				<div class="content-box-content">
 					
-					<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
+					<div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
 						
 						
 											
@@ -81,7 +83,7 @@
 							
 						</table>
 						
-					</div> <!-- End #tab1 -->    
+					</div> <!-- End #tab2 -->    
 					    
 						
 				</div> <!-- End .content-box-content -->

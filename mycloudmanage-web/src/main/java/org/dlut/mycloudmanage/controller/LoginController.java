@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.dlut.mycloudmanage.biz.UserBiz;
 import org.dlut.mycloudmanage.common.constant.SessionConstant;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.obj.LoginReqDTO;
@@ -40,12 +41,17 @@ public class LoginController extends BaseController {
     @Resource(name = "userManageService")
     private IUserManageService userManageService;
 
+    @Resource
+    private UserBiz            userBiz;
+
     @RequestMapping(method = { RequestMethod.POST, RequestMethod.GET })
     public String login(LoginReqDTO loginReqDTO, String redirect, HttpServletRequest request,
                         HttpServletResponse response, ModelMap model) {
         if (request.getMethod().equals("GET")) {
             return UrlConstant.LOGIN_URL;
         }
+
+        userBiz.hello();
 
         // 验证用户的合法性
         model.addAttribute("loginReqDTO", loginReqDTO);

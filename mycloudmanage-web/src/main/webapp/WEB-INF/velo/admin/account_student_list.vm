@@ -24,7 +24,7 @@
 							<thead>
 								<tr>
 								   <th><input class="check-all" type="checkbox" /></th>
-								   <th>虚拟机名称</th>
+								   <th>教师</th>
 								   <th>所属课程</th>
 								   <th>状态</th>
 								   <th>ip</th>

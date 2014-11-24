@@ -57,28 +57,18 @@
 							</tfoot>
 						 
 							<tbody>
+								#foreach($user in $!userList)
 								<tr>
 									<td><input type="checkbox" /></td>
-									<td>张三</td>
-									<td>23434354</td>
+									<td>$user.userName</td>
+									<td>$user.account</td>
 									<td>
 										<!-- Icons -->
 										 <a class="button" href="#">编辑</a>
 										 <a class="button" href="#">删除</a> 
 									</td>
 								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>李飼</td>
-									<td>323434</td>
-
-									<td>
-										<!-- Icons -->
-										 <a class="button" href="#">编辑</a>
-										 <a class="button" href="#">删除</a> 
-									</td>
-								</tr>
+								#end
 							</tbody>
 							s
 						</table>

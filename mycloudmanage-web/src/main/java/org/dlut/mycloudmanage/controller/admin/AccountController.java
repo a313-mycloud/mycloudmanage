@@ -7,6 +7,8 @@
  */
 package org.dlut.mycloudmanage.controller.admin;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -73,6 +75,28 @@ public class AccountController extends BaseController {
             return this.goErrorPage(errorDesc);
         }
         UserDTO userDTO = (UserDTO) model.get("loginUser");
+
+        this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
+        model.put("screen", "admin/account_student_list");
+        model.put("js", "admin/account_student_list");
+        return "default";
+    }
+
+    @RequestMapping(value = "/admin/account/list")
+    public String accountList(HttpServletRequest request, HttpServletResponse response, ModelMap model, int role) {
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            log.warn(errorDesc);
+            return this.goErrorPage(errorDesc);
+        }
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
+
+        QueryUserCondition queryUserCondition = new QueryUserCondition();
+        RoleEnum roleEnum = RoleEnum.getRoleByStatus(role);
+        queryUserCondition.setRole(roleEnum);
+        MyCloudResult<Pagination<UserDTO>> result = userManageService.query(queryUserCondition);
+        List<UserDTO> userList = result.getModel().getList();
+        model.put("userList", userList);
 
         this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
         model.put("screen", "admin/account_student_list");

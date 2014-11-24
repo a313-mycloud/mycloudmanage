@@ -7,7 +7,7 @@
 					
 					
 					<ul class="content-box-tabs">
-						<li><a href="#tab1" class="default-tab">Table</a></li> <!-- href must be unique and match the id of target div -->
+						<li><a href="#tab1" class="default-tab">教师</a></li> <!-- href must be unique and match the id of target div -->
 						<li><a href="#tab2">Forms</a></li>
 					</ul>
 					

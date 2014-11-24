@@ -15,6 +15,10 @@ import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.controller.BaseController;
 import org.dlut.mycloudmanage.controller.LoginController;
+import org.dlut.mycloudserver.client.common.MyCloudResult;
+import org.dlut.mycloudserver.client.common.Pagination;
+import org.dlut.mycloudserver.client.common.usermanage.QueryUserCondition;
+import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
 import org.dlut.mycloudserver.client.service.usermanage.IUserManageService;
 import org.slf4j.Logger;
@@ -38,6 +42,31 @@ public class AccountController extends BaseController {
 
     @RequestMapping(value = UrlConstant.ADMIN_ACCOUNT_STUDENT_LIST)
     public String accountStudentList(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            log.warn(errorDesc);
+            return this.goErrorPage(errorDesc);
+        }
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
+
+        QueryUserCondition queryUserCondition = new QueryUserCondition();
+        queryUserCondition.setRole(RoleEnum.STUDENT);
+        MyCloudResult<Pagination<UserDTO>> result = userManageService.query(queryUserCondition);
+        if (!result.isSuccess()) {
+            log.warn("查询用户失败，原因：" + result.getMsgInfo());
+            return this.goErrorPage("查询用户失败");
+        }
+        Pagination<UserDTO> paginateion = result.getModel();
+        model.put("userList", paginateion.getList());
+
+        this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
+        model.put("screen", "admin/account_student_list");
+        model.put("js", "admin/account_student_list");
+        return "default";
+    }
+
+    @RequestMapping(value = UrlConstant.ADMIN_ACCOUNT_TEACHER_LIST)
+    public String accountTeacherList(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         String errorDesc = this.setDefaultEnv(request, response, model);
         if (errorDesc != null) {
             log.warn(errorDesc);

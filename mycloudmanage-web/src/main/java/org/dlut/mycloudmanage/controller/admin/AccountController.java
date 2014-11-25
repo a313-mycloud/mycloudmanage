@@ -97,15 +97,16 @@ public class AccountController extends BaseController {
         MyCloudResult<Pagination<UserDTO>> result = userManageService.query(queryUserCondition);
         List<UserDTO> userList = result.getModel().getList();
         model.put("userList", userList);
-
+        model.put("role", roleEnum.getStatus());
         this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
-        if (roleEnum == RoleEnum.ADMIN) {
-            model.put("screen", "admin/account_admin_list");
-        } else if (roleEnum == RoleEnum.STUDENT) {
-            model.put("screen", "admin/account_student_list");
-        } else if (roleEnum == RoleEnum.TEACHER) {
-            model.put("screen", "admin/account_teacher_list");
-        }
+        //        if (roleEnum == RoleEnum.ADMIN) {
+        //            model.put("screen", "admin/account_admin_list");
+        //        } else if (roleEnum == RoleEnum.STUDENT) {
+        //            model.put("screen", "admin/account_student_list");
+        //        } else if (roleEnum == RoleEnum.TEACHER) {
+        //            model.put("screen", "admin/account_teacher_list");
+        //        }
+        model.put("screen", "admin/account_list");
         model.put("js", "admin/account_student_list");
         return "default";
     }

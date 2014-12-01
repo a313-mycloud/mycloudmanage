@@ -69,8 +69,8 @@
 									<td>$user.account</td>
 									<td>
 										<!-- Icons -->
-										 <a class="button edit_btn">编辑</a>
-										 <a class="button delete_btn" id="delete_$user.account">删除</a> 
+										 <a class="button" href="#">编辑</a>
+										 <a class="button" onclick="deleteAction()" href="#">删除</a> 
 									</td>
 								</tr>
 								#end

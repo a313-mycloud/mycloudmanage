@@ -7,5 +7,7 @@ $(document).ready(function(){
 });
 
 function deleteAction() {
-	alert("delete");
+   var r=false; if(confirm('确定删除吗？?')) r=true; event.returnValue=r; return r;
+        //confirm("确定删除吗？");
+	
 }

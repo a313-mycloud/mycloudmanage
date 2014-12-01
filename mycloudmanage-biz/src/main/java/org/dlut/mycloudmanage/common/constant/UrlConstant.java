@@ -13,45 +13,55 @@ package org.dlut.mycloudmanage.common.constant;
  * @author luojie.lj 2014年9月25日 上午11:01:57
  */
 public class UrlConstant {
-    /**
-     * 登陆页面
-     */
-    public static final String LOGIN_URL                  = "/login";
+	/**
+	 * 登陆页面
+	 */
+	public static final String LOGIN_URL = "/login";
 
-    /**
-     * 登出页面
-     */
-    public static final String LOGOUT_URL                 = "/logout";
+	/**
+	 * 登出页面
+	 */
+	public static final String LOGOUT_URL = "/logout";
 
-    /**
-     * 错误页面
-     */
-    public static final String ERROR_URL                  = "/error";
+	/**
+	 * 错误页面
+	 */
+	public static final String ERROR_URL = "/error";
 
-    public static final String DEFAULT_URL                = "index";
+	public static final String DEFAULT_URL = "index";
 
-    /**
-     * 学生角色虚拟机列表页面
-     */
-    public static final String STUDENT_VM_LIST            = "/student/vm/list";
+	/**
+	 * 学生角色虚拟机列表页面
+	 */
+	public static final String STUDENT_VM_LIST = "/student/vm/list";
 
-    /**
-     * 学生角色登陆后的默认页
-     */
-    public static final String STUDENT_DEFAULT_URL        = STUDENT_VM_LIST;
+	/**
+	 * 学生角色登陆后的默认页
+	 */
+	public static final String STUDENT_DEFAULT_URL = STUDENT_VM_LIST;
 
-    /**
-     * 教师角色登陆后的默认页
-     */
-    public static final String TEACHER_DEFAULT_URL        = "/teacher/index";
+	/**
+	 * 教师角色登陆后的默认页
+	 */
+	public static final String TEACHER_DEFAULT_URL = "/teacher/index";
 
-    /**
-     * 管理员登陆后的默认页
-     */
-    public static final String ADMIN_DEFAULT_URL          = "/admin/index";
+	/**
+	 * 管理员登陆后的默认页
+	 */
+	public static final String ADMIN_DEFAULT_URL = "/admin/index";
 
-    public static final String ADMIN_ACCOUNT_STUDENT_LIST = "/admin/account/student/list"; // 管理员-账号管理-学生列表
-    public static final String ADMIN_ACCOUNT_TEACHER_LIST = "/admin/account/teacher/list"; // 管理员-账号管理-教师列表
-    public static final String ADMIN_ACCOUNT_ADMIN_LIST   = "/admin/account/admin/list";  // 管理员-账号管理-管理员列表
+	public static final String ADMIN_ACCOUNT_STUDENT_LIST = "/admin/account/student/list"; // 管理员-账号管理-学生列表
+	public static final String ADMIN_ACCOUNT_TEACHER_LIST = "/admin/account/teacher/list"; // 管理员-账号管理-教师列表
+	public static final String ADMIN_ACCOUNT_ADMIN_LIST = "/admin/account/admin/list"; // 管理员-账号管理-管理员列表
+
+	/**
+	 * 管理员-物理机-操作
+	 */
+	public static final String ADMIN_HOST_LIST = "/admin/host/list";
+	public static final String ADMIN_HOST_REMOVE = "/admin/host/remove";
+	public static final String ADMIN_ADD_FORM = "/admin/add/form";
+	public static final String ADMIN_HOST_ADD = "/admin/host/add";
+	public static final String ADMIN_EDIT_FORM = "/admin/edit/form";
+	public static final String ADMIN_HOST_EDIT = "/admin/host/edit";
 
 }

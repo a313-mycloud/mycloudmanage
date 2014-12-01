@@ -11,14 +11,14 @@
            http://www.springframework.org/schema/mvc     
            http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<bean id="userManageService"
+	<bean id="hostManageService"
 		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
 		<property name="serviceUrl">
 			<value>
-				${userManageService-url}	
+				${hostManageService-url}	
 			</value>
 		</property>
-		<property name="serviceInterface" value="org.dlut.mycloudserver.client.service.usermanage.IUserManageService">
+		<property name="serviceInterface" value="org.dlut.mycloudserver.client.service.hostmanage.IHostManageService">
 		</property>
 	</bean>
 	<!-- <import resource="classpath*:usermanage-context.xml" /> -->

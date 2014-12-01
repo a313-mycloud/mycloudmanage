@@ -40,17 +40,21 @@
 										<div class="bulk-actions align-left">
 											<a class="button" href="#">全部删除</a>
 											<a class="button" href="#">添加</a>
+											
+												
+										<a class="shortcut" href='#message' rel="modal"><span>
 										</div>
 										
 										<div class="pagination">
 											<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
-											<a href="#" class="number" title="1">1..</a>
+											<a href="#" class="number current" title="1">1..</a>
 											<a href="#" class="number" title="2">2</a>
-											<a href="#" class="number current" title="3">3</a>
-											<a href="#" class="number" title="4">4</a>
+											<a href="#" class="number" title="3">3</a>
 											<a href="#" title="Next Page">Next &raquo;</a><a href="#" title="Last Page">Last &raquo;</a>
 										</div> <!-- End .pagination -->
 										<div class="clear"></div>
+									
+										
 									</td>
 								</tr>
 							</tfoot>

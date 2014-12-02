@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 类AccountController.java的实现描述：TODO 类实现描述
@@ -108,6 +109,27 @@ public class AccountController extends BaseController {
         //        }
         model.put("screen", "admin/account_list");
         model.put("js", "admin/account_list");
+        return "default";
+    }
+
+    @RequestMapping(value = "/admin/account/delete.do")
+    @ResponseBody
+    public String accountDelete(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+                                String userAccount) {
+        return "true";
+    }
+
+    @RequestMapping(value = "/admin/account/add")
+    public String accountAdd(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            log.warn(errorDesc);
+            return this.goErrorPage(errorDesc);
+        }
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
+
+        this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
+        model.put("screen", "admin/account_add");
         return "default";
     }
 }

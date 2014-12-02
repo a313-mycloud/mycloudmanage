@@ -13,8 +13,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
 import org.dlut.mycloudmanage.biz.HostBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
@@ -30,6 +28,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 类HostController.java的实现描述：TODO 类实现描述
@@ -54,7 +54,7 @@ public class HostController extends BaseController {
 
 	@RequestMapping(value = UrlConstant.ADMIN_HOST_LIST)
 	public String adminHostList(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model, int page) {
+			HttpServletResponse response, ModelMap model) {
 
 		String errorDesc = this.setDefaultEnv(request, response, model);
 		if (errorDesc != null) {

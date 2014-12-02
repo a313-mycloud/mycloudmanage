@@ -34,8 +34,8 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
-		
+
+
 
 		<!-- velocity 相关包 -->
 		<dependency>
@@ -46,6 +46,12 @@
 		<dependency>
 			<groupId>velocity-tools</groupId>
 			<artifactId>velocity-tools</artifactId>
+		</dependency>
+
+		<!-- json 相关包 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
 		</dependency>
 
 		<dependency>

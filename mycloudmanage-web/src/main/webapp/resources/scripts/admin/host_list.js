@@ -6,7 +6,7 @@ $(document).ready(function(){
 		add($("#hostName").val(),$("#hostIp").val());
 	});
 	$(".edit").click(function(){
-	    edit($("#hostId"),$("#hostName").val(),$("#hostIp").val());
+	    edit($("#hostId").val(),$("#hostName").val(),$("#hostIp").val());
 	});
 	
 });
@@ -18,7 +18,7 @@ function remove(id){
 		 dataType:"json",
 		 success:function(data){
 		 	
-		 	if(data.isLogin){
+		 	if(!data.isLogin){
 		 		alert("请登陆");
 		 		window.location.replace("/login");
 		 	}
@@ -42,6 +42,7 @@ function remove(id){
 }
 function add(hostName,hostIp){
 	$.ajax({
+		 type:"POST",
 		 url:'/admin/host/add',
 		 data:{"hostName":hostName,"hostIp":hostIp},
 		 dataType:"json",
@@ -70,15 +71,15 @@ function add(hostName,hostIp){
 function edit(hostId,hostName,hostIp){
 	$.ajax({
 		 url:'/admin/host/edit',
-		 data:{"hostId":id,"hostName":hostName,"hostIp":hostIp},
+		 data:{"hostId":hostId,"hostName":hostName,"hostIp":hostIp},
 		 dataType:"json",
 		 success:function(data){
 		 	if(!data.isLogin){
-		 		alert("请登陆");
+		 		alert("请登陆Login");
 		 		window.location.replace("/login");
 		 	}
 		 	else if(!data.isAuth){
-		 		alert("您没有权限");
+		 		alert("您没有权限Auth");
 		 	}
 		 	else{
 		 		if(!data.isSuccess){
@@ -91,6 +92,7 @@ function edit(hostId,hostName,hostIp){
 		 },
 		 error:function(data,status){
 		 	alert(status);
+		 	
 		 } 
 	});	
 }

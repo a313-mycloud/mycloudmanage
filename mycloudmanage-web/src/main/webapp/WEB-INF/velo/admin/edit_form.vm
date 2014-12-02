@@ -4,41 +4,32 @@
 <div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
 						
 						
-						<form id="editform" method="get" action="/admin/host/edit">
-						<table>
-						    <input type="hidden"  name="hostId" value="$!host.hostId"/>
-						    <tr><td>
-						    <label for="hostName">物理机名称</label>
-						    </td>
-						    <td>
-						     <input type="text"  name="hostName" value="$!host.hostName"/>
-						    </td>
-						    </tr>
-						  
+						  <table>
 						   <tr>
-						   <td>
-						   <label for="hostIp">物理机Ip</label>
-						   </td>
-						   <td>
-						   <input type="text"  name="hostIp" value="$!host.hostIp"/>
-						   </td>
+						   <td></td>
+						   <td><input type="hidden"  id="hostId" value="$!host.hostId"/></td>
 						   </tr>
-						 
-						  
+						   
+						   
 						   <tr>
-						   <td>
-						   <input type="submit" value="修改"></input>
-						   </td>
-						   <td>
-						   <input type="reset" value="重置"/>
-						   </td>
+						   <td><label for="hostName">物理机名称</label></td>
+						   <td><input type="text"  id="hostName" value="$!host.hostName"/></td>
+						   </tr>
+						   				  
+						   <tr>
+						   <td><label for="hostIp">物理机Ip</label></td>
+						   <td><input type="text"  id="hostIp" value="$!host.hostIp"/></td>
+						   </tr>
+						   					  
+						   <tr>
+						   <td><a class="button edit" >修改</a></td>
+						   <td><a class="button reset" >重置</a></td>
 						   </tr>
 						   </table>
-						</form>
-						
-						
-						
 					
+						
+						
+						
 						
 					</div> <!-- End #tab2 -->    
 				</div> <!-- End .content-box-content -->

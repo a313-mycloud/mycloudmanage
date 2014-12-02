@@ -17,8 +17,8 @@
 						   </tr>
 						   					  
 						   <tr>
-						   <td><a class="button add" hostId="$!host.hostId">添加</a></td>
-						   <td><a class="button reset" hostId="$!host.hostId">重置</a></td>
+						   <td><a class="button add" >添加</a></td>
+						   <td><a class="button reset" >重置</a></td>
 						   </tr>
 						   </table>
 						 

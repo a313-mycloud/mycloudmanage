@@ -19,7 +19,7 @@
 									<td colspan="6">
 										<div class="bulk-actions align-left">
 											<a class="button" >全部删除</a>
-											<a class="button add" href="/admin/add/form" >添加</a>
+											<a class="button" href="/admin/add/form" >添加</a>
 										</div>
 										
 										<div class="pagination">
@@ -42,7 +42,7 @@
 									<td>$!host.hostIp</td>
 									<td>$!host.hostStatus</td>
 									<td>
-										 <a class="button edit"  href="/admin/edit/form?hostId=$!host.hostId">编辑</a>
+										 <a class="button"  href="/admin/edit/form?hostId=$!host.hostId">编辑</a>
 										 <a class="button remove" hostId="$!host.hostId">删除</a> 
 									</td>
 								</tr>

@@ -13,6 +13,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.dlut.mycloudmanage.biz.HostBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -123,35 +126,39 @@ public class HostController extends BaseController {
 	 * @param hostIp
 	 * @return
 	 */
-	@RequestMapping(value = UrlConstant.ADMIN_HOST_ADD)
+	@RequestMapping(value = UrlConstant.ADMIN_HOST_ADD, method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject addHost(HttpServletRequest request,
+	public String addHost(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String hostName,
 			String hostIp) {
+
 		JSONObject json = new JSONObject();
 		json.put("isLogin", true);
 		json.put("isAuth", true);
 		// 检查IP
 		QueryHostCondition queryHostCondition = new QueryHostCondition();
 		queryHostCondition.setHostIp(hostIp);
-		if (this.hostBiz.query(queryHostCondition) != null) {
+
+		if (this.hostBiz.query(queryHostCondition).getTotalCount() > 0) {
 			json.put("isSuccess", false);
-			json.put("message", "添加的IP已经存在");
-			return json;
+			json.put("message", "要添加的IP已经存在");
+			return json.toString();
 		}
+
 		// 添加记录
 		HostDTO hostDTO = new HostDTO();
 		hostDTO.setHostIp(hostIp);
 		hostDTO.setHostName(hostName);
+
 		if (this.hostBiz.createHost(hostDTO) > 0) {
 			json.put("isSuccess", true);
 			json.put("message", "添加成功");
-			return json;
+			return json.toString();
 		}
 
 		json.put("isSuccess", false);
 		json.put("message", "添加失败");
-		return json;
+		return json.toString();
 	}
 
 	/**
@@ -166,7 +173,7 @@ public class HostController extends BaseController {
 	@RequestMapping(value = UrlConstant.ADMIN_EDIT_FORM)
 	public String editForm(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, int hostId) {
-
+		// 查询要修改的内容，以显示在编辑表单中
 		QueryHostCondition queryHostCondition = new QueryHostCondition();
 		queryHostCondition.setHostId(hostId);
 		HostDTO hostDTO = this.hostBiz.query(queryHostCondition).getList()
@@ -192,19 +199,27 @@ public class HostController extends BaseController {
 	 */
 	@RequestMapping(value = UrlConstant.ADMIN_HOST_EDIT)
 	@ResponseBody
-	public JSONObject editHost(HttpServletRequest request,
+	public String editHost(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, int hostId,
 			String hostName, String hostIp) {
 		JSONObject json = new JSONObject();
 		json.put("isLogin", true);
 		json.put("isAuth", true);
 		// 检查id是否存在
-		QueryHostCondition queryHostCondition = new QueryHostCondition();
-		queryHostCondition.setHostId(hostId);
-		if (this.hostBiz.query(queryHostCondition) == null) {
+		QueryHostCondition queryHostCondition1 = new QueryHostCondition();
+		queryHostCondition1.setHostId(hostId);
+		if (this.hostBiz.query(queryHostCondition1).getTotalCount() <= 0) {
 			json.put("isSuccess", false);
 			json.put("message", "要编辑的物理机不存在");
-			return json;
+			return json.toString();
+		}
+		// 检查Ip是否存在
+		QueryHostCondition queryHostCondition2 = new QueryHostCondition();
+		queryHostCondition2.setHostIp(hostIp);
+		if (this.hostBiz.query(queryHostCondition2).getTotalCount() > 0) {
+			json.put("isSuccess", false);
+			json.put("message", "要编辑的Ip已经存在");
+			return json.toString();
 		}
 		HostDTO hostDTO = new HostDTO();
 		hostDTO.setHostId(hostId);
@@ -213,9 +228,10 @@ public class HostController extends BaseController {
 		if (this.hostBiz.updateHost(hostDTO)) {
 			json.put("isSuccess", true);
 			json.put("message", "更新成功");
+			return json.toString();
 		}
 		json.put("isSuccess", false);
 		json.put("message", "更新失败");
-		return json;
+		return json.toString();
 	}
 }

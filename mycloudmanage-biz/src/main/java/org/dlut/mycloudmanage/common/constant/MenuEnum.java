@@ -15,43 +15,43 @@ import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
  * @author luojie.lj 2014年9月23日 下午8:40:38
  */
 public enum MenuEnum {
-    STUDENT_MENU_VM("虚拟机", UrlConstant.STUDENT_VM_LIST, RoleEnum.STUDENT),
-    STUDENT_MENU_DISK("硬盘", "", RoleEnum.STUDENT),
+	STUDENT_MENU_VM("虚拟机", UrlConstant.STUDENT_VM_LIST, RoleEnum.STUDENT), STUDENT_MENU_DISK(
+			"硬盘", "", RoleEnum.STUDENT), ADMIN_HOST_LIST("物理机管理",
+			UrlConstant.ADMIN_HOST_LIST, RoleEnum.ADMIN), ADMIN_MENU_ACCOUNT(
+			"账号管理", UrlConstant.ADMIN_ACCOUNT_STUDENT_LIST, RoleEnum.ADMIN);
 
-    ADMIN_MENU_ACCOUNT("账号管理", UrlConstant.ADMIN_ACCOUNT_STUDENT_LIST, RoleEnum.ADMIN);
+	private String name;
+	private String route;
+	private RoleEnum role;
 
-    private String   name;
-    private String   route;
-    private RoleEnum role;
+	private MenuEnum(String name, String route, RoleEnum role) {
+		this.name = name;
+		this.route = route;
+		this.role = role;
+	}
 
-    private MenuEnum(String name, String route, RoleEnum role) {
-        this.name = name;
-        this.route = route;
-        this.role = role;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getRoute() {
+		return route;
+	}
 
-    public String getRoute() {
-        return route;
-    }
+	public void setRoute(String route) {
+		this.route = route;
+	}
 
-    public void setRoute(String route) {
-        this.route = route;
-    }
+	public RoleEnum getRole() {
+		return role;
+	}
 
-    public RoleEnum getRole() {
-        return role;
-    }
-
-    public void setRole(RoleEnum role) {
-        this.role = role;
-    }
+	public void setRole(RoleEnum role) {
+		this.role = role;
+	}
 
 }

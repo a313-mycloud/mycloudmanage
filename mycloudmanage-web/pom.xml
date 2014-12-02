@@ -34,6 +34,8 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		
+		
 
 		<!-- velocity 相关包 -->
 		<dependency>
@@ -52,6 +54,7 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>mycloudmanage-web</finalName>

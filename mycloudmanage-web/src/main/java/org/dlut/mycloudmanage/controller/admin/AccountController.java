@@ -107,7 +107,7 @@ public class AccountController extends BaseController {
         //            model.put("screen", "admin/account_teacher_list");
         //        }
         model.put("screen", "admin/account_list");
-        model.put("js", "admin/account_student_list");
+        model.put("js", "admin/account_list");
         return "default";
     }
 }

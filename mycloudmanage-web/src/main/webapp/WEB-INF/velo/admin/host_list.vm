@@ -4,7 +4,7 @@
 <div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
 						
 											
-						<table id="hostList">
+						<table >
 							<thead>
 								<tr>
 								  <th>物理机名称</th>
@@ -21,21 +21,17 @@
 											<a class="button" >全部删除</a>
 											<a class="button" href="/admin/add/form" >添加</a>
 										</div>
+									
+									
+										<div class="holder">
+										</div>
 										
-										<div class="pagination">
-											<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
-											<a href="#" class="number" title="1">1..</a>
-											<a href="#" class="number" title="2">2</a>
-											<a href="#" class="number current" title="3">3</a>
-											<a href="#" class="number" title="4">4</a>s
-											<a href="#" title="Next Page">Next &raquo;</a><a href="#" title="Last Page">Last &raquo;</a>
-										</div> <!-- End .pagination -->
-										<div class="clear"></div>
+										
 									</td>
 								</tr>
 							</tfoot>
 						 
-							<tbody>
+							<tbody id="itemContainer">
 								#foreach($host in $!hostList)
 								<tr>
 									<td>$!host.hostName</td>

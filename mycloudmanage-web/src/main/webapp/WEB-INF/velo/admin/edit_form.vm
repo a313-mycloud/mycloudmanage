@@ -6,8 +6,10 @@
 						
 						  <table>
 						   <tr>
+						   <td><input type="hidden"  id="hostId" value="$!host.hostId"/>
+						   <input type="hidden"  id="preName" value="$!host.hostName"/>
+						   <input type="hidden"  id="preIp" value="$!host.hostIp"/></td>
 						   <td></td>
-						   <td><input type="hidden"  id="hostId" value="$!host.hostId"/></td>
 						   </tr>
 						   
 						   
@@ -23,7 +25,7 @@
 						   					  
 						   <tr>
 						   <td><a class="button edit" >修改</a></td>
-						   <td><a class="button reset" >重置</a></td>
+						   <td><a class="button resetEdit" >重置</a></td>
 						   </tr>
 						   </table>
 					

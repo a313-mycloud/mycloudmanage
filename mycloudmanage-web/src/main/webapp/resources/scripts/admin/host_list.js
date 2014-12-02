@@ -8,6 +8,14 @@ $(document).ready(function(){
 	$(".edit").click(function(){
 	    edit($("#hostId").val(),$("#hostName").val(),$("#hostIp").val());
 	});
+	$(".reset").click(function(){
+		$("#hostName").val("");
+		$("#hostIp").val("");
+	});	
+	$(".resetEdit").click(function(){
+		$("#hostName").val($("#preName").val());
+		$("#hostIp").val($("#preIp").val());
+	});	
 	
 });
 function remove(id){
@@ -30,7 +38,7 @@ function remove(id){
 		 			alert(data.message);
 		 		}
 		 		else{
-		 			window.location.replace("/admin/host/list");
+		 			window.location.replace("/admin/host/list?currentPage=1&perPage=5");
 		 		}
 		 	}
 		 },
@@ -59,7 +67,7 @@ function add(hostName,hostIp){
 		 			alert(data.message);
 		 		}
 		 		else{
-		 			window.location.replace("/admin/host/list");
+		 			window.location.replace("/admin/host/list?currentPage=1&perPage=5");
 		 		}
 		 	}
 		 },
@@ -86,7 +94,7 @@ function edit(hostId,hostName,hostIp){
 		 			alert(data.message);
 		 		}
 		 		else{
-		 			window.location.replace("/admin/host/list");
+		 			window.location.replace("/admin/host/list?currentPage=1&perPage=5");
 		 		}
 		 	}
 		 },
@@ -96,5 +104,6 @@ function edit(hostId,hostName,hostIp){
 		 } 
 	});	
 }
+
 
 

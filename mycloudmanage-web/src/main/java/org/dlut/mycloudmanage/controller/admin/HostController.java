@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
@@ -49,12 +48,16 @@ public class HostController extends BaseController {
 	 * 
 	 * @param request
 	 * @param response
+	 * @param model
+	 * @param currentPage
+	 * @param perPage
 	 * @return
 	 */
 
 	@RequestMapping(value = UrlConstant.ADMIN_HOST_LIST)
 	public String adminHostList(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model, int currentPage,
+			int perPage) {
 
 		String errorDesc = this.setDefaultEnv(request, response, model);
 		if (errorDesc != null) {
@@ -62,10 +65,15 @@ public class HostController extends BaseController {
 		}
 
 		QueryHostCondition queryHostCondition = new QueryHostCondition();
+		queryHostCondition.setLimit(perPage);
+		queryHostCondition.setOffset((currentPage - 1) * perPage);
 		Pagination<HostDTO> pageHostDTO = this.hostBiz
 				.query(queryHostCondition);
 		List<HostDTO> hostList = pageHostDTO.getList();
 		model.put("hostList", hostList);
+
+		System.out.print("dfsafsfas" + hostList.size());
+
 		this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_HOST_LIST, model);
 		model.put("screen", "admin/host_list");
 		model.put("js", "admin/host_list");
@@ -126,7 +134,7 @@ public class HostController extends BaseController {
 	 * @param hostIp
 	 * @return
 	 */
-	@RequestMapping(value = UrlConstant.ADMIN_HOST_ADD, method = RequestMethod.POST)
+	@RequestMapping(value = UrlConstant.ADMIN_HOST_ADD)
 	@ResponseBody
 	public String addHost(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String hostName,
@@ -216,6 +224,7 @@ public class HostController extends BaseController {
 		// 检查Ip是否存在
 		QueryHostCondition queryHostCondition2 = new QueryHostCondition();
 		queryHostCondition2.setHostIp(hostIp);
+		queryHostCondition2.setHostName(hostName);
 		if (this.hostBiz.query(queryHostCondition2).getTotalCount() > 0) {
 			json.put("isSuccess", false);
 			json.put("message", "要编辑的Ip已经存在");
@@ -233,5 +242,6 @@ public class HostController extends BaseController {
 		json.put("isSuccess", false);
 		json.put("message", "更新失败");
 		return json.toString();
+
 	}
 }

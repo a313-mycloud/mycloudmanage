@@ -54,7 +54,7 @@ public class HostController extends BaseController {
 
 	@RequestMapping(value = UrlConstant.ADMIN_HOST_LIST)
 	public String adminHostList(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model, int page) {
 
 		String errorDesc = this.setDefaultEnv(request, response, model);
 		if (errorDesc != null) {

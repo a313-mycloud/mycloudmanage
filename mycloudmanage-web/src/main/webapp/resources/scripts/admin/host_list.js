@@ -16,6 +16,18 @@ $(document).ready(function(){
 		$("#hostName").val($("#preName").val());
 		$("#hostIp").val($("#preIp").val());
 	});	
+	$(".prePage").click(function(){
+	     showPrePage($("#page").attr("currentPage"));
+	});
+	$(".nextPage").click(function(){
+	     showNextPage($("#page").attr("currentPage"),$("#page").attr("totalPage"));
+	});
+	$(".firstPage").click(function(){
+	     showFirstPage();
+	});
+	$(".lastPage").click(function(){
+	     showLastPage($("#page").attr("totalPage"));
+	});
 	
 });
 function remove(id){
@@ -38,7 +50,7 @@ function remove(id){
 		 			alert(data.message);
 		 		}
 		 		else{
-		 			window.location.replace("/admin/host/list?currentPage=1&perPage=5");
+		 			window.location.replace("/admin/host/list?currentPage=1&pageSize=5");
 		 		}
 		 	}
 		 },
@@ -67,7 +79,7 @@ function add(hostName,hostIp){
 		 			alert(data.message);
 		 		}
 		 		else{
-		 			window.location.replace("/admin/host/list?currentPage=1&perPage=5");
+		 			window.location.replace("/admin/host/list?currentPage=1&pageSize=5");
 		 		}
 		 	}
 		 },
@@ -94,7 +106,7 @@ function edit(hostId,hostName,hostIp){
 		 			alert(data.message);
 		 		}
 		 		else{
-		 			window.location.replace("/admin/host/list?currentPage=1&perPage=5");
+		 			window.location.replace("/admin/host/list?currentPage=1&pageSize=5");
 		 		}
 		 	}
 		 },
@@ -104,6 +116,27 @@ function edit(hostId,hostName,hostIp){
 		 } 
 	});	
 }
-
+function showPrePage(currentPage){
+	if(currentPage>1){
+		var current=Number(currentPage)-1;
+		window.location.replace("/admin/host/list?currentPage="+current+"&pageSize=5");
+	}
+	else
+	    alert("没有上一页");
+}
+function showNextPage(currentPage,totalPage){
+	if(currentPage<totalPage){
+		var current=Number(currentPage)+1;
+		window.location.replace("/admin/host/list?currentPage="+current+"&pageSize=5");
+	}
+	else
+	    alert("没有下一页");
+}
+function showFirstPage(){
+	window.location.replace("/admin/host/list?currentPage=1&pageSize=5");
+}
+function showLastPage(totalPage){
+	window.location.replace("/admin/host/list?currentPage="+totalPage+"&pageSize=5");
+}
 
 

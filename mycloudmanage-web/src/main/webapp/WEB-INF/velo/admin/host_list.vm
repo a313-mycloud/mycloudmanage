@@ -2,9 +2,10 @@
 <div class="content-box"><!-- Start Content Box -->
 <div class="content-box-content">
 <div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
-						
-											
-						<table >
+					
+					
+									
+						<table id="table" totalPages="$!totalPages">
 							<thead>
 								<tr>
 								  <th>物理机名称</th>
@@ -17,21 +18,23 @@
 							<tfoot>
 								<tr>
 									<td colspan="6">
-										<div class="bulk-actions align-left">
+										<div class=" align-left">
 											<a class="button" >全部删除</a>
 											<a class="button" href="/admin/add/form" >添加</a>
-										</div>
-									
-									
-										<div class="holder">
-										</div>
-										
-										
+									    </div>   
+									    <div class="align-right">
+									        <a class="button" >总共$!totalPage页</a>
+									        <a class="button firstPage">首页</a>
+									        <a class="button prePage" >上页</a>
+									        <a class="button "  id="page" currentPage="$!currentPage" totalPage="$!totalPage">$!currentPage</a>
+									        <a class="button nextPage" >下页</a>
+									        <a class="button lastPage" >末页</a>
+									    </div>
 									</td>
 								</tr>
 							</tfoot>
 						 
-							<tbody id="itemContainer">
+							<tbody >
 								#foreach($host in $!hostList)
 								<tr>
 									<td>$!host.hostName</td>

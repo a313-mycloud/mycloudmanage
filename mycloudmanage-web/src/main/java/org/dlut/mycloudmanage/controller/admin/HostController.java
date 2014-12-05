@@ -57,7 +57,7 @@ public class HostController extends BaseController {
 	@RequestMapping(value = UrlConstant.ADMIN_HOST_LIST)
 	public String adminHostList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, int currentPage,
-			int perPage) {
+			int pageSize) {
 
 		String errorDesc = this.setDefaultEnv(request, response, model);
 		if (errorDesc != null) {
@@ -65,14 +65,17 @@ public class HostController extends BaseController {
 		}
 
 		QueryHostCondition queryHostCondition = new QueryHostCondition();
-		queryHostCondition.setLimit(perPage);
-		queryHostCondition.setOffset((currentPage - 1) * perPage);
+		queryHostCondition.setLimit(pageSize);
+		queryHostCondition.setOffset((currentPage - 1) * pageSize);
 		Pagination<HostDTO> pageHostDTO = this.hostBiz
 				.query(queryHostCondition);
+		if (pageHostDTO.getTotalPage() < currentPage)
+			return this.goErrorPage("该页面不存在");
 		List<HostDTO> hostList = pageHostDTO.getList();
 		model.put("hostList", hostList);
 
-		System.out.print("dfsafsfas" + hostList.size());
+		model.put("currentPage", currentPage);
+		model.put("totalPage", pageHostDTO.getTotalPage());
 
 		this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_HOST_LIST, model);
 		model.put("screen", "admin/host_list");
@@ -216,7 +219,8 @@ public class HostController extends BaseController {
 		// 检查id是否存在
 		QueryHostCondition queryHostCondition1 = new QueryHostCondition();
 		queryHostCondition1.setHostId(hostId);
-		if (this.hostBiz.query(queryHostCondition1).getTotalCount() <= 0) {
+		Pagination<HostDTO> page1 = this.hostBiz.query(queryHostCondition1);
+		if (page1.getTotalCount() <= 0) {
 			json.put("isSuccess", false);
 			json.put("message", "要编辑的物理机不存在");
 			return json.toString();
@@ -225,7 +229,9 @@ public class HostController extends BaseController {
 		QueryHostCondition queryHostCondition2 = new QueryHostCondition();
 		queryHostCondition2.setHostIp(hostIp);
 		queryHostCondition2.setHostName(hostName);
-		if (this.hostBiz.query(queryHostCondition2).getTotalCount() > 0) {
+		Pagination<HostDTO> page2 = this.hostBiz.query(queryHostCondition2);
+		if (page2.getTotalCount() > 0
+				&& !page1.getList().get(0).getHostIp().equals(hostIp)) {
 			json.put("isSuccess", false);
 			json.put("message", "要编辑的Ip已经存在");
 			return json.toString();

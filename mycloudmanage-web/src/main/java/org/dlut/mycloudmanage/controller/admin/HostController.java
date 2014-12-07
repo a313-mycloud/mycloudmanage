@@ -90,7 +90,7 @@ public class HostController extends BaseController {
 	 * @param hostId
 	 * @return
 	 */
-	@RequestMapping(value = UrlConstant.ADMIN_HOST_REMOVE)
+	@RequestMapping(value = UrlConstant.ADMIN_HOST_REMOVE, produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
 	public String removeHost(int hostId) {
 		JSONObject json = new JSONObject();
@@ -109,6 +109,7 @@ public class HostController extends BaseController {
 		json.put("data", "");
 
 		return json.toString();
+
 	}
 
 	/**
@@ -116,20 +117,12 @@ public class HostController extends BaseController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = UrlConstant.ADMIN_HOST_REMOVEALL)
+	@RequestMapping(value = UrlConstant.ADMIN_HOST_REMOVEALL, produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
 	public String removeAll() {
 		JSONObject json = new JSONObject();
 		json.put("isLogin", true);
 		json.put("isAuth", true);
-		/*
-		 * this.hostBiz. if (this.hostBiz.deleteHostById(hostId)) {
-		 * log.info("删除" + hostId + "成功"); json.put("isSuccess", true);
-		 * json.put("message", "删除成功"); json.put("data", ""); return
-		 * json.toString(); } log.info("删除" + hostId + "失败");
-		 * json.put("isSuccess", false); json.put("message", "该物理机不存在");
-		 * json.put("data", "");
-		 */
 
 		json.put("isSuccess", true);
 		json.put("message", "删除成功");
@@ -164,7 +157,7 @@ public class HostController extends BaseController {
 	 * @param hostIp
 	 * @return
 	 */
-	@RequestMapping(value = UrlConstant.ADMIN_HOST_ADD)
+	@RequestMapping(value = UrlConstant.ADMIN_HOST_ADD, produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
 	public String addHost(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String hostName,
@@ -235,7 +228,7 @@ public class HostController extends BaseController {
 	 * @param hostIp
 	 * @return
 	 */
-	@RequestMapping(value = UrlConstant.ADMIN_HOST_EDIT)
+	@RequestMapping(value = UrlConstant.ADMIN_HOST_EDIT, produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
 	public String editHost(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, int hostId,

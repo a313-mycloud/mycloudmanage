@@ -31,9 +31,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 
 /**
+ * 
  * 类HostController.java的实现描述：TODO 类实现描述
  * 
- * @author xuyizhen 2014年11月30日
+ * @author xuyizhen Dec 7, 2014 10:19:01 AM
  */
 @Controller
 public class HostController extends BaseController {
@@ -111,6 +112,32 @@ public class HostController extends BaseController {
 	}
 
 	/**
+	 * 管理员-物理机-删除全部 处理异步请求，返回JSON
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = UrlConstant.ADMIN_HOST_REMOVEALL)
+	@ResponseBody
+	public String removeAll() {
+		JSONObject json = new JSONObject();
+		json.put("isLogin", true);
+		json.put("isAuth", true);
+		/*
+		 * this.hostBiz. if (this.hostBiz.deleteHostById(hostId)) {
+		 * log.info("删除" + hostId + "成功"); json.put("isSuccess", true);
+		 * json.put("message", "删除成功"); json.put("data", ""); return
+		 * json.toString(); } log.info("删除" + hostId + "失败");
+		 * json.put("isSuccess", false); json.put("message", "该物理机不存在");
+		 * json.put("data", "");
+		 */
+
+		json.put("isSuccess", true);
+		json.put("message", "删除成功");
+		json.put("data", "");
+		return json.toString();
+	}
+
+	/**
 	 * 响应客户端请求，跳转到添加表单
 	 * 
 	 * @param request
@@ -122,7 +149,7 @@ public class HostController extends BaseController {
 	public String addHostForm(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_HOST_LIST, model);
-		model.put("screen", "admin/add_form");
+		model.put("screen", "admin/host_add_form");
 		model.put("js", "admin/host_list");
 		return "default";
 	}
@@ -142,7 +169,7 @@ public class HostController extends BaseController {
 	public String addHost(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String hostName,
 			String hostIp) {
-
+		System.out.println(hostName + "  " + hostIp);
 		JSONObject json = new JSONObject();
 		json.put("isLogin", true);
 		json.put("isAuth", true);
@@ -191,7 +218,7 @@ public class HostController extends BaseController {
 				.get(0);
 		model.put("host", hostDTO);
 		this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_HOST_LIST, model);
-		model.put("screen", "admin/edit_form");
+		model.put("screen", "admin/host_edit_form");
 		model.put("js", "admin/host_list");
 		return "default";
 

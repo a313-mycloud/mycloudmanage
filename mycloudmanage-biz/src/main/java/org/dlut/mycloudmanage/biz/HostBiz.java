@@ -10,7 +10,11 @@ import org.dlut.mycloudserver.client.service.hostmanage.IHostManageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
+/**
+ * 
+ * 类HostBiz.java的实现描述：TODO 类实现描述 
+ * @author xuyizhen Dec 7, 2014 10:19:44 AM
+ */
 @Service
 public class HostBiz {
 	private static Logger log = LoggerFactory.getLogger(UserBiz.class);

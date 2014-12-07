@@ -1,12 +1,21 @@
+/**
+ *  *
+ * @author xuyizhen Dec 7, 2014 10:47 AM
+ */
+
 $(document).ready(function(){	
 	$(".remove").click(function() {
-		remove($(this).attr("hostId"));
+		remove("/admin/host/remove",{hostId:$(this).attr('hostId')},"/admin/host/list?currentPage=1&pageSize=5");
+	});
+	$(".removeAll").click(function(){
+		removeAll("/admin/host/removeAll","/admin/host/list?currentPage=1&pageSize=5");
+	
 	});
 	$(".add").click(function(){
-		add($("#hostName").val(),$("#hostIp").val());
+		add('/admin/host/add',{hostName:$("#hostName").val(),hostIp:$("#hostIp").val()},"/admin/host/list?currentPage=1&pageSize=5");
 	});
 	$(".edit").click(function(){
-	    edit($("#hostId").val(),$("#hostName").val(),$("#hostIp").val());
+	    edit('/admin/host/edit',{"hostId":$("#hostId").val(),"hostName":$("#hostName").val(),"hostIp":$("#hostIp").val()},"/admin/host/list?currentPage=1&pageSize=5");
 	});
 	$(".reset").click(function(){
 		$("#hostName").val("");
@@ -17,24 +26,30 @@ $(document).ready(function(){
 		$("#hostIp").val($("#preIp").val());
 	});	
 	$(".prePage").click(function(){
-	     showPrePage($("#page").attr("currentPage"));
+	     showPrePage("/admin/host/list",$("#page").attr("currentPage"),5);
 	});
 	$(".nextPage").click(function(){
-	     showNextPage($("#page").attr("currentPage"),$("#page").attr("totalPage"));
+	     showNextPage("/admin/host/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"),5);
 	});
 	$(".firstPage").click(function(){
-	     showFirstPage();
+	     showFirstPage("/admin/host/list",5);
 	});
 	$(".lastPage").click(function(){
-	     showLastPage($("#page").attr("totalPage"));
+	     showLastPage("/admin/host/list",$("#page").attr("totalPage"),5);
 	});
 	
 });
-function remove(id){
+/**
+ * 删除操作对应的js代码
+ * @param {} url    删除操作对应的controller地址
+ * @param {} jsonData 要删除的记录的ID，json格式
+ * @param {} replace  删除成功后要跳转到的页面
+ */
+function remove(url,data,replace){
 	if(confirm("确定删除？")){
 		$.ajax({
-		 url:'/admin/host/remove',
-		 data:{"hostId":id},
+		 url:url,
+		 data:data,
 		 dataType:"json",
 		 success:function(data){
 		 	
@@ -50,7 +65,7 @@ function remove(id){
 		 			alert(data.message);
 		 		}
 		 		else{
-		 			window.location.replace("/admin/host/list?currentPage=1&pageSize=5");
+		 			window.location.replace(replace);
 		 		}
 		 	}
 		 },
@@ -60,11 +75,15 @@ function remove(id){
 	});		
 	}
 }
-function add(hostName,hostIp){
-	$.ajax({
-		 type:"POST",
-		 url:'/admin/host/add',
-		 data:{"hostName":hostName,"hostIp":hostIp},
+/**
+ * 删除全部数据的js代码
+ * @param {} url
+ * @param {} replace
+ */
+function removeAll(url,replace){
+	if(confirm("确定删除全部？")){
+		$.ajax({
+		 url:url,
 		 dataType:"json",
 		 success:function(data){
 		 	if(!data.isLogin){
@@ -79,7 +98,43 @@ function add(hostName,hostIp){
 		 			alert(data.message);
 		 		}
 		 		else{
-		 			window.location.replace("/admin/host/list?currentPage=1&pageSize=5");
+		 			window.location.replace(replace);
+		 		}
+		 	}
+		 },
+		 error:function(data,status){
+		 	alert(status);
+		 } 
+	});		
+	}
+}
+
+/**
+ * 添加操作对应的js代码
+ * @param {} url
+ * @param {} data
+ * @param {} replace
+ */
+function add(url,data,replace){
+	$.ajax({
+		 type:"POST",
+		 url:url,
+		 data:data,
+		 dataType:"json",
+		 success:function(data){
+		 	if(!data.isLogin){
+		 		alert("请登陆");
+		 		window.location.replace("/login");
+		 	}
+		 	else if(!data.isAuth){
+		 		alert("您没有权限");
+		 	}
+		 	else{
+		 		if(!data.isSuccess){
+		 			alert(data.message);
+		 		}
+		 		else{
+		 			window.location.replace(replace);
 		 		}
 		 	}
 		 },
@@ -88,10 +143,16 @@ function add(hostName,hostIp){
 		 } 
 	});	
 }
-function edit(hostId,hostName,hostIp){
+/**
+ * 编辑操作对应的js代码
+ * @param {} url
+ * @param {} data
+ * @param {} replace
+ */
+function edit(url,data,replace){
 	$.ajax({
-		 url:'/admin/host/edit',
-		 data:{"hostId":hostId,"hostName":hostName,"hostIp":hostIp},
+		 url:url,
+		 data:data,
 		 dataType:"json",
 		 success:function(data){
 		 	if(!data.isLogin){
@@ -106,7 +167,7 @@ function edit(hostId,hostName,hostIp){
 		 			alert(data.message);
 		 		}
 		 		else{
-		 			window.location.replace("/admin/host/list?currentPage=1&pageSize=5");
+		 			window.location.replace(replace);
 		 		}
 		 	}
 		 },
@@ -116,27 +177,51 @@ function edit(hostId,hostName,hostIp){
 		 } 
 	});	
 }
-function showPrePage(currentPage){
+/**
+ * 显示前一页的代码
+ * @param {} url
+ * @param {} currentPage
+ * @param {} pageSize
+ */
+function showPrePage(url,currentPage,pageSize){
 	if(currentPage>1){
 		var current=Number(currentPage)-1;
-		window.location.replace("/admin/host/list?currentPage="+current+"&pageSize=5");
+		window.location.replace(url+"?currentPage="+current+"&pageSize="+pageSize);
 	}
 	else
 	    alert("没有上一页");
 }
-function showNextPage(currentPage,totalPage){
+/**
+ * 显示后一页的代码
+ * @param {} url
+ * @param {} currentPage
+ * @param {} totalPage
+ * @param {} pageSize
+ */
+function showNextPage(url,currentPage,totalPage,pageSize){
 	if(currentPage<totalPage){
 		var current=Number(currentPage)+1;
-		window.location.replace("/admin/host/list?currentPage="+current+"&pageSize=5");
+		window.location.replace(url+"?currentPage="+current+"&pageSize="+pageSize);
 	}
 	else
 	    alert("没有下一页");
 }
-function showFirstPage(){
-	window.location.replace("/admin/host/list?currentPage=1&pageSize=5");
+/**
+ * 显示第一页的代码
+ * @param {} url
+ * @param {} pageSize
+ */
+function showFirstPage(url,pageSize){
+	window.location.replace(url+"?currentPage=1&pageSize="+pageSize);
 }
-function showLastPage(totalPage){
-	window.location.replace("/admin/host/list?currentPage="+totalPage+"&pageSize=5");
+/**
+ * 显示最后一页的代码
+ * @param {} url
+ * @param {} totalPage
+ * @param {} pageSize
+ */
+function showLastPage(url,totalPage,pageSize){
+	window.location.replace(url+"?currentPage="+totalPage+"&pageSize="+pageSize);
 }
 
 

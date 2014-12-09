@@ -58,11 +58,11 @@ public class UrlConstant {
 	 * 管理员-物理机-操作
 	 */
 	public static final String ADMIN_HOST_LIST = "/admin/host/list";
-	public static final String ADMIN_HOST_REMOVE = "/admin/host/remove";
-	public static final String ADMIN_HOST_REMOVEALL = "/admin/host/removeAll";
+	public static final String ADMIN_HOST_REMOVE = "/admin/host/remove.do";
+	public static final String ADMIN_HOST_REMOVEALL = "/admin/host/removeAll.do";
 	public static final String ADMIN_ADD_FORM = "/admin/host/add/form";
-	public static final String ADMIN_HOST_ADD = "/admin/host/add";
+	public static final String ADMIN_HOST_ADD = "/admin/host/add.do";
 	public static final String ADMIN_EDIT_FORM = "/admin/host/edit/form";
-	public static final String ADMIN_HOST_EDIT = "/admin/host/edit";
+	public static final String ADMIN_HOST_EDIT = "/admin/host/edit.do";
 
 }

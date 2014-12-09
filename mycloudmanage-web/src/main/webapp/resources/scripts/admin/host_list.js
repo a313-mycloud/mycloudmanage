@@ -5,17 +5,17 @@
 
 $(document).ready(function(){	
 	$(".remove").click(function() {
-		remove("/admin/host/remove",{hostId:$(this).attr('hostId')},"/admin/host/list?currentPage=1&pageSize=5");
+		remove("/admin/host/remove.do",{hostId:$(this).attr('hostId')},"/admin/host/list?currentPage=1&pageSize=5");
 	});
 	$(".removeAll").click(function(){
-		removeAll("/admin/host/removeAll","/admin/host/list?currentPage=1&pageSize=5");
+		removeAll("/admin/host/removeAll.do","/admin/host/list?currentPage=1&pageSize=5");
 	
 	});
 	$(".add").click(function(){
-		add('/admin/host/add',{hostName:$("#hostName").val(),hostIp:$("#hostIp").val()},"/admin/host/list?currentPage=1&pageSize=5");
+		add('/admin/host/add.do',{hostName:$("#hostName").val(),hostIp:$("#hostIp").val()},"/admin/host/list?currentPage=1&pageSize=5");
 	});
 	$(".edit").click(function(){
-	    edit('/admin/host/edit',{"hostId":$("#hostId").val(),"hostName":$("#hostName").val(),"hostIp":$("#hostIp").val()},"/admin/host/list?currentPage=1&pageSize=5");
+	    edit('/admin/host/edit.do',{"hostId":$("#hostId").val(),"hostName":$("#hostName").val(),"hostIp":$("#hostIp").val()},"/admin/host/list?currentPage=1&pageSize=5");
 	});
 	$(".reset").click(function(){
 		$("#hostName").val("");

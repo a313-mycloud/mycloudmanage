@@ -13,5 +13,7 @@ package org.dlut.mycloudmanage.common.constant;
  * @author luojie 2014年9月21日 下午7:39:11
  */
 public class SessionConstant {
-    public static final String USER_ACCOUNT = "user_account";
+	public static final String USER_ACCOUNT = "user_account";
+	public static final String TEACHER_ACCOUNT = "teacher_account";
+	public static final String ADMIN_ACCOUNT = "admin_account";
 }

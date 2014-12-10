@@ -32,10 +32,10 @@ $(document).ready(function(){
 	     showNextPage("/admin/host/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
 	$(".firstPage").click(function(){
-	     showFirstPage("/admin/host/list");
+	     showFirstPage("/admin/host/list",$("#page").attr("currentPage"));
 	});
 	$(".lastPage").click(function(){
-	     showLastPage("/admin/host/list",$("#page").attr("totalPage"));
+	     showLastPage("/admin/host/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
 	
 });
@@ -184,7 +184,7 @@ function edit(url,data,replace){
  * @param {} pageSize
  */
 function showPrePage(url,currentPage){
-	if(currentPage>1){
+	if(Number(currentPage)>1){
 		var current=Number(currentPage)-1;
 		window.location.replace(url+"?currentPage="+current);
 	}
@@ -199,7 +199,7 @@ function showPrePage(url,currentPage){
  * @param {} pageSize
  */
 function showNextPage(url,currentPage,totalPage){
-	if(currentPage<totalPage){
+	if(Number(currentPage)<Number(totalPage)){
 		var current=Number(currentPage)+1;
 		window.location.replace(url+"?currentPage="+current);
 	}
@@ -211,8 +211,11 @@ function showNextPage(url,currentPage,totalPage){
  * @param {} url
  * @param {} pageSize
  */
-function showFirstPage(url){
-	window.location.replace(url+"?currentPage=1");
+function showFirstPage(url,currentPage){
+	if(Number(currentPage)==1)
+		alert("已经是首页");
+	else
+		window.location.replace(url+"?currentPage=1");
 }
 /**
  * 显示最后一页的代码
@@ -220,8 +223,11 @@ function showFirstPage(url){
  * @param {} totalPage
  * @param {} pageSize
  */
-function showLastPage(url,totalPage){
-	window.location.replace(url+"?currentPage="+totalPage);
+function showLastPage(url,currentPage,totalPage){
+	if(Number(currentPage)==Number(totalPage))
+		alert("已经是末页");
+	else
+	   window.location.replace(url+"?currentPage="+totalPage);
 }
 
 

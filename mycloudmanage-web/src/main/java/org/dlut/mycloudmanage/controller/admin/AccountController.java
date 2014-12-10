@@ -84,13 +84,17 @@ public class AccountController extends BaseController {
     }
 
     @RequestMapping(value = "/admin/account/list")
-    public String accountList(HttpServletRequest request, HttpServletResponse response, ModelMap model, int role) {
+    public String accountList(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer role) {
         String errorDesc = this.setDefaultEnv(request, response, model);
         if (errorDesc != null) {
             log.warn(errorDesc);
             return this.goErrorPage(errorDesc);
         }
         UserDTO userDTO = (UserDTO) model.get("loginUser");
+
+        if (role == null) {
+            role = 1;
+        }
 
         QueryUserCondition queryUserCondition = new QueryUserCondition();
         RoleEnum roleEnum = RoleEnum.getRoleByStatus(role);

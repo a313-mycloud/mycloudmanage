@@ -16,9 +16,11 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * 拦截未登陆用户
+ * 拦截器类，检验是否登陆和是否有权限 对于客户端请求，错误时调到errorPage 对于ajax请求，返回json
  * 
- * @author luojie 2014年9月21日 下午10:31:19
+ * 类LoginInterceptor.java的实现描述：TODO 类实现描述
+ * 
+ * @author xuyizhen Dec 10, 2014 7:32:22 PM
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 

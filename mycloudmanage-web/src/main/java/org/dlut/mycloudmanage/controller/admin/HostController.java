@@ -71,11 +71,11 @@ public class HostController extends BaseController {
 		queryHostCondition.setOffset((currentPage - 1) * PAGESIZE);
 		Pagination<HostDTO> pageHostDTO = this.hostBiz
 				.query(queryHostCondition);
-		if (pageHostDTO.getTotalPage() < currentPage)
+		if (pageHostDTO.getTotalPage() >= 1
+				&& (currentPage < 1 || currentPage > pageHostDTO.getTotalPage()))
 			return this.goErrorPage("该页面不存在");
 		List<HostDTO> hostList = pageHostDTO.getList();
 		model.put("hostList", hostList);
-
 		model.put("currentPage", currentPage);
 		model.put("totalPage", pageHostDTO.getTotalPage());
 

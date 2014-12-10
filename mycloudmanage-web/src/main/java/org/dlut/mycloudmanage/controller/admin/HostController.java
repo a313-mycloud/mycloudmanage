@@ -40,7 +40,7 @@ import com.alibaba.fastjson.JSONObject;
 public class HostController extends BaseController {
 
 	private static Logger log = LoggerFactory.getLogger(HostController.class);
-
+	private static final int PAGESIZE = 5;
 	@Resource(name = "hostBiz")
 	private HostBiz hostBiz;
 
@@ -57,17 +57,18 @@ public class HostController extends BaseController {
 
 	@RequestMapping(value = UrlConstant.ADMIN_HOST_LIST)
 	public String adminHostList(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model, int currentPage,
-			int pageSize) {
+			HttpServletResponse response, ModelMap model, Integer currentPage) {
 
 		String errorDesc = this.setDefaultEnv(request, response, model);
 		if (errorDesc != null) {
 			return this.goErrorPage(errorDesc);
 		}
+		if (currentPage == null)
+			currentPage = 1;
 
 		QueryHostCondition queryHostCondition = new QueryHostCondition();
-		queryHostCondition.setLimit(pageSize);
-		queryHostCondition.setOffset((currentPage - 1) * pageSize);
+		queryHostCondition.setLimit(PAGESIZE);
+		queryHostCondition.setOffset((currentPage - 1) * PAGESIZE);
 		Pagination<HostDTO> pageHostDTO = this.hostBiz
 				.query(queryHostCondition);
 		if (pageHostDTO.getTotalPage() < currentPage)
@@ -113,7 +114,7 @@ public class HostController extends BaseController {
 	}
 
 	/**
-	 * 管理员-物理机-删除全部 处理异步请求，返回JSON
+	 * 管理员-物理机-删除全部 处理异步请求，返回JSON 没有实现
 	 * 
 	 * @return
 	 */
@@ -123,7 +124,6 @@ public class HostController extends BaseController {
 		JSONObject json = new JSONObject();
 		json.put("isLogin", true);
 		json.put("isAuth", true);
-
 		json.put("isSuccess", true);
 		json.put("message", "删除成功");
 		json.put("data", "");
@@ -245,11 +245,11 @@ public class HostController extends BaseController {
 			json.put("message", "要编辑的物理机不存在");
 			return json.toString();
 		}
-		// 检查Ip是否存在
+		// 检查Ip是否为其他机器的IP
 		QueryHostCondition queryHostCondition2 = new QueryHostCondition();
 		queryHostCondition2.setHostIp(hostIp);
-		queryHostCondition2.setHostName(hostName);
 		Pagination<HostDTO> page2 = this.hostBiz.query(queryHostCondition2);
+
 		if (page2.getTotalCount() > 0
 				&& !page1.getList().get(0).getHostIp().equals(hostIp)) {
 			json.put("isSuccess", false);

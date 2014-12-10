@@ -5,17 +5,17 @@
 
 $(document).ready(function(){	
 	$(".remove").click(function() {
-		remove("/admin/host/remove.do",{hostId:$(this).attr('hostId')},"/admin/host/list?currentPage=1&pageSize=5");
+		remove("/admin/host/remove.do",{hostId:$(this).attr('hostId')},"/admin/host/list?currentPage=1");
 	});
 	$(".removeAll").click(function(){
-		removeAll("/admin/host/removeAll.do","/admin/host/list?currentPage=1&pageSize=5");
+		removeAll("/admin/host/removeAll.do","/admin/host/list?currentPage=1");
 	
 	});
 	$(".add").click(function(){
-		add('/admin/host/add.do',{hostName:$("#hostName").val(),hostIp:$("#hostIp").val()},"/admin/host/list?currentPage=1&pageSize=5");
+		add('/admin/host/add.do',{hostName:$("#hostName").val(),hostIp:$("#hostIp").val()},"/admin/host/list?currentPage=1");
 	});
 	$(".edit").click(function(){
-	    edit('/admin/host/edit.do',{"hostId":$("#hostId").val(),"hostName":$("#hostName").val(),"hostIp":$("#hostIp").val()},"/admin/host/list?currentPage=1&pageSize=5");
+	    edit('/admin/host/edit.do',{"hostId":$("#hostId").val(),"hostName":$("#hostName").val(),"hostIp":$("#hostIp").val()},"/admin/host/list?currentPage=1");
 	});
 	$(".reset").click(function(){
 		$("#hostName").val("");
@@ -26,16 +26,16 @@ $(document).ready(function(){
 		$("#hostIp").val($("#preIp").val());
 	});	
 	$(".prePage").click(function(){
-	     showPrePage("/admin/host/list",$("#page").attr("currentPage"),5);
+	     showPrePage("/admin/host/list",$("#page").attr("currentPage"));
 	});
 	$(".nextPage").click(function(){
-	     showNextPage("/admin/host/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"),5);
+	     showNextPage("/admin/host/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
 	$(".firstPage").click(function(){
-	     showFirstPage("/admin/host/list",5);
+	     showFirstPage("/admin/host/list");
 	});
 	$(".lastPage").click(function(){
-	     showLastPage("/admin/host/list",$("#page").attr("totalPage"),5);
+	     showLastPage("/admin/host/list",$("#page").attr("totalPage"));
 	});
 	
 });
@@ -183,10 +183,10 @@ function edit(url,data,replace){
  * @param {} currentPage
  * @param {} pageSize
  */
-function showPrePage(url,currentPage,pageSize){
+function showPrePage(url,currentPage){
 	if(currentPage>1){
 		var current=Number(currentPage)-1;
-		window.location.replace(url+"?currentPage="+current+"&pageSize="+pageSize);
+		window.location.replace(url+"?currentPage="+current);
 	}
 	else
 	    alert("没有上一页");
@@ -198,10 +198,10 @@ function showPrePage(url,currentPage,pageSize){
  * @param {} totalPage
  * @param {} pageSize
  */
-function showNextPage(url,currentPage,totalPage,pageSize){
+function showNextPage(url,currentPage,totalPage){
 	if(currentPage<totalPage){
 		var current=Number(currentPage)+1;
-		window.location.replace(url+"?currentPage="+current+"&pageSize="+pageSize);
+		window.location.replace(url+"?currentPage="+current);
 	}
 	else
 	    alert("没有下一页");
@@ -211,8 +211,8 @@ function showNextPage(url,currentPage,totalPage,pageSize){
  * @param {} url
  * @param {} pageSize
  */
-function showFirstPage(url,pageSize){
-	window.location.replace(url+"?currentPage=1&pageSize="+pageSize);
+function showFirstPage(url){
+	window.location.replace(url+"?currentPage=1");
 }
 /**
  * 显示最后一页的代码
@@ -220,8 +220,8 @@ function showFirstPage(url,pageSize){
  * @param {} totalPage
  * @param {} pageSize
  */
-function showLastPage(url,totalPage,pageSize){
-	window.location.replace(url+"?currentPage="+totalPage+"&pageSize="+pageSize);
+function showLastPage(url,totalPage){
+	window.location.replace(url+"?currentPage="+totalPage);
 }
 
 

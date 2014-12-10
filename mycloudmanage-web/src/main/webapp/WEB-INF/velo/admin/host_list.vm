@@ -41,7 +41,7 @@
 								<tr>
 									<td>$!host.hostName</td>
 									<td>$!host.hostIp</td>
-									<td>$!host.hostStatus</td>
+									<td>$!host.hostStatusEnum.desc</td>
 									<td>
 										 <a class="button"  href="/admin/host/edit/form?hostId=$!host.hostId">编辑</a>
 										 <a class="button remove" hostId="$!host.hostId">删除</a> 

@@ -7,7 +7,7 @@
 					
 					
 									
-						<table id="table" totalPages="$!totalPages">
+						<table id="table" >
 							<thead>
 								<tr>
 								  <th>物理机名称</th>

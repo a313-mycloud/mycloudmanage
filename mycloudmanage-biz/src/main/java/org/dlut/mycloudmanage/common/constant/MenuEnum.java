@@ -18,7 +18,8 @@ public enum MenuEnum {
 	STUDENT_MENU_VM("虚拟机", UrlConstant.STUDENT_VM_LIST, RoleEnum.STUDENT), STUDENT_MENU_DISK(
 			"硬盘", "", RoleEnum.STUDENT), ADMIN_HOST_LIST("物理机管理",
 			UrlConstant.ADMIN_HOST_LIST, RoleEnum.ADMIN), ADMIN_MENU_ACCOUNT(
-			"账号管理", UrlConstant.ADMIN_ACCOUNT_STUDENT_LIST, RoleEnum.ADMIN);
+			"账号管理", UrlConstant.ADMIN_ACCOUNT_STUDENT_LIST, RoleEnum.ADMIN), ADMIN_CLASS_LIST(
+			"课程管理", UrlConstant.ADMIN_CLASS_LIST, RoleEnum.ADMIN);
 
 	private String name;
 	private String route;

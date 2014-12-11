@@ -60,9 +60,20 @@ public class UrlConstant {
 	public static final String ADMIN_HOST_LIST = "/admin/host/list";
 	public static final String ADMIN_HOST_REMOVE = "/admin/host/remove.do";
 	public static final String ADMIN_HOST_REMOVEALL = "/admin/host/removeAll.do";
-	public static final String ADMIN_ADD_FORM = "/admin/host/add/form";
+	public static final String ADMIN_HOST_ADD_FORM = "/admin/host/add/form";
 	public static final String ADMIN_HOST_ADD = "/admin/host/add.do";
-	public static final String ADMIN_EDIT_FORM = "/admin/host/edit/form";
+	public static final String ADMIN_HOST_EDIT_FORM = "/admin/host/edit/form";
 	public static final String ADMIN_HOST_EDIT = "/admin/host/edit.do";
+
+	/**
+	 * 管理员-课程-操作
+	 */
+	public static final String ADMIN_CLASS_LIST = "/admin/class/list";
+	public static final String ADMIN_CLASS_REMOVE = "/admin/class/remove.do";
+	public static final String ADMIN_CLASS_REMOVEALL = "/admin/class/removeAll.do";
+	public static final String ADMIN_CLASS_ADD_FORM = "/admin/class/add/form";
+	public static final String ADMIN_CLASS_ADD = "/admin/class/add.do";
+	public static final String ADMIN_CLASS_EDIT_FORM = "/admin/class/edit/form";
+	public static final String ADMIN_CLASS_EDIT = "/admin/class/edit.do";
 
 }

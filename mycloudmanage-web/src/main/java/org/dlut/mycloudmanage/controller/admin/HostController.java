@@ -138,7 +138,7 @@ public class HostController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = UrlConstant.ADMIN_ADD_FORM)
+	@RequestMapping(value = UrlConstant.ADMIN_HOST_ADD_FORM)
 	public String addHostForm(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_HOST_LIST, model);
@@ -201,7 +201,7 @@ public class HostController extends BaseController {
 	 * @param hostId
 	 * @return
 	 */
-	@RequestMapping(value = UrlConstant.ADMIN_EDIT_FORM)
+	@RequestMapping(value = UrlConstant.ADMIN_HOST_EDIT_FORM)
 	public String editForm(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, int hostId) {
 		// 查询要修改的内容，以显示在编辑表单中

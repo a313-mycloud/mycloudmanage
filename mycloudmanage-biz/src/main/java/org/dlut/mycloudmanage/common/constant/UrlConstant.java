@@ -31,14 +31,9 @@ public class UrlConstant {
 	public static final String DEFAULT_URL = "index";
 
 	/**
-	 * 学生角色虚拟机列表页面
-	 */
-	public static final String STUDENT_VM_LIST = "/student/vm/list";
-
-	/**
 	 * 学生角色登陆后的默认页
 	 */
-	public static final String STUDENT_DEFAULT_URL = STUDENT_VM_LIST;
+	public static final String STUDENT_DEFAULT_URL = "/student/vm/list";
 
 	/**
 	 * 教师角色登陆后的默认页
@@ -75,5 +70,11 @@ public class UrlConstant {
 	public static final String ADMIN_CLASS_ADD = "/admin/class/add.do";
 	public static final String ADMIN_CLASS_EDIT_FORM = "/admin/class/edit/form";
 	public static final String ADMIN_CLASS_EDIT = "/admin/class/edit.do";
+
+	/**
+	 * 学生-虚拟机-操作
+	 */
+	public static final String STUDENT_VM_LIST = "/student/vm/list";
+	public static final String STUDENT_VM_EDIT_FORM = "/student/vm/edit/form";
 
 }

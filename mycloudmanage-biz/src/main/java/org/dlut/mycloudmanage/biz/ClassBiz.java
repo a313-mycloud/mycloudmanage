@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ClassBiz {
-	private static Logger log = LoggerFactory.getLogger(UserBiz.class);
+	private static Logger log = LoggerFactory.getLogger(ClassBiz.class);
 
 	@Resource(name = "classManageService")
 	private IClassManageService classManageService;
@@ -59,7 +59,7 @@ public class ClassBiz {
 		if (!result.isSuccess()) {
 			log.warn("调用classManageService.createClass()出错，"
 					+ result.getMsgCode() + ":" + result.getMsgInfo());
-			return -1;
+			return 0;
 		}
 		return result.getModel();
 	}
@@ -113,7 +113,7 @@ public class ClassBiz {
 		if (!result.isSuccess()) {
 			log.warn("调用classManageService.countQuery()出错，"
 					+ result.getMsgCode() + ":" + result.getMsgInfo());
-			return -1;
+			return 0;
 		}
 		return result.getModel();
 	}

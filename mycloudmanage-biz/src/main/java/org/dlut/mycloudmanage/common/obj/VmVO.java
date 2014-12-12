@@ -23,6 +23,33 @@ public class VmVO {
 	private String showPort;
 	private ShowTypeEnum showType;
 	private String vmUuid;
+	private Integer vmVcpu;
+	private String vmMemory;
+	private String vmDesc;
+
+	public String getVmDesc() {
+		return vmDesc;
+	}
+
+	public void setVmDesc(String vmDesc) {
+		this.vmDesc = vmDesc;
+	}
+
+	public Integer getVmVcpu() {
+		return vmVcpu;
+	}
+
+	public void setVmVcpu(Integer vmVcpu) {
+		this.vmVcpu = vmVcpu;
+	}
+
+	public String getVmMemory() {
+		return vmMemory;
+	}
+
+	public void setVmMemory(String vmMemory) {
+		this.vmMemory = vmMemory;
+	}
 
 	public String getVmUuid() {
 		return vmUuid;

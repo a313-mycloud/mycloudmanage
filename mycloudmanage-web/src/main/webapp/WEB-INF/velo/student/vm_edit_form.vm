@@ -8,7 +8,10 @@
 						   <tr>
 						   <td><input type="hidden"  id="vmUuid" value="$!vm.vmUuid"/>
 						   <input type="hidden"  id="preName" value="$!vm.vmName"/>
-						   <input type="hidden"  id="preShowType" value="$!vm.showType.status"/></td>
+						   <input type="hidden"  id="preShowType" value="$!vm.showType.value"/>
+						   <input type="hidden"  id="preVmDesc" value="$!vm.desc"/>
+						   <input type="hidden"  id="preShowPassword" value="$!vm.showPassword"/>
+						   </td>
 						   <td></td>
 						   </tr>
 						   
@@ -18,14 +21,25 @@
 						   <td><input type="text"  id="vmName" value="$!vm.vmName"/></td>
 						   </tr>
 						   
+						    <tr>
+						   <td><label for="vmDesc">虚拟机描述</label></td>
+						   <td><input type="text"  id="vmDesc" value="$!vm.desc"/></td>
+						   </tr>
+						   
+						   <tr>
+						   <td><label for="vmPassword">远程访问密码</label></td>
+						   <td><input type="text"  id="vmPassword" value="$!vm.showPassword"/></td>
+						   </tr>
+						   
+						   
 						   
 						   				  
 						   <tr>
 						   <td><label for="showType">访问方式</label></td>
 						   <td>
 						       <select id="showType" > 
-						         <option value=1>SPICE</option>
-						         <option value=2>VNC</option>
+						         <option value="1">SPICE</option>
+						         <option value="2">VNC</option>
 						       </select>
 						   </td>
 						   </tr>

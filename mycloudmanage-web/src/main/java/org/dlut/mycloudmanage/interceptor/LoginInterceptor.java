@@ -1,13 +1,15 @@
 package org.dlut.mycloudmanage.interceptor;
 
+import java.net.URLEncoder;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.dlut.mycloudmanage.common.UrlUtil;
 import org.dlut.mycloudmanage.common.constant.SessionConstant;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
+import org.dlut.mycloudmanage.common.utils.UrlUtil;
 import org.dlut.mycloudserver.client.service.usermanage.IUserManageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +46,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			if (StringUtils.isBlank(userAccount)) {
 				json.put("isLogin", false);
 				response.getWriter().write(json.toString());
+				log.warn("用户为空，拦截登陆");
 				return false;
 			}
 			if (userManageService.getUserByAccount(userAccount).getModel()
@@ -51,18 +54,21 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				json.put("isLogin", true);
 				json.put("isAuth", false);
 				response.getWriter().write(json.toString());
+				log.warn("没有权限，拦截登陆");
 				return false;
 			}
 		} else {// 客户端跳转
 			if (StringUtils.isBlank(userAccount)) {
 				response.sendRedirect(UrlConstant.LOGIN_URL + "?redirect="
 						+ UrlUtil.getCurUrl(request));
+				log.warn("用户为空，拦截登陆");
 				return false;
 			}
 			if (userManageService.getUserByAccount(userAccount).getModel()
 					.getRole().getStatus() != getApplyAuth(uri)) {
-				response.sendRedirect(UrlConstant.ERROR_URL
-						+ "?errorDesc=您没有权限");
+				response.sendRedirect(UrlConstant.ERROR_URL + "?errorDesc="
+						+ URLEncoder.encode("您没有权限", "utf-8"));
+				log.warn("没有权限，拦截登陆");
 				return false;
 			}
 		}

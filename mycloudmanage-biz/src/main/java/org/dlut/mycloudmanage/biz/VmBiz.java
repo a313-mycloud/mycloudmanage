@@ -165,4 +165,21 @@ public class VmBiz {
 		}
 		return result.getModel();
 	}
+
+	/**
+	 * 更新虚拟机
+	 * 
+	 * @param vmDTO
+	 * @return
+	 */
+	public boolean updateVm(VmDTO vmDTO) {
+		MyCloudResult<Boolean> result = this.vmManageService.updateVm(vmDTO);
+		if (!result.isSuccess()) {
+			log.warn("调用vmManageService.updateVm()出错，" + result.getMsgCode()
+					+ ":" + result.getMsgInfo());
+			return false;
+		}
+		return result.getModel();
+	}
+
 }

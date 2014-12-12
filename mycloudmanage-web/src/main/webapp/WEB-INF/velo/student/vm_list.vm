@@ -11,10 +11,12 @@
 							<thead>
 								<tr>
 								   <th>虚拟机名称</th>
+								   <th>虚拟机配置</th>
 								   <th>所属课程</th>
 								   <th>状态</th>
 								   <th>访问地址</th>
-								   <th>访问方式</th>								   
+								   <th>访问方式</th>
+								   <th>虚拟机描述</th>								   
 								   <th>操作</th>
 								</tr>
 							</thead>
@@ -22,8 +24,10 @@
 							<tfoot>
 								<tr>
 									<td colspan="6">
-										  
-									    <div class="align-right">
+										   
+									 
+									    
+									     <div class="align-right">
 									        <a class="button" >总共$!totalPage页</a>
 									        <a class="button firstPage">首页</a>
 									        <a class="button prePage" >上页</a>
@@ -40,14 +44,19 @@
 								<tr>
 								    
 									<td>$!vm.vmName</td>
+									<td>$!vm.vmVcpu核，$!vm.vmMemory</td>
 									<td>$!vm.vmClass</td>
 									<td>$!vm.vmStatus.desc</td>
 									<td>$!vm.hostIp:$!vm.showPort</td>
 									<td>$!vm.showType.desc</th>
+									<td>$!vm.vmDesc</th>
 									<td>
 										 <a class="button"  href="/student/vm/edit/form?vmUuid=$!vm.vmUuid">编辑</a>
-										 <a class="button start" vmUuid="$!vm.vmUuid">开启</a>
-										 <a class="button shutdown" vmUuid="$!vm.vmUuid">关闭</a>
+										 #if($!vm.vmStatus.status==0)
+										 	<a class="button start" vmUuid="$!vm.vmUuid">开启</a>
+										 #else
+										 	<a class="button shutdown" vmUuid="$!vm.vmUuid">关闭</a>
+										 #end
 									</td>
 								</tr>
 								#end

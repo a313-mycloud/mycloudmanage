@@ -13,6 +13,8 @@ import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.obj.VmVO;
+import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
+import org.dlut.mycloudmanage.common.utils.MemUtil;
 import org.dlut.mycloudmanage.controller.BaseController;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
@@ -82,7 +84,7 @@ public class VMController extends BaseController {
 		for (VmDTO vmDTO : vmDTOList) {
 			VmVO vmVO = new VmVO();
 			if (vmDTO.getClassId() == null)
-				vmVO.setVmClass("-");
+				vmVO.setVmClass("--");
 			else
 				vmVO.setVmClass(this.classBiz.getClassById(vmDTO.getClassId())
 						.getClassName());
@@ -95,9 +97,15 @@ public class VMController extends BaseController {
 				vmVO.setShowPort(vmDTO.getShowPort() + "");
 			}
 			vmVO.setVmStatus(vmDTO.getVmStatus());
-			vmVO.setVmName("默认");
+			vmVO.setVmName(vmDTO.getVmName());
 			vmVO.setVmUuid(vmDTO.getVmUuid());
 			vmVO.setShowType(vmDTO.getShowType());
+			vmVO.setVmVcpu(vmDTO.getVmVcpu());
+			vmVO.setVmMemory(MemUtil.getMem(vmDTO.getVmMemory(), MemUnitEnum.GB));
+			if (vmDTO.getDesc() == null)
+				vmVO.setVmDesc("--");
+			else
+				vmVO.setVmDesc(vmDTO.getDesc());
 			vmList.add(vmVO);
 		}
 		model.put("vmList", vmList);
@@ -149,7 +157,7 @@ public class VMController extends BaseController {
 	@ResponseBody
 	public String vmEdit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String vmUuid,
-			String vmName, int showType) {
+			String vmName, String showType, String vmDesc, String showPassword) {
 		JSONObject json = new JSONObject();
 		json.put("isLogin", true);
 		json.put("isAuth", true);
@@ -163,17 +171,20 @@ public class VMController extends BaseController {
 			return json.toString();
 		}
 
-		VmDTO vm = new VmDTO();
-		vm.setVmUuid(vmUuid);
-		// vm.setVmName();
-		if (showType == 1)
-			vm.setShowType(ShowTypeEnum.SPICE);
+		VmDTO vmDTO = new VmDTO();
+		vmDTO.setVmUuid(vmUuid);
+		vmDTO.setVmName(vmName);
+		vmDTO.setDesc(vmDesc);
+		vmDTO.setShowPassword(showPassword);
+		if (Integer.parseInt(showType) == 1)
+			vmDTO.setShowType(ShowTypeEnum.SPICE);
 		else
-			vm.setShowType(ShowTypeEnum.VNC);
-		/*
-		 * if (this.vmBiz.) { json.put("isSuccess", true); json.put("message",
-		 * "更新成功"); return json.toString(); }
-		 */
+			vmDTO.setShowType(ShowTypeEnum.VNC);
+		if (this.vmBiz.updateVm(vmDTO)) {
+			json.put("isSuccess", true);
+			json.put("message", "更新成功");
+			return json.toString();
+		}
 		json.put("isSuccess", false);
 		json.put("message", "更新失败");
 		return json.toString();

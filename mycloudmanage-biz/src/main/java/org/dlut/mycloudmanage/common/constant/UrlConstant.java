@@ -76,5 +76,8 @@ public class UrlConstant {
 	 */
 	public static final String STUDENT_VM_LIST = "/student/vm/list";
 	public static final String STUDENT_VM_EDIT_FORM = "/student/vm/edit/form";
+	public static final String STUDENT_VM_EDIT = "/student/vm/edit.do";
+	public static final String STUDENT_VM_START = "/student/vm/start.do";
+	public static final String STUDENT_VM_SHUTDOWN = "/student/vm/shutdown.do";
 
 }

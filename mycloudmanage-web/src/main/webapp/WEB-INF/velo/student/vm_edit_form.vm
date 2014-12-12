@@ -8,24 +8,26 @@
 						   <tr>
 						   <td><input type="hidden"  id="vmUuid" value="$!vm.vmUuid"/>
 						   <input type="hidden"  id="preName" value="$!vm.vmName"/>
-						   <input type="hidden"  id="preShowType" value="$!vm.showType"/></td>
+						   <input type="hidden"  id="preShowType" value="$!vm.showType.status"/></td>
 						   <td></td>
 						   </tr>
 						   
-						   <tr>
-								   <th>虚拟机名称</th>
-								   <th>访问方式</th>								   
-								   
-						  </tr>
 								
 						   <tr>
 						   <td><label for="vmName">虚拟机名称</label></td>
 						   <td><input type="text"  id="vmName" value="$!vm.vmName"/></td>
 						   </tr>
+						   
+						   
 						   				  
 						   <tr>
 						   <td><label for="showType">访问方式</label></td>
-						   <td><input type="text"  id="showType" value="$!vm.showType"/></td>
+						   <td>
+						       <select id="showType" > 
+						         <option value=1>SPICE</option>
+						         <option value=2>VNC</option>
+						       </select>
+						   </td>
 						   </tr>
 						   					  
 						   <tr>

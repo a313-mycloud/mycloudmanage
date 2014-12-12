@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class VmBiz {
-	private static Logger log = LoggerFactory.getLogger(UserBiz.class);
+	private static Logger log = LoggerFactory.getLogger(VmBiz.class);
 
 	@Resource(name = "vmManageService")
 	private IVmManageService vmManageService;

@@ -7,6 +7,9 @@
  */
 package org.dlut.mycloudmanage.common.obj;
 
+import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
+import org.dlut.mycloudserver.client.common.vmmanage.VmStatusEnum;
+
 /**
  * 类VmVO.java的实现描述：TODO 类实现描述
  * 
@@ -15,19 +18,11 @@ package org.dlut.mycloudmanage.common.obj;
 public class VmVO {
 	private String vmName;
 	private String vmClass;
-	private String vmStatus;
+	private VmStatusEnum vmStatus;
 	private String hostIp;
 	private String showPort;
-	private String showType;
+	private ShowTypeEnum showType;
 	private String vmUuid;
-
-	public String getShowType() {
-		return showType;
-	}
-
-	public void setShowType(String showType) {
-		this.showType = showType;
-	}
 
 	public String getVmUuid() {
 		return vmUuid;
@@ -53,11 +48,11 @@ public class VmVO {
 		this.vmClass = vmClass;
 	}
 
-	public String getVmStatus() {
+	public VmStatusEnum getVmStatus() {
 		return vmStatus;
 	}
 
-	public void setVmStatus(String vmStatus) {
+	public void setVmStatus(VmStatusEnum vmStatus) {
 		this.vmStatus = vmStatus;
 	}
 
@@ -75,6 +70,14 @@ public class VmVO {
 
 	public void setShowPort(String showPort) {
 		this.showPort = showPort;
+	}
+
+	public ShowTypeEnum getShowType() {
+		return showType;
+	}
+
+	public void setShowType(ShowTypeEnum showType) {
+		this.showType = showType;
 	}
 
 }

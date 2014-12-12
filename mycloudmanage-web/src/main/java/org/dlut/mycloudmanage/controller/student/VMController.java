@@ -1,10 +1,3 @@
-/*
- * Copyright 2014 etao.com All right reserved. This software is the
- * confidential and proprietary information of etao.com ("Confidential
- * Information"). You shall not disclose such Confidential Information and shall
- * use it only in accordance with the terms of the license agreement you entered
- * into with etao.com .
- */
 package org.dlut.mycloudmanage.controller.student;
 
 import java.util.ArrayList;
@@ -25,10 +18,14 @@ import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
+import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 
@@ -50,6 +47,15 @@ public class VMController extends BaseController {
 
 	private static final int PAGESIZE = 5;
 
+	/**
+	 * 学生-虚拟机-显示列表
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param currentPage
+	 * @return
+	 */
 	@RequestMapping(value = UrlConstant.STUDENT_VM_LIST)
 	public String vmList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, Integer currentPage) {
@@ -88,10 +94,10 @@ public class VMController extends BaseController {
 						.getHostIp());
 				vmVO.setShowPort(vmDTO.getShowPort() + "");
 			}
-			vmVO.setVmStatus(vmDTO.getVmStatus().getDesc());
+			vmVO.setVmStatus(vmDTO.getVmStatus());
 			vmVO.setVmName("默认");
 			vmVO.setVmUuid(vmDTO.getVmUuid());
-			vmVO.setShowType(vmDTO.getShowType().getDesc());
+			vmVO.setShowType(vmDTO.getShowType());
 			vmList.add(vmVO);
 		}
 		model.put("vmList", vmList);
@@ -104,6 +110,15 @@ public class VMController extends BaseController {
 		return "default";
 	}
 
+	/**
+	 * 学生-虚拟机-编辑表单
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param vmUuid
+	 * @return
+	 */
 	@RequestMapping(value = UrlConstant.STUDENT_VM_EDIT_FORM)
 	public String editForm(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String vmUuid) {
@@ -117,6 +132,123 @@ public class VMController extends BaseController {
 		model.put("js", "student/vm_list");
 		return "default";
 
+	}
+
+	/**
+	 * 学生-虚拟机-编辑
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param vmUuid
+	 * @param vmName
+	 * @param showType
+	 * @return
+	 */
+	@RequestMapping(value = UrlConstant.STUDENT_VM_EDIT, produces = { "application/json;charset=UTF-8" })
+	@ResponseBody
+	public String vmEdit(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model, String vmUuid,
+			String vmName, int showType) {
+		JSONObject json = new JSONObject();
+		json.put("isLogin", true);
+		json.put("isAuth", true);
+		// 检查vmUuid是否存在
+		QueryVmCondition queryVmCondition = new QueryVmCondition();
+		queryVmCondition.setVmUuid(vmUuid);
+		Pagination<VmDTO> page = this.vmBiz.query(queryVmCondition);
+		if (page.getTotalCount() <= 0) {
+			json.put("isSuccess", false);
+			json.put("message", "要编辑的虚拟机不存在");
+			return json.toString();
+		}
+
+		VmDTO vm = new VmDTO();
+		vm.setVmUuid(vmUuid);
+		// vm.setVmName();
+		if (showType == 1)
+			vm.setShowType(ShowTypeEnum.SPICE);
+		else
+			vm.setShowType(ShowTypeEnum.VNC);
+		/*
+		 * if (this.vmBiz.) { json.put("isSuccess", true); json.put("message",
+		 * "更新成功"); return json.toString(); }
+		 */
+		json.put("isSuccess", false);
+		json.put("message", "更新失败");
+		return json.toString();
+	}
+
+	/**
+	 * 学生-虚拟机-开启
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param vmUuid
+	 * @return
+	 */
+	@RequestMapping(value = UrlConstant.STUDENT_VM_START, produces = { "application/json;charset=UTF-8" })
+	@ResponseBody
+	public String vmStart(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model, String vmUuid) {
+		JSONObject json = new JSONObject();
+		json.put("isLogin", true);
+		json.put("isAuth", true);
+		// 检查vmUuid是否存在
+		QueryVmCondition queryVmCondition = new QueryVmCondition();
+		queryVmCondition.setVmUuid(vmUuid);
+		Pagination<VmDTO> page = this.vmBiz.query(queryVmCondition);
+		if (page.getTotalCount() <= 0) {
+			json.put("isSuccess", false);
+			json.put("message", "要启动的虚拟机不存在");
+			return json.toString();
+		}
+
+		if (this.vmBiz.startVm(vmUuid)) {
+			json.put("isSuccess", true);
+			json.put("message", "虚拟机启动成功");
+			return json.toString();
+		}
+		json.put("isSuccess", false);
+		json.put("message", "虚拟机启动失败");
+		return json.toString();
+	}
+
+	/**
+	 * 学生-虚拟机-关闭 返回json
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param vmUuid
+	 * @return
+	 */
+	@RequestMapping(value = UrlConstant.STUDENT_VM_SHUTDOWN, produces = { "application/json;charset=UTF-8" })
+	@ResponseBody
+	public String vmShutDown(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model, String vmUuid) {
+		JSONObject json = new JSONObject();
+		json.put("isLogin", true);
+		json.put("isAuth", true);
+		// 检查vmUuid是否存在
+		QueryVmCondition queryVmCondition = new QueryVmCondition();
+		queryVmCondition.setVmUuid(vmUuid);
+		Pagination<VmDTO> page = this.vmBiz.query(queryVmCondition);
+		if (page.getTotalCount() <= 0) {
+			json.put("isSuccess", false);
+			json.put("message", "要关闭的虚拟机不存在");
+			return json.toString();
+		}
+
+		if (this.vmBiz.forceShutDownVm(vmUuid)) {
+			json.put("isSuccess", true);
+			json.put("message", "虚拟机关闭成功");
+			return json.toString();
+		}
+		json.put("isSuccess", false);
+		json.put("message", "虚拟机关闭失败");
+		return json.toString();
 	}
 
 }

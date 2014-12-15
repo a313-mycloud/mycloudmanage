@@ -21,13 +21,11 @@
 								</tr>
 							</thead>
 					
-							<tfoot>
+								<tfoot>
 								<tr>
-									<td colspan="6">
-										   
-									 
-									    
-									     <div class="align-right">
+									<td colspan="8">
+										
+									    <div class="align-right">
 									        <a class="button" >总共$!totalPage页</a>
 									        <a class="button firstPage">首页</a>
 									        <a class="button prePage" >上页</a>

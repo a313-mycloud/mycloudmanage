@@ -158,6 +158,7 @@ public class VMController extends BaseController {
 	public String vmEdit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String vmUuid,
 			String vmName, String showType, String vmDesc, String showPassword) {
+
 		JSONObject json = new JSONObject();
 		json.put("isLogin", true);
 		json.put("isAuth", true);

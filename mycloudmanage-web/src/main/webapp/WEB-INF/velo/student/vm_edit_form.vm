@@ -28,12 +28,17 @@
 						   
 						   <tr>
 						   <td><label for="vmPassword">远程访问密码</label></td>
-						   <td><input type="text"  id="vmPassword" value="$!vm.showPassword"/></td>
+						   <td>
+						      <span id="box">
+						      <input type="password"  id="vmPassword" value="$!vm.showPassword">
+						    <a href="javascript:showPass()" class="button" >显示</a>  
+						      
+						      </span>
+						   </td>
 						   </tr>
 						   
 						   
-						   
-						   				  
+						   		  
 						   <tr>
 						   <td><label for="showType">访问方式</label></td>
 						   <td>

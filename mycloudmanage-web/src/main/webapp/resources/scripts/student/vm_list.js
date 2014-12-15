@@ -8,7 +8,7 @@ $(document).ready(function(){
 		$("#showType").val($("#preShowType").val());
 	});
 	$(".edit").click(function(){
-	    edit('/student/vm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"vmPassword":$("#vmPassword").val()},"/student/vm/list?currentPage=1");
+	    edit('/student/vm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val()},"/student/vm/list?currentPage=1");
 	});
 	$(".resetEdit").click(function(){
 		console.log($("#preName").val());
@@ -18,6 +18,9 @@ $(document).ready(function(){
 		$("#vmDesc").val($("#preVmDesc").val());
 		$("#vmPassword").val($("#preShowPassword").val());
 	});	
+	
+	
+	
 	$(".start").click(function(){
 		start('/student/vm/start.do',{"vmUuid":$(this).attr("vmUuid")},"/student/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});
@@ -36,6 +39,8 @@ $(document).ready(function(){
 	$(".lastPage").click(function(){
 	     showLastPage("/student/vm/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
+	
+	
 	
 });
 /**
@@ -106,3 +111,11 @@ function start(url,data,replace){
 		 } 
 	});	
 }
+function showPass(){ 			
+	$("#box").html("<input type='text' id='vmPassword'  value="+$("#vmPassword").val()+"><a href='javascript:hidePass()' class='button '>隐藏密码</a>");
+	//$("#box").html("<input type='text' id='vmPassword'  value="+$("#vmPassword").val()+"><a  class='button hidePass'>隐藏密码</a>");
+}
+function hidePass(){   
+    $("#box").html("<input type='password' id='vmPassword' value="+$("#vmPassword").val()+"><a href='javascript:showPass()' class='button '>显示密码</a>");
+	//$("#box").html("<input type='password' id='vmPassword' value="+$("#vmPassword").val()+"><a  class='button showPass '>显示密码</a>");
+} 

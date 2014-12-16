@@ -24,7 +24,10 @@
 								<tfoot>
 								<tr>
 									<td colspan="8">
-										
+										<div class="align-left">
+										    <a class="button removeAll" >全部删除</a>
+											<a class="button" href="#" >添加</a>
+										</div>
 									    <div class="align-right">
 									        <a class="button" >总共$!totalPage页</a>
 									        <a class="button firstPage">首页</a>
@@ -49,7 +52,7 @@
 									<td>$!vm.showType.desc</th>
 									<td>$!vm.vmDesc</th>
 									<td>
-										 <a class="button"  href="/student/vm/edit/form?vmUuid=$!vm.vmUuid">编辑</a>
+										 <a class="button"  href="/teacher/vm/edit/form?vmUuid=$!vm.vmUuid">编辑</a>
 										 #if($!vm.vmStatus.status==0)
 										 	<a class="button start" vmUuid="$!vm.vmUuid">开启</a>
 										 #else

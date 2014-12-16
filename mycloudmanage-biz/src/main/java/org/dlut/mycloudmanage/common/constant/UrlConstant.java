@@ -80,4 +80,13 @@ public class UrlConstant {
 	public static final String STUDENT_VM_START = "/student/vm/start.do";
 	public static final String STUDENT_VM_SHUTDOWN = "/student/vm/shutdown.do";
 
+	/**
+	 * 教师-虚拟机-操作
+	 */
+	public static final String TEACHER_VM_LIST = "/teacher/vm/list";
+	public static final String TEACHER_VM_EDIT_FORM = "/teacher/vm/edit/form";
+	public static final String TEACHER_VM_EDIT = "/teacher/vm/edit.do";
+	public static final String TEACHER_VM_START = "/teacher/vm/start.do";
+	public static final String TEACHER_VM_SHUTDOWN = "/teacher/vm/shutdown.do";
+
 }

@@ -7,7 +7,6 @@
  */
 package org.dlut.mycloudmanage.common.utils;
 
-
 /**
  * 类MemUtil.java的实现描述：TODO 类实现描述
  * 
@@ -15,6 +14,10 @@ package org.dlut.mycloudmanage.common.utils;
  */
 public class MemUtil {
 	public static String getMem(long memory, MemUnitEnum memUnitEnum) {
-		return memory / memUnitEnum.getSize() + memUnitEnum.getDesc();
+		return memory / memUnitEnum.getSize() + "";
+	}
+
+	public static long getMem(int memory, MemUnitEnum memUnitEnum) {
+		return memory * memUnitEnum.getSize();
 	}
 }

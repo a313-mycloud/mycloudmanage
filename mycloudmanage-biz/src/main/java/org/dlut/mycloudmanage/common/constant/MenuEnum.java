@@ -15,7 +15,8 @@ import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
  * @author luojie.lj 2014年9月23日 下午8:40:38
  */
 public enum MenuEnum {
-	STUDENT_MENU_VM("虚拟机", UrlConstant.STUDENT_VM_LIST, RoleEnum.STUDENT), STUDENT_MENU_DISK(
+	TEACHER_MENU_VM("虚拟机管理", UrlConstant.TEACHER_VM_LIST, RoleEnum.TEACHER), STUDENT_MENU_VM(
+			"虚拟机管理", UrlConstant.STUDENT_VM_LIST, RoleEnum.STUDENT), STUDENT_MENU_DISK(
 			"硬盘", "", RoleEnum.STUDENT), ADMIN_HOST_LIST("物理机管理",
 			UrlConstant.ADMIN_HOST_LIST, RoleEnum.ADMIN), ADMIN_MENU_ACCOUNT(
 			"账号管理", UrlConstant.ADMIN_ACCOUNT_STUDENT_LIST, RoleEnum.ADMIN), ADMIN_CLASS_LIST(

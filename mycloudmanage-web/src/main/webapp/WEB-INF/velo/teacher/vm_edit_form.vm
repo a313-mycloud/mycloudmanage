@@ -5,14 +5,17 @@
 						
 						
 						  <table>
+						   <thead>
+						    <tr>教师-虚拟机-编辑</tr>
+						   <thead>
 						   <tr>
 						   <td><input type="hidden"  id="vmUuid" value="$!vm.vmUuid"/>
 						   <input type="hidden"  id="preName" value="$!vm.vmName"/>
 						   <input type="hidden"  id="preShowType" value="$!vm.showType.value"/>
 						   <input type="hidden"  id="preVmDesc" value="$!vm.vmDesc"/>
 						   <input type="hidden"  id="preShowPassword" value="$!vm.vmPass"/>
-						   <input type="hidden"  id="vmVcpu" value="$!vm.vmVcpu"/>
-						   <input type="hidden"  id="vmMemory" value="$!vm.vmMemory"/>
+						   <input type="hidden"  id="preVmVcpu" value="$!vm.vmVcpu"/>
+						   <input type="hidden"  id="preVmMemory" value="$!vm.vmMemory"/>
 						   </td>
 						   <td></td>
 						   </tr>
@@ -29,11 +32,21 @@
 						   </tr>
 						   
 						   <tr>
+						   <td><label for="vmVcpu">虚拟机核心数</label></td>
+						   <td><input type="text"  id="vmVcpu" value="$!vm.vmVcpu"/></td>
+						   </tr>
+						   
+						    <tr>
+						   <td><label for="vmMemory">虚拟机内存(MB)</label></td>
+						   <td><input type="text"  id="vmMemory" value="$!vm.vmMemory"/></td>
+						   </tr>
+						   
+						   <tr>
 						   <td><label for="vmPassword">远程访问密码</label></td>
 						   <td>
 						      <span id="box">
 						      <input type="password"  id="vmPassword" value="$!vm.vmPass">
-						      <a href="javascript:showPass()" class="button" >显示密码</a>  
+						    <a href="javascript:showPass()" class="button" >显示密码</a>  
 						      
 						      </span>
 						   </td>

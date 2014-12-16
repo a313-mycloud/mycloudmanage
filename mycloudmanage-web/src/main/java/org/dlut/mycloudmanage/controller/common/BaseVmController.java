@@ -1,4 +1,11 @@
-package org.dlut.mycloudmanage.controller.student;
+/*
+ * Copyright 2014 etao.com All right reserved. This software is the
+ * confidential and proprietary information of etao.com ("Confidential
+ * Information"). You shall not disclose such Confidential Information and shall
+ * use it only in accordance with the terms of the license agreement you entered
+ * into with etao.com .
+ */
+package org.dlut.mycloudmanage.controller.common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,19 +17,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.dlut.mycloudmanage.biz.ClassBiz;
 import org.dlut.mycloudmanage.biz.HostBiz;
 import org.dlut.mycloudmanage.biz.VmBiz;
-import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.obj.VmVO;
 import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
 import org.dlut.mycloudmanage.common.utils.MemUtil;
+import org.dlut.mycloudmanage.common.utils.MyStringUtils;
 import org.dlut.mycloudmanage.controller.BaseController;
 import org.dlut.mycloudserver.client.common.Pagination;
-import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,13 +35,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * 
  * 类VMController.java的实现描述：TODO 类实现描述
  * 
- * @author xuyizhen Dec 12, 2014 3:14:14 AM
+ * @author xuyizhen Dec 16, 2014 6:51:22 PM
  */
-@Controller
-public class VMController extends BaseController {
+public class BaseVmController extends BaseController {
+	public static final int PAGESIZE = 5;
 
 	@Resource(name = "vmBiz")
 	private VmBiz vmBiz;
@@ -47,18 +51,6 @@ public class VMController extends BaseController {
 	@Resource(name = "hostBiz")
 	private HostBiz hostBiz;
 
-	private static final int PAGESIZE = 5;
-
-	/**
-	 * 学生-虚拟机-显示列表
-	 * 
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @param currentPage
-	 * @return
-	 */
-	@RequestMapping(value = UrlConstant.STUDENT_VM_LIST)
 	public String vmList(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, Integer currentPage) {
 
@@ -83,7 +75,7 @@ public class VMController extends BaseController {
 		List<VmVO> vmList = new ArrayList<VmVO>();
 		for (VmDTO vmDTO : vmDTOList) {
 			VmVO vmVO = new VmVO();
-			if (vmDTO.getClassId() == null)
+			if (vmDTO.getClassId() == 0)
 				vmVO.setVmClass("--");
 			else
 				vmVO.setVmClass(this.classBiz.getClassById(vmDTO.getClassId())
@@ -101,7 +93,7 @@ public class VMController extends BaseController {
 			vmVO.setVmUuid(vmDTO.getVmUuid());
 			vmVO.setShowType(vmDTO.getShowType());
 			vmVO.setVmVcpu(vmDTO.getVmVcpu());
-			vmVO.setVmMemory(MemUtil.getMem(vmDTO.getVmMemory(), MemUnitEnum.GB));
+			vmVO.setVmMemory(MemUtil.getMem(vmDTO.getVmMemory(), MemUnitEnum.MB));
 			if (vmDTO.getDesc() == null)
 				vmVO.setVmDesc("--");
 			else
@@ -111,15 +103,11 @@ public class VMController extends BaseController {
 		model.put("vmList", vmList);
 		model.put("currentPage", currentPage);
 		model.put("totalPage", pageVmDTO.getTotalPage());
-
-		this.setShowMenuList(RoleEnum.STUDENT, MenuEnum.STUDENT_MENU_VM, model);
-		model.put("screen", "student/vm_list");
-		model.put("js", "student/vm_list");
 		return "default";
+
 	}
 
 	/**
-	 * 学生-虚拟机-编辑表单
 	 * 
 	 * @param request
 	 * @param response
@@ -127,23 +115,32 @@ public class VMController extends BaseController {
 	 * @param vmUuid
 	 * @return
 	 */
-	@RequestMapping(value = UrlConstant.STUDENT_VM_EDIT_FORM)
 	public String editForm(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String vmUuid) {
+		String errorDesc = setDefaultEnv(request, response, model);
+		if (errorDesc != null) {
+			return goErrorPage(errorDesc);
+		}
+		UserDTO userDTO = (UserDTO) model.get("loginUser");
 		// 查询要修改的内容，以显示在编辑表单中
 		QueryVmCondition queryVmCondition = new QueryVmCondition();
 		queryVmCondition.setVmUuid(vmUuid);
 		VmDTO vmDTO = this.vmBiz.query(queryVmCondition).getList().get(0);
-		model.put("vm", vmDTO);
-		this.setShowMenuList(RoleEnum.STUDENT, MenuEnum.STUDENT_MENU_VM, model);
-		model.put("screen", "student/vm_edit_form");
-		model.put("js", "student/vm_list");
+		VmVO vm = new VmVO();
+		vm.setVmName(vmDTO.getVmName());
+		vm.setVmDesc(vmDTO.getDesc());
+		vm.setVmVcpu(vmDTO.getVmVcpu());
+		vm.setVmMemory(MemUtil.getMem(vmDTO.getVmMemory(), MemUnitEnum.MB));
+		vm.setShowType(vmDTO.getShowType());
+		vm.setVmPass(vmDTO.getShowPassword());
+		vm.setVmUuid(vmDTO.getVmUuid());
+		model.put("vm", vm);
+
 		return "default";
 
 	}
 
 	/**
-	 * 学生-虚拟机-编辑
 	 * 
 	 * @param request
 	 * @param response
@@ -151,13 +148,18 @@ public class VMController extends BaseController {
 	 * @param vmUuid
 	 * @param vmName
 	 * @param showType
+	 * @param vmDesc
+	 * @param showPassword
+	 * @param vmVcpu
+	 * @param vmMemory
+	 *            MB
 	 * @return
 	 */
-	@RequestMapping(value = UrlConstant.STUDENT_VM_EDIT, produces = { "application/json;charset=UTF-8" })
-	@ResponseBody
+
 	public String vmEdit(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String vmUuid,
-			String vmName, String showType, String vmDesc, String showPassword) {
+			String vmName, String showType, String vmDesc, String showPassword,
+			String vmVcpu, String vmMemory) {
 
 		JSONObject json = new JSONObject();
 		json.put("isLogin", true);
@@ -171,12 +173,24 @@ public class VMController extends BaseController {
 			json.put("message", "要编辑的虚拟机不存在");
 			return json.toString();
 		}
-
+		if (!MyStringUtils.isInteger(vmVcpu)) {
+			json.put("isSuccess", false);
+			json.put("message", "核心数格式不正确");
+			return json.toString();
+		}
+		if (!MyStringUtils.isInteger(vmMemory)) {
+			json.put("isSuccess", false);
+			json.put("message", "内存格式不正确");
+			return json.toString();
+		}
 		VmDTO vmDTO = new VmDTO();
 		vmDTO.setVmUuid(vmUuid);
 		vmDTO.setVmName(vmName);
 		vmDTO.setDesc(vmDesc);
 		vmDTO.setShowPassword(showPassword);
+		vmDTO.setVmVcpu(Integer.parseInt(vmVcpu));
+		vmDTO.setVmMemory(MemUtil.getMem(Integer.parseInt(vmMemory),
+				MemUnitEnum.MB));
 		if (Integer.parseInt(showType) == 1)
 			vmDTO.setShowType(ShowTypeEnum.SPICE);
 		else
@@ -191,16 +205,19 @@ public class VMController extends BaseController {
 		return json.toString();
 	}
 
-	/**
-	 * 学生-虚拟机-开启
-	 * 
+	/*
 	 * @param request
+	 * 
 	 * @param response
+	 * 
 	 * @param model
+	 * 
 	 * @param vmUuid
+	 * 
 	 * @return
 	 */
-	@RequestMapping(value = UrlConstant.STUDENT_VM_START, produces = { "application/json;charset=UTF-8" })
+	@RequestMapping(value = { UrlConstant.STUDENT_VM_START,
+			UrlConstant.TEACHER_VM_START }, produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
 	public String vmStart(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String vmUuid) {
@@ -228,16 +245,12 @@ public class VMController extends BaseController {
 	}
 
 	/**
-	 * 学生-虚拟机-关闭 返回json
-	 * 
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @param vmUuid
 	 * @return
 	 */
-	@RequestMapping(value = UrlConstant.STUDENT_VM_SHUTDOWN, produces = { "application/json;charset=UTF-8" })
-	@ResponseBody
 	public String vmShutDown(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String vmUuid) {
 		JSONObject json = new JSONObject();

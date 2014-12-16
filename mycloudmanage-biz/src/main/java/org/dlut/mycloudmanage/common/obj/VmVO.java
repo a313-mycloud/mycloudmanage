@@ -24,8 +24,17 @@ public class VmVO {
 	private ShowTypeEnum showType;
 	private String vmUuid;
 	private Integer vmVcpu;
-	private String vmMemory;
+	private String vmMemory;// 单位MB
 	private String vmDesc;
+	private String vmPass;
+
+	public String getVmPass() {
+		return vmPass;
+	}
+
+	public void setVmPass(String vmPass) {
+		this.vmPass = vmPass;
+	}
 
 	public String getVmDesc() {
 		return vmDesc;

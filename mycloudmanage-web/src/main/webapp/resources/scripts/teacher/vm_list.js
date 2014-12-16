@@ -8,7 +8,7 @@ $(document).ready(function(){
 		$("#showType").val($("#preShowType").val());
 	});
 	$(".edit").click(function(){
-	    edit('/student/vm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/student/vm/list?currentPage=1");
+	    edit('/teacher/vm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/teacher/vm/list?currentPage=1");
 	});
 	$(".resetEdit").click(function(){
 		console.log($("#preName").val());
@@ -17,27 +17,29 @@ $(document).ready(function(){
 		$("#showType").val($("#preShowType").val());
 		$("#vmDesc").val($("#preVmDesc").val());
 		$("#vmPassword").val($("#preShowPassword").val());
+		$("#vmVcpu").val($("#preVmVcpu").val());
+		$("#vmMemory").val($("#preVmMemory").val());
 	});	
 	
 	
 	
 	$(".start").click(function(){
-		start('/student/vm/start.do',{"vmUuid":$(this).attr("vmUuid")},"/student/vm/list?currentPage="+$("#page").attr("currentPage"));
+		start('/teacher/vm/start.do',{"vmUuid":$(this).attr("vmUuid")},"/teacher/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});
 	$(".shutdown").click(function(){
-		shutdown('/student/vm/shutdown.do',{"vmUuid":$(this).attr("vmUuid")},"/student/vm/list?currentPage="+$("#page").attr("currentPage"));
+		shutdown('/teacher/vm/shutdown.do',{"vmUuid":$(this).attr("vmUuid")},"/teacher/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});
 	$(".prePage").click(function(){
-	     showPrePage("/student/vm/list",$("#page").attr("currentPage"));
+	     showPrePage("/teacher/vm/list",$("#page").attr("currentPage"));
 	});
 	$(".nextPage").click(function(){
-	     showNextPage("/student/vm/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
+	     showNextPage("/teacher/vm/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
 	$(".firstPage").click(function(){
-	     showFirstPage("/student/vm/list",$("#page").attr("currentPage"));
+	     showFirstPage("/teacher/vm/list",$("#page").attr("currentPage"));
 	});
 	$(".lastPage").click(function(){
-	     showLastPage("/student/vm/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
+	     showLastPage("/teacher/vm/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
 	
 	

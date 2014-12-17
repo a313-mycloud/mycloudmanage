@@ -5,9 +5,7 @@
 						
 						
 						  <table>
-						   <thead>
-						    <tr>教师-虚拟机-编辑</tr>
-						   <thead>
+						  
 						   <tr>
 						   <td><input type="hidden"  id="vmUuid" value="$!vm.vmUuid"/>
 						   <input type="hidden"  id="preName" value="$!vm.vmName"/>
@@ -51,9 +49,7 @@
 						      </span>
 						   </td>
 						   </tr>
-						   
-						   
-						   		  
+						   	  
 						   <tr>
 						   <td><label for="showType">访问方式</label></td>
 						   <td>

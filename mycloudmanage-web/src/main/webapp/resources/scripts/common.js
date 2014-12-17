@@ -80,7 +80,6 @@ function removeAll(url,replace){
  */
 function add(url,data,replace){
 	$.ajax({
-		 type:"POST",
 		 url:url,
 		 data:data,
 		 dataType:"json",

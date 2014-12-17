@@ -25,8 +25,7 @@
 								<tr>
 									<td colspan="8">
 										<div class="align-left">
-										    <a class="button removeAll" >全部删除</a>
-											<a class="button" href="#" >添加</a>
+											<a class="button" href="/teacher/vm/add/form" >添加</a>
 										</div>
 									    <div class="align-right">
 									        <a class="button" >总共$!totalPage页</a>

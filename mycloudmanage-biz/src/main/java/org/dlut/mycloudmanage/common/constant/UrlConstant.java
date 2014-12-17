@@ -88,5 +88,7 @@ public class UrlConstant {
 	public static final String TEACHER_VM_EDIT = "/teacher/vm/edit.do";
 	public static final String TEACHER_VM_START = "/teacher/vm/start.do";
 	public static final String TEACHER_VM_SHUTDOWN = "/teacher/vm/shutdown.do";
+	public static final String TEACHER_VM_ADD_FORM = "/teacher/vm/add/form";
+	public static final String TEACHER_VM_ADD = "/teacher/vm/add.do";
 
 }

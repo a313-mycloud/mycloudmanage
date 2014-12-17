@@ -48,11 +48,7 @@
 			<artifactId>velocity-tools</artifactId>
 		</dependency>
 
-		<!-- json 相关包 -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-		</dependency>
+		
 
 		<dependency>
 			<groupId>junit</groupId>

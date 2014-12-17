@@ -7,13 +7,28 @@
  */
 package org.dlut.mycloudmanage.controller.teacher;
 
+import java.util.List;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+import org.dlut.mycloudmanage.biz.ImageBiz;
+import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
+import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
+import org.dlut.mycloudmanage.common.utils.MemUtil;
+import org.dlut.mycloudmanage.common.utils.MyJsonUtils;
+import org.dlut.mycloudmanage.common.utils.MyStringUtils;
 import org.dlut.mycloudmanage.controller.common.BaseVmController;
+import org.dlut.mycloudserver.client.common.storemanage.ImageDTO;
+import org.dlut.mycloudserver.client.common.storemanage.QueryImageCondition;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
+import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
+import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
+import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +43,13 @@ import com.alibaba.fastjson.JSONObject;
  */
 @Controller
 public class TeacherVmController extends BaseVmController {
+
+	@Resource(name = "imageBiz")
+	private ImageBiz imageBiz;
+
+	@Resource(name = "vmBiz")
+	private VmBiz vmBiz;
+
 	/**
 	 * 教师-虚拟机-列表
 	 * 
@@ -98,9 +120,6 @@ public class TeacherVmController extends BaseVmController {
 			HttpServletResponse response, ModelMap model, String vmUuid,
 			String vmName, String showType, String vmDesc, String showPassword,
 			String vmVcpu, String vmMemory) {
-		JSONObject json = new JSONObject();
-		json.put("isLogin", true);
-		json.put("isAuth", true);
 
 		return super.vmEdit(request, response, model, vmUuid, vmName, showType,
 				vmDesc, showPassword, vmVcpu, vmMemory);
@@ -140,4 +159,97 @@ public class TeacherVmController extends BaseVmController {
 		return super.vmShutDown(request, response, model, vmUuid);
 	}
 
+	@RequestMapping(value = UrlConstant.TEACHER_VM_ADD_FORM)
+	public String addVmForm(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		QueryImageCondition queryImageCondition = new QueryImageCondition();
+		queryImageCondition.setIsTemplate(true);
+		queryImageCondition.setOffset(0);
+		queryImageCondition.setLimit(100);
+		List<ImageDTO> images = this.imageBiz.query(queryImageCondition)
+				.getList();
+		model.put("imageList", images);
+		this.setShowMenuList(RoleEnum.TEACHER, MenuEnum.TEACHER_MENU_VM, model);
+		model.put("screen", "teacher/vm_add_form");
+		model.put("js", "teacher/vm_list");
+		return "default";
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param vmName
+	 * @param vmVcpu
+	 * @param vmMemory
+	 * @param imageUuid
+	 * @param showType
+	 * @param password
+	 * @param vmDesc
+	 *            允许为空
+	 * @return
+	 */
+	@RequestMapping(value = UrlConstant.TEACHER_VM_ADD, produces = { "application/json;charset=UTF-8" })
+	@ResponseBody
+	public String addVm(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model, String vmName,
+			String vmVcpu, String vmMemory, String imageUuid, String showType,
+			String password, String vmDesc) {
+		String errorDesc = setDefaultEnv(request, response, model);
+		if (errorDesc != null) {
+			return goErrorPage(errorDesc);
+		}
+		UserDTO userDTO = (UserDTO) model.get("loginUser");
+
+		JSONObject json = new JSONObject();
+		if (StringUtils.isBlank(vmName)) {
+			return MyJsonUtils.getFailJsonString(json, "虚拟机名字不能为空");
+		}
+		if (StringUtils.isBlank(password)) {
+			return MyJsonUtils.getFailJsonString(json, "密码格式不能为空");
+		}
+		if (!MyStringUtils.isInteger(vmVcpu)) {
+			return MyJsonUtils.getFailJsonString(json, "核心数需要填写一个数字");
+		}
+		if (!MyStringUtils.isInteger(vmMemory)) {
+			return MyJsonUtils.getFailJsonString(json, "内存格式需要填写一个数字");
+		}
+		if (!MyStringUtils.isInteger(showType)) {
+			return MyJsonUtils.getFailJsonString(json, "显示类型格式不正确");
+		}
+		// 获取作为模板的虚拟机的信息
+		ImageDTO srcImage = this.imageBiz.getImageByUuid(imageUuid, true);
+		if (srcImage == null) {
+			return MyJsonUtils.getFailJsonString(json, "镜像不存在");
+		}
+		ImageDTO destImage = this.imageBiz.cloneImage(imageUuid,
+				srcImage.getImageName(), false);
+		VmDTO vmDTO = new VmDTO();
+		if (vmDesc == null)
+			vmDTO.setDesc("");
+		else
+			vmDTO.setDesc(vmDesc);
+		vmDTO.setImageUuid(destImage.getImageUuid());
+		vmDTO.setShowPassword(password);
+		if (Integer.parseInt(showType) == 1)
+			vmDTO.setShowType(ShowTypeEnum.SPICE);
+		else if (Integer.parseInt(showType) == 2)
+			vmDTO.setShowType(ShowTypeEnum.VNC);
+		else
+			return MyJsonUtils.getFailJsonString(json, "显示类型格式不正确");
+
+		vmDTO.setVmMemory(MemUtil.getMem(Integer.parseInt(vmMemory),
+				MemUnitEnum.MB));
+		vmDTO.setVmVcpu(Integer.parseInt(vmVcpu));
+		vmDTO.setClassId(0);// 在没有绑定课程的情况下，默认为0
+		vmDTO.setVmName(vmName);
+		vmDTO.setUserAccount(userDTO.getAccount());
+
+		if (this.vmBiz.createVm(vmDTO) == null) {
+			this.imageBiz.deleteImageByUuid(destImage.getImageUuid());
+			return MyJsonUtils.getFailJsonString(json, "虚拟机创建失败");
+		}
+		return MyJsonUtils.getSuccessJsonString(json, "虚拟机创建成功");
+	}
 }

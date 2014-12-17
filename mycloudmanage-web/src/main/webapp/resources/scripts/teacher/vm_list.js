@@ -4,9 +4,6 @@
  */
 
 $(document).ready(function(){	
-	$(function(){
-		$("#showType").val($("#preShowType").val());
-	});
 	$(".edit").click(function(){
 	    edit('/teacher/vm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/teacher/vm/list?currentPage=1");
 	});
@@ -19,10 +16,25 @@ $(document).ready(function(){
 		$("#vmPassword").val($("#preShowPassword").val());
 		$("#vmVcpu").val($("#preVmVcpu").val());
 		$("#vmMemory").val($("#preVmMemory").val());
+		$("#showType").val($("#preShowType").val());
 	});	
 	
+	$(".add").click(function(){
+		add('/teacher/vm/add.do',{"vmName":$("#vmName").val(),"vmDesc":$("#vmDesc").val(),
+		"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val(),"imageUuid":$("#imageUuid").val(),
+		"showType":$("#showType").val(),"password":$("#password").val()},"/teacher/vm/list?currentPage=1");
+		
+	});
 	
-	
+	$(".reset").click(function(){
+         $("#vmName").val("");
+         $("#vmDesc").val("");
+		 $("#vmVcpu").val("");
+		 $("#vmMemory").val("");
+		 $("#imageUuid").get(0).selectedIndex=1;
+		 $("#showType").val("");
+		 $("#password").val("");
+	});	
 	$(".start").click(function(){
 		start('/teacher/vm/start.do',{"vmUuid":$(this).attr("vmUuid")},"/teacher/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});

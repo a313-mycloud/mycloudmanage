@@ -41,8 +41,13 @@
 						 
 							<tbody >
 								#foreach($vm in $!vmList)
+								
+							    #if($!{velocityCount}%2!=0)
+								<tr class="alt-row">
+								#else
 								<tr>
-								    
+								#end
+								
 									<td>$!vm.vmName</td>
 									<td>$!vm.vmVcpu核，$!{vm.vmMemory}MB</td>
 									<td>$!vm.vmClass</td>

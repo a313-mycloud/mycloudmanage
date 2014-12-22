@@ -23,27 +23,38 @@
 										<div class=" align-left">
 											<a class="button" href="/admin/host/add/form" >添加</a>
 									    </div>   
-									    <div class="align-right">
-									        <a class="button" >总共$!totalPage页</a>
-									        <a class="button firstPage">首页</a>
-									        <a class="button prePage" >上页</a>
-									        <a class="button "  id="page" currentPage="$!currentPage" totalPage="$!totalPage">$!currentPage</a>
-									        <a class="button nextPage" >下页</a>
-									        <a class="button lastPage" >末页</a>
+									 
+									    
+									    <div class="pagination">
+									        <a >总共$!totalPage页</a>
+									        <a class="firstPage" >首页</a>
+									        <a class="prePage" >上页</a>
+									        <a class="number"  id="page" currentPage="$!currentPage" totalPage="$!totalPage"  title="current">$!currentPage</a>
+									        <a class="nextPage" >下页</a>
+									        <a class="lastPage" >末页</a>
 									    </div>
+									    
 									</td>
 								</tr>
 							</tfoot>
 						 
 							<tbody >
 								#foreach($host in $!hostList)
+								  #if($!{velocityCount}%2!=0)
+								<tr class="alt-row">
+								#else
 								<tr>
+								#end
 									<td>$!host.hostName</td>
 									<td>$!host.hostIp</td>
 									<td>$!host.hostStatusEnum.desc</td>
 									<td>
-										 <a class="button"  href="/admin/host/edit/form?hostId=$!host.hostId">编辑</a>
-										 <a class="button remove" hostId="$!host.hostId">删除</a> 
+										 <a   href="/admin/host/edit/form?hostId=$!host.hostId">
+										 <img src="/resources/images/icons/pencil.png" alt="编辑" tittle="编辑">
+                                         </a>
+										 <a class="remove" hostId="$!host.hostId">
+										<img src="/resources/images/icons/cross.png" alt="删除" tittle="删除">
+                                         </a> 
 									</td>
 								</tr>
 								#end

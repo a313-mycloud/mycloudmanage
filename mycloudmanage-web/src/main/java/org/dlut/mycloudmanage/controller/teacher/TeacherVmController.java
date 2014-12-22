@@ -27,6 +27,7 @@ import org.dlut.mycloudserver.client.common.storemanage.ImageDTO;
 import org.dlut.mycloudserver.client.common.storemanage.QueryImageCondition;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
+import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.springframework.stereotype.Controller;
@@ -44,7 +45,7 @@ import com.alibaba.fastjson.JSONObject;
 @Controller
 public class TeacherVmController extends BaseVmController {
 
-	@Resource(name = "imageBiz")
+	@Resource(name="imageBiz")
 	private ImageBiz imageBiz;
 
 	@Resource(name = "vmBiz")
@@ -162,13 +163,18 @@ public class TeacherVmController extends BaseVmController {
 	@RequestMapping(value = UrlConstant.TEACHER_VM_ADD_FORM)
 	public String addVmForm(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		QueryImageCondition queryImageCondition = new QueryImageCondition();
-		queryImageCondition.setIsTemplate(true);
-		queryImageCondition.setOffset(0);
-		queryImageCondition.setLimit(100);
-		List<ImageDTO> images = this.imageBiz.query(queryImageCondition)
-				.getList();
-		model.put("imageList", images);
+//		QueryImageCondition queryImageCondition = new QueryImageCondition();
+//		queryImageCondition.setIsTemplate(true);
+//		queryImageCondition.setOffset(0);
+//		queryImageCondition.setLimit(100);
+//		List<ImageDTO> images = this.imageBiz.query(queryImageCondition)
+//				.getList();
+		QueryVmCondition queryVmCondition= new QueryVmCondition();
+		queryVmCondition.setIsTemplateVm(true);
+		queryVmCondition.setOffset(0);
+		queryVmCondition.setLimit(1000);
+		List<VmDTO> vms=this.vmBiz.query(queryVmCondition).getList();
+		model.put("vmList",vms);
 		this.setShowMenuList(RoleEnum.TEACHER, MenuEnum.TEACHER_MENU_VM, model);
 		model.put("screen", "teacher/vm_add_form");
 		model.put("js", "teacher/vm_list");
@@ -194,7 +200,7 @@ public class TeacherVmController extends BaseVmController {
 	@ResponseBody
 	public String addVm(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String vmName,
-			String vmVcpu, String vmMemory, String imageUuid, String showType,
+			String vmVcpu, String vmMemory, String srcVmUuid, String showType,
 			String password, String vmDesc) {
 		String errorDesc = setDefaultEnv(request, response, model);
 		if (errorDesc != null) {
@@ -219,19 +225,22 @@ public class TeacherVmController extends BaseVmController {
 			return MyJsonUtils.getFailJsonString(json, "显示类型格式不正确");
 		}
 		// 获取作为模板的虚拟机的信息
-		ImageDTO srcImage = this.imageBiz.getImageByUuid(imageUuid, true);
-		if (srcImage == null) {
-			return MyJsonUtils.getFailJsonString(json, "镜像不存在");
+		
+		VmDTO srcVm = this.vmBiz.getVmByUuid(srcVmUuid);
+		
+		if (srcVm == null) {
+			return MyJsonUtils.getFailJsonString(json, "模板虚拟机不存在");
 		}
-		ImageDTO destImage = this.imageBiz.cloneImage(imageUuid,
-				srcImage.getImageName(), false);
+	    ImageDTO destImage=this.imageBiz.cloneImage(srcVm.getImageUuid(),srcVm.getVmName(), false);
 		VmDTO vmDTO = new VmDTO();
 		if (vmDesc == null)
 			vmDTO.setDesc("");
 		else
 			vmDTO.setDesc(vmDesc);
-		vmDTO.setImageUuid(destImage.getImageUuid());
+		vmDTO.setIsTemplateVm(false);
+		vmDTO.setParentVmUuid(srcVmUuid);
 		vmDTO.setShowPassword(password);
+		vmDTO.setImageUuid(destImage.getImageUuid());
 		if (Integer.parseInt(showType) == 1)
 			vmDTO.setShowType(ShowTypeEnum.SPICE);
 		else if (Integer.parseInt(showType) == 2)

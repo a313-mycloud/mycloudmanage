@@ -21,7 +21,7 @@ $(document).ready(function(){
 	
 	$(".add").click(function(){
 		add('/teacher/vm/add.do',{"vmName":$("#vmName").val(),"vmDesc":$("#vmDesc").val(),
-		"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val(),"imageUuid":$("#imageUuid").val(),
+		"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val(),"srcVmUuid":$("#srcVmUuid").val(),
 		"showType":$("#showType").val(),"password":$("#password").val()},"/teacher/vm/list?currentPage=1");
 		
 	});
@@ -31,7 +31,7 @@ $(document).ready(function(){
          $("#vmDesc").val("");
 		 $("#vmVcpu").val("");
 		 $("#vmMemory").val("");
-		 $("#imageUuid").get(0).selectedIndex=1;
+		 $("#srcVmUuid").get(0).selectedIndex=0;
 		 $("#showType").val("");
 		 $("#password").val("");
 	});	
@@ -126,10 +126,10 @@ function start(url,data,replace){
 	});	
 }
 function showPass(){ 			
-	$("#box").html("<input type='text' id='vmPassword'  value="+$("#vmPassword").val()+"><a href='javascript:hidePass()' class='button '>隐藏密码</a>");
+	$("#box").html("<input class='text-input small-input'  type='text' id='vmPassword'  value="+$("#vmPassword").val()+"><a href='javascript:hidePass()' class='button '>隐藏密码</a>");
 	//$("#box").html("<input type='text' id='vmPassword'  value="+$("#vmPassword").val()+"><a  class='button hidePass'>隐藏密码</a>");
 }
 function hidePass(){   
-    $("#box").html("<input type='password' id='vmPassword' value="+$("#vmPassword").val()+"><a href='javascript:showPass()' class='button '>显示密码</a>");
+    $("#box").html("<input class='text-input small-input'  type='password' id='vmPassword' value="+$("#vmPassword").val()+"><a href='javascript:showPass()' class='button '>显示密码</a>");
 	//$("#box").html("<input type='password' id='vmPassword' value="+$("#vmPassword").val()+"><a  class='button showPass '>显示密码</a>");
 } 

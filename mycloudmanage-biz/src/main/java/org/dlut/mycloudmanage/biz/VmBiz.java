@@ -181,5 +181,39 @@ public class VmBiz {
 		}
 		return result.getModel();
 	}
+	
+    /**
+     * 在数据库中将硬盘绑定到虚拟机，如果此时虚拟机正在运行，则会将硬盘挂载到虚拟机上
+     * 
+     * @param vmUuid
+     * @param diskUuid
+     * @return
+     */
+    public boolean  attachDisk(String vmUuid, String diskUuid){
+    	 MyCloudResult<Boolean> result = this.vmManageService.attachDisk(vmUuid, diskUuid);
+    	 if(!result.isSuccess()){
+    		 log.warn("调用vmManageService.attachDisk()出错，" + result.getMsgCode()
+ 					+ ":" + result.getMsgInfo());
+ 			return false;
+    	 }
+    	 return result.getModel();
+   }
+
+    /**
+     * 在数据库中将硬盘和虚拟机解绑定，如果此时虚拟机正在运行，则会将硬盘从虚拟机中卸载
+     * 
+     * @param diskUuid
+     * @return
+     */
+    public boolean detachDisk(String diskUuid){
+    	MyCloudResult<Boolean> result = this.vmManageService.detachDisk(diskUuid);
+    	 if(!result.isSuccess()){
+    		 log.warn("调用vmManageService.detachDisk()出错，" + result.getMsgCode()
+ 					+ ":" + result.getMsgInfo());
+ 			return false;
+    	 }
+    	 return result.getModel();
+    	
+    }
 
 }

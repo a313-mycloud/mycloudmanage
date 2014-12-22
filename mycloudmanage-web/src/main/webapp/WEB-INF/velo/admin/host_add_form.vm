@@ -4,24 +4,25 @@
 <div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
 						
 						
-						
-						  <table>
-						   <tr>
-						   <td><label for="hostName">物理机名称</label></td>
-						   <td><input type="text"  id="hostName"/></td>
-						   </tr>
-						   				  
-						   <tr>
-						   <td><label for="hostIp">物理机Ip</label></td>
-						   <td><input type="text"  id="hostIp"/></td>
-						   </tr>
-						   					  
-						   <tr>
-						   <td><a class="button add" >添加</a></td>
-						   <td><a class="button reset" >重置</a></td>
-						   </tr>
-						   </table>
+	
 						 
+						 <form>
+						 	<fieldset>
+						  	<p>
+							  	<label>物理机名称</label>
+							  	<input class="text-input small-input " type="text"  id="hostName" name="hostName">
+						  	</p>
+						  	<p>
+							  	<label>物理机IP</label>
+							  	<input class="text-input small-input " type="text"  id="hostIp" name="hostIp">
+						  	</p>
+						  	
+						  	<p>
+						  	   <a class="button add"    >添加</a>
+						  	   <a class="button reset"    >重置</a>
+						  	</p>
+						 	</fieldset>
+						 </form>
 						
 						
 						

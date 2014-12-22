@@ -4,30 +4,26 @@
 <div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
 						
 						
-						  <table>
-						   <tr>
-						   <td><input type="hidden"  id="hostId" value="$!host.hostId"/>
-						   <input type="hidden"  id="preName" value="$!host.hostName"/>
-						   <input type="hidden"  id="preIp" value="$!host.hostIp"/></td>
-						   <td></td>
-						   </tr>
+						
 						   
+						   <form>
+						 	<fieldset>
+						  	<p>
+							  	<label>物理机名称</label>
+							  	<input class="text-input small-input"  type="text"  id="hostName" value="$!host.hostName">
+						  	</p>
+						  	<p>
+							  	<label>物理机IP</label>
+							  	<input class="text-input small-input " type="text"  id="hostIp" value="$!host.hostIp">
+						  	</p>
+						  	
+						  	<p>
+						  	    <a class="button edit" >修改</a>
+						        <a class="button resetEdit" >重置</a>
+						  	</p>
+						 	</fieldset>
+						 </form>
 						   
-						   <tr>
-						   <td><label for="hostName">物理机名称</label></td>
-						   <td><input type="text"  id="hostName" value="$!host.hostName"/></td>
-						   </tr>
-						   				  
-						   <tr>
-						   <td><label for="hostIp">物理机Ip</label></td>
-						   <td><input type="text"  id="hostIp" value="$!host.hostIp"/></td>
-						   </tr>
-						   					  
-						   <tr>
-						   <td><a class="button edit" >修改</a></td>
-						   <td><a class="button resetEdit" >重置</a></td>
-						   </tr>
-						   </table>
 					
 						
 						

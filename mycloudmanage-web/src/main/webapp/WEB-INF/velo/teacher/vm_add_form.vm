@@ -5,62 +5,60 @@
 						
 						
 						
-						  <table>
-						  
-						   <tr>
-						   <td><label for="vmName">虚拟机名称</label></td>
-						   <td><input type="text"  id="vmName"/></td>
-						   </tr>
+						   <form>
+						   <fieldset>
 						   
-						    <tr>
-						   <td><label for="vmDesc">虚拟机描述(可选)</label></td>
-						   <td><input type="text"  id="vmDesc"/></td>
-						   </tr>
+						   <p>
+						   <label >虚拟机名称</label>
+						   <input  class="text-input small-input" type="text"  id="vmName">
+						   </p>
+						   
+						 
 						   				  
-						   <tr>
-						   <td><label for="vmVcpu">核心数</label></td>
-						   <td><input type="text"  id="vmVcpu"/></td>
-						   </tr>
+						   <p>
+						   <label>核心数</label>
+						   <input class="text-input small-input" type="text"  id="vmVcpu">
+						   </p>
 						   
-						   <tr>
-						   <td><label for="vmMemory">内存（MB）</label></td>
-						   <td><input type="text"  id="vmMemory"/></td>
-						   </tr>
+						   <p>
+						   <label>内存（MB）</label>
+						   <input class="text-input small-input" type="text"  id="vmMemory">
+						   </p>
 						   
-						   <tr>
-						   <td><label for="imageUuid">镜像</label></td>
-						   <td>
-						   <select id="imageUuid">
-						   #foreach($image in $!imageList)
-						   <option value="$!image.imageUuid">$!{image.imageName}</option>
+						   <p>
+						   <label>模板虚拟机</label>
+						   <select id="srcVmUuid">
+						   #foreach($vm in $!vmList)
+						   <option value="$!vm.vmUuid">$!{vm.vmName}</option>
 						   #end 
-						   </select></td>
-						   </tr>
+						   </select>
+						   </p>
 						   
-						   
-						   <tr>
-						   <td><label for="showType">访问方式</label></td>
-						   <td>
-						       <select id="showType" > 
+						   <p>
+						   <label>访问方式</label>
+						       <select id="showType"  class="small-input"> 
 						         <option value="1">SPICE</option>
 						         <option value="2">VNC</option>
 						       </select>
-						   </td>
-						   </tr>
+						   </p>
 						   
-						   <tr>
-						   <td><label for="password">远程访问密码</label></td>
-						   <td>
-						     <input type="password" id="password"></input>
-						   </td>
-						   </tr>
+						   <p>
+						       <label>远程访问密码</label>
+						       <input class="text-input small-input" type="password" id="password">
+						   </p>
+						 	 
+						 	 
+						   <p>
+						   <label >虚拟机描述(可选)</label>
+						   <input  class="text-input medium-input"  id="vmDesc" >
+						   </p>
 						   
-						   					  
-						   <tr>
-						   <td><a class="button add" >添加</a></td>
-						   <td><a class="button reset" >重置</a></td>
-						   </tr>
-						   </table>
+						   <p>
+						           <a class="button add" >添加</a>
+						           <a class="button reset" >重置</a>
+						   </p>
+						   </fieldset>
+						   </form>
 						 
 						
 						

@@ -67,6 +67,7 @@ public class BaseVmController extends BaseController {
 		queryVmCondition.setUserAccount(userDTO.getAccount());
 		queryVmCondition.setLimit(PAGESIZE);
 		queryVmCondition.setOffset((currentPage - 1) * PAGESIZE);
+		queryVmCondition.setIsTemplateVm(false);
 		Pagination<VmDTO> pageVmDTO = this.vmBiz.query(queryVmCondition);
 		if (pageVmDTO.getTotalPage() >= 1
 				&& (currentPage < 1 || currentPage > pageVmDTO.getTotalPage()))

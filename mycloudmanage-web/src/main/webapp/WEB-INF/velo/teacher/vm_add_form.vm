@@ -6,7 +6,7 @@
 						
 						
 						   <form>
-						
+						  <field>
 						   <p>
 						   <label >虚拟机名称</label>
 						   <input  class="text-input small-input" type="text"  id="vmName" name="vmName">
@@ -21,10 +21,9 @@
 						   
 						   <p>
 						   <label>内存（MB）</label>
-						   <input class="text-input small-input" type="text"  id="memory" name="memory">
-						  
+						   <input class="text-input small-input" type="text"  id="vmMemory" name="vmMemory">
 						   </p>
-						   
+						  
 						   <p>
 						   <label>模板虚拟机</label>
 						   <select id="srcVmUuid" name="srcVmUuid" class="small-input">
@@ -44,9 +43,10 @@
 						   
 						   <p>
 						       <label>远程访问密码</label>
-						       <input class="text-input small-input" type="password" id="showPassword" name="showPassword">
+						       <input class="text-input small-input" type="text" id="vmPassword" name="vmPassword">
 						       
 						   </p>
+						   
 						 	 
 						 	 
 						   <p>
@@ -59,8 +59,9 @@
 						           <a class="button reset" >重置</a>
 						   </p>
 						
-						   </form>
-						 
+						   </field>
+						   
+						   <form>
 						
 						
 					</div> <!-- End #tab2 -->    

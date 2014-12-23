@@ -7,9 +7,6 @@
  */
 package org.dlut.mycloudmanage.common.utils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,22 +23,15 @@ public class UrlUtil {
     private static Logger log = LoggerFactory.getLogger(UrlUtil.class);
 
     /**
-     * 获取当前请求的url，包括参数
+     * 获取请求的站内地址，包括参数
      */
     public static String getCurUrl(HttpServletRequest request) {
         if (request == null) {
             return "";
         }
-        String curUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-                + request.getRequestURI();
-        if (!StringUtils.isBlank(request.getQueryString())) {
-            curUrl += "?" + request.getQueryString();
-        }
-        try {
-            return URLEncoder.encode(curUrl, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            log.error("编码不支持", e);
-            return curUrl;
-        }
+        if (StringUtils.isBlank(request.getQueryString()))
+            return request.getRequestURI();
+        else
+            return request.getRequestURI() + "?" + request.getQueryString();
     }
 }

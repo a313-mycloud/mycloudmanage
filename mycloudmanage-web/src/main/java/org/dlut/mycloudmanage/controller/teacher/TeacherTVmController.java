@@ -139,6 +139,11 @@ public class TeacherTVmController extends BaseController {
     public String vmEdit(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid,
                          String vmName, String showType, String vmDesc, String showPassword, String vmVcpu,
                          String vmMemory) {
+
+        String errorDesc = setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return goErrorPage(errorDesc);
+        }
         JSONObject json = new JSONObject();
 
         // 检查vmUuid是否存在
@@ -171,6 +176,10 @@ public class TeacherTVmController extends BaseController {
     @RequestMapping(value = UrlConstant.TEACHER_TVM_CONVERT, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String convert(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid) {
+        String errorDesc = setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return goErrorPage(errorDesc);
+        }
         JSONObject json = new JSONObject();
 
         // 检查vmUuid是否存在

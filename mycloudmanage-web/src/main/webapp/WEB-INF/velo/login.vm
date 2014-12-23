@@ -22,7 +22,7 @@
 		<div id="login-content">
 		
 		
-			<form action="/login" method="post">
+			<form action="#" method="post">
 			
 				#if ($!errorDesc)
 				<div class="notification error png_bg">

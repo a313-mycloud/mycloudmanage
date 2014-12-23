@@ -9,7 +9,7 @@ $(document).ready(function(){
 		convert('/teacher/vm/convert.do',{vmUuid:$(this).attr('vmUuid')},'/teacher/vm/list?currentPage=1');
 	});
 	$(".edit").click(function(){
-	    edit('/teacher/vm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/teacher/vm/list?currentPage=1");
+	    edit('/teacher/vm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"vmPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/teacher/vm/list?currentPage=1");
 	});
 	$(".resetEdit").click(function(){
 		console.log($("#preName").val());

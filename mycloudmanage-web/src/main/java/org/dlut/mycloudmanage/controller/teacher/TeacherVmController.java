@@ -155,6 +155,10 @@ public class TeacherVmController extends BaseVmController {
 
     @RequestMapping(value = UrlConstant.TEACHER_VM_ADD_FORM)
     public String addVmForm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        String errorDesc = setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return goErrorPage(errorDesc);
+        }
         QueryVmCondition queryVmCondition = new QueryVmCondition();
         queryVmCondition.setIsTemplateVm(true);
         queryVmCondition.setOffset(0);
@@ -183,7 +187,7 @@ public class TeacherVmController extends BaseVmController {
     @RequestMapping(value = UrlConstant.TEACHER_VM_ADD, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String addVm(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmName,
-                        String vmVcpu, String vmMemory, String srcVmUuid, String showType, String password,
+                        String vmVcpu, String vmMemory, String srcVmUuid, String showType, String showPassword,
                         String vmDesc) {
         String errorDesc = setDefaultEnv(request, response, model);
         if (errorDesc != null) {
@@ -195,7 +199,7 @@ public class TeacherVmController extends BaseVmController {
         if (StringUtils.isBlank(vmName)) {
             return MyJsonUtils.getFailJsonString(json, "虚拟机名字不能为空");
         }
-        if (StringUtils.isBlank(password)) {
+        if (StringUtils.isBlank(showPassword)) {
             return MyJsonUtils.getFailJsonString(json, "密码格式不能为空");
         }
         if (!MyStringUtils.isInteger(vmVcpu)) {
@@ -234,7 +238,7 @@ public class TeacherVmController extends BaseVmController {
             destVm.setDesc(vmDesc);
         destVm.setIsTemplateVm(false);
         destVm.setIsPublicTemplate(false);
-        destVm.setShowPassword(password);
+        destVm.setShowPassword(showPassword);
         if (this.vmBiz.cloneVm(destVm, srcVmUuid) == null) {
             return MyJsonUtils.getFailJsonString(json, "虚拟机创建失败");
         }

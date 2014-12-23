@@ -19,71 +19,64 @@ import com.alibaba.fastjson.JSONObject;
 
 /**
  * 拦截器类，检验是否登陆和是否有权限 对于客户端请求，错误时调到errorPage 对于ajax请求，返回json
- * 
  * 类LoginInterceptor.java的实现描述：TODO 类实现描述
  * 
  * @author xuyizhen Dec 10, 2014 7:32:22 PM
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
-	private static Logger log = LoggerFactory.getLogger(LoginInterceptor.class);
+    private static Logger      log = LoggerFactory.getLogger(LoginInterceptor.class);
 
-	@Resource(name = "userManageService")
-	private IUserManageService userManageService;
+    @Resource(name = "userManageService")
+    private IUserManageService userManageService;
 
-	@Override
-	public boolean preHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler) throws Exception {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-		String uri = request.getRequestURI();
-		// 得到用户帐号
-		String userAccount = (String) request.getSession().getAttribute(
-				SessionConstant.USER_ACCOUNT);
+        String uri = request.getRequestURI();
+        // 得到用户帐号
+        String userAccount = (String) request.getSession().getAttribute(SessionConstant.USER_ACCOUNT);
 
-		// 如果ajax跳转
-		if (uri.endsWith(".do") || uri.endsWith(".do/")) {
-			JSONObject json = new JSONObject();
-			if (StringUtils.isBlank(userAccount)) {
-				json.put("isLogin", false);
-				response.getWriter().write(json.toString());
-				log.warn("用户为空，拦截登陆");
-				return false;
-			}
-			if (userManageService.getUserByAccount(userAccount).getModel()
-					.getRole().getStatus() != getApplyAuth(uri)) {
-				json.put("isLogin", true);
-				json.put("isAuth", false);
-				response.getWriter().write(json.toString());
-				log.warn("没有权限，拦截登陆");
-				return false;
-			}
-		} else {// 客户端跳转
-			if (StringUtils.isBlank(userAccount)) {
-				response.sendRedirect(UrlConstant.LOGIN_URL + "?redirect="
-						+ UrlUtil.getCurUrl(request));
-				log.warn("用户为空，拦截登陆");
-				return false;
-			}
-			if (userManageService.getUserByAccount(userAccount).getModel()
-					.getRole().getStatus() != getApplyAuth(uri)) {
-				response.sendRedirect(UrlConstant.ERROR_URL + "?errorDesc="
-						+ URLEncoder.encode("您没有权限", "utf-8"));
-				log.warn("没有权限，拦截登陆");
-				return false;
-			}
-		}
-		return super.preHandle(request, response, handler);
-	}
+        // 如果ajax跳转
+        if (uri.endsWith(".do") || uri.endsWith(".do/")) {
+            JSONObject json = new JSONObject();
+            if (StringUtils.isBlank(userAccount)) {
+                json.put("isLogin", false);
+                response.getWriter().write(json.toString());
+                log.warn("用户为空，拦截登陆");
+                return false;
+            }
+            if (userManageService.getUserByAccount(userAccount).getModel().getRole().getStatus() != getApplyAuth(uri)) {
+                json.put("isLogin", true);
+                json.put("isAuth", false);
+                response.getWriter().write(json.toString());
+                log.warn("没有权限，拦截登陆");
+                return false;
+            }
+        } else {// 客户端跳转
+            if (StringUtils.isBlank(userAccount)) {
+                response.sendRedirect(UrlConstant.LOGIN_URL + "?redirect=" + UrlUtil.getCurUrl(request));
+                log.warn("用户为空，拦截登陆");
+                return false;
+            }
+            if (userManageService.getUserByAccount(userAccount).getModel().getRole().getStatus() != getApplyAuth(uri)) {
+                response.sendRedirect(UrlConstant.ERROR_URL + "?errorDesc=" + URLEncoder.encode("您没有权限", "utf-8"));
+                log.warn("没有权限，拦截登陆");
+                return false;
+            }
+        }
+        return super.preHandle(request, response, handler);
+    }
 
-	// 根据才uri返回申请的内容属于v的权限
-	private int getApplyAuth(String uri) {
-		int endIndex = uri.indexOf("/", 1);
-		String applyAuth = uri.substring(1, endIndex);
-		int applyAuthStatus = 1;
-		if (applyAuth.equals("teacher"))
-			applyAuthStatus = 2;
-		else if (applyAuth.equals("admin"))
-			applyAuthStatus = 3;
-		return applyAuthStatus;
-	}
+    // 根据才uri返回申请的内容属于v的权限
+    private int getApplyAuth(String uri) {
+        int endIndex = uri.indexOf("/", 1);
+        String applyAuth = uri.substring(1, endIndex);
+        int applyAuthStatus = 1;
+        if (applyAuth.equals("teacher"))
+            applyAuthStatus = 2;
+        else if (applyAuth.equals("admin"))
+            applyAuthStatus = 3;
+        return applyAuthStatus;
+    }
 }

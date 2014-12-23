@@ -232,7 +232,7 @@ public class TeacherVmController extends BaseVmController {
         else
             return MyJsonUtils.getFailJsonString(json, "显示类型格式不正确");
         destVm.setClassId(0);// 在没有绑定课程的情况下，默认为0
-        if (vmDesc == null)
+        if (StringUtils.isBlank(vmDesc))
             destVm.setDesc("");
         else
             destVm.setDesc(vmDesc);

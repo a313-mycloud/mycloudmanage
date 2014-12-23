@@ -23,7 +23,7 @@ import org.dlut.mycloudmanage.common.utils.MemUtil;
 import org.dlut.mycloudmanage.common.utils.MyJsonUtils;
 import org.dlut.mycloudmanage.common.utils.MyStringUtils;
 import org.dlut.mycloudmanage.controller.common.BaseVmController;
-import org.dlut.mycloudserver.client.common.storemanage.ImageDTO;
+import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
@@ -155,12 +155,6 @@ public class TeacherVmController extends BaseVmController {
 
     @RequestMapping(value = UrlConstant.TEACHER_VM_ADD_FORM)
     public String addVmForm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-        //		QueryImageCondition queryImageCondition = new QueryImageCondition();
-        //		queryImageCondition.setIsTemplate(true);
-        //		queryImageCondition.setOffset(0);
-        //		queryImageCondition.setLimit(100);
-        //		List<ImageDTO> images = this.imageBiz.query(queryImageCondition)
-        //				.getList();
         QueryVmCondition queryVmCondition = new QueryVmCondition();
         queryVmCondition.setIsTemplateVm(true);
         queryVmCondition.setOffset(0);
@@ -220,33 +214,49 @@ public class TeacherVmController extends BaseVmController {
         if (srcVm == null) {
             return MyJsonUtils.getFailJsonString(json, "模板虚拟机不存在");
         }
-        ImageDTO destImage = this.imageBiz.cloneImage(srcVm.getImageUuid(), srcVm.getVmName(), false);
-        VmDTO vmDTO = new VmDTO();
-        if (vmDesc == null)
-            vmDTO.setDesc("");
-        else
-            vmDTO.setDesc(vmDesc);
-        vmDTO.setIsTemplateVm(false);
-        vmDTO.setParentVmUuid(srcVmUuid);
-        vmDTO.setShowPassword(password);
-        vmDTO.setImageUuid(destImage.getImageUuid());
+
+        //设置目标虚拟机的配置
+        VmDTO destVm = new VmDTO();
+        destVm.setVmName(vmName);
+        destVm.setUserAccount(userDTO.getAccount());
+        destVm.setVmMemory(MemUtil.getMem(Integer.parseInt(vmMemory), MemUnitEnum.MB));
+        destVm.setVmVcpu(Integer.parseInt(vmVcpu));
         if (Integer.parseInt(showType) == 1)
-            vmDTO.setShowType(ShowTypeEnum.SPICE);
+            destVm.setShowType(ShowTypeEnum.SPICE);
         else if (Integer.parseInt(showType) == 2)
-            vmDTO.setShowType(ShowTypeEnum.VNC);
+            destVm.setShowType(ShowTypeEnum.VNC);
         else
             return MyJsonUtils.getFailJsonString(json, "显示类型格式不正确");
-
-        vmDTO.setVmMemory(MemUtil.getMem(Integer.parseInt(vmMemory), MemUnitEnum.MB));
-        vmDTO.setVmVcpu(Integer.parseInt(vmVcpu));
-        vmDTO.setClassId(0);// 在没有绑定课程的情况下，默认为0
-        vmDTO.setVmName(vmName);
-        vmDTO.setUserAccount(userDTO.getAccount());
-
-        if (this.vmBiz.createVm(vmDTO) == null) {
-            this.imageBiz.deleteImageByUuid(destImage.getImageUuid());
+        destVm.setClassId(0);// 在没有绑定课程的情况下，默认为0
+        if (vmDesc == null)
+            destVm.setDesc("");
+        else
+            destVm.setDesc(vmDesc);
+        destVm.setIsTemplateVm(false);
+        destVm.setIsPublicTemplate(false);
+        destVm.setShowPassword(password);
+        if (this.vmBiz.cloneVm(destVm, srcVmUuid) == null) {
             return MyJsonUtils.getFailJsonString(json, "虚拟机创建失败");
         }
         return MyJsonUtils.getSuccessJsonString(json, "虚拟机创建成功");
+    }
+
+    @RequestMapping(value = UrlConstant.TEACHER_VM_CONVERT, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public String convert(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid) {
+        JSONObject json = new JSONObject();
+
+        // 检查vmUuid是否存在
+        QueryVmCondition queryVmCondition = new QueryVmCondition();
+        queryVmCondition.setVmUuid(vmUuid);
+        Pagination<VmDTO> page = this.vmBiz.query(queryVmCondition);
+        if (page.getTotalCount() <= 0) {
+            return MyJsonUtils.getFailJsonString(json, "要操作的虚拟机不存在");
+        }
+
+        if (this.vmBiz.changeToTemplateVm(vmUuid)) {
+            return MyJsonUtils.getSuccessJsonString(json, "转换成功");
+        }
+        return MyJsonUtils.getFailJsonString(json, "转换失败");
     }
 }

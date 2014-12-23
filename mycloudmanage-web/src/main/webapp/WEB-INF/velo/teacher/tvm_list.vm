@@ -59,7 +59,7 @@
                                         
 										 <!--转换按钮-->
 										 <a  class="convert" vmUuid="$!{vm.vmUuid}">
-										 <image src="/resources/images/icons/cross.png"  alt="转换" title="转换">
+										 <image src="/resources/images/icons/convert.gif"  alt="转换" title="转换">
                                          </a>
 									</td>
 								</tr>

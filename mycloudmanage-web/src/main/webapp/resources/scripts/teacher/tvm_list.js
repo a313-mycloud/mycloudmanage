@@ -38,7 +38,7 @@ $(document).ready(function(){
 	
 });
 function convert(url,data,replace){
-	if(confirm("此操作会删除所有以此虚拟机为模板的虚拟机，确定转换？")){
+	if(confirm("此操作会将模板虚拟机转换为个人虚拟机，将会删除所有以此虚拟机为模板的学生虚拟机，确定转换？")){
 		$.ajax({
 		 url:url,
 		 data:data,

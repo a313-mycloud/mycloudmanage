@@ -6,28 +6,28 @@
 						
 						
 						   <form>
-						   <fieldset>
-						   
+						
 						   <p>
 						   <label >虚拟机名称</label>
-						   <input  class="text-input small-input" type="text"  id="vmName">
+						   <input  class="text-input small-input" type="text"  id="vmName" name="vmName">
 						   </p>
 						   
 						 
 						   				  
 						   <p>
 						   <label>核心数</label>
-						   <input class="text-input small-input" type="text"  id="vmVcpu">
+						   <input class="text-input small-input" type="text"  id="vmVcpu" name="vmVcpu">
 						   </p>
 						   
 						   <p>
 						   <label>内存（MB）</label>
-						   <input class="text-input small-input" type="text"  id="vmMemory">
+						   <input class="text-input small-input" type="text"  id="memory" name="memory">
+						  
 						   </p>
 						   
 						   <p>
 						   <label>模板虚拟机</label>
-						   <select id="srcVmUuid">
+						   <select id="srcVmUuid" name="srcVmUuid" class="small-input">
 						   #foreach($vm in $!vmList)
 						   <option value="$!vm.vmUuid">$!{vm.vmName}</option>
 						   #end 
@@ -36,7 +36,7 @@
 						   
 						   <p>
 						   <label>访问方式</label>
-						       <select id="showType"  class="small-input"> 
+						       <select id="showType"  name="showType" class="small-input"> 
 						         <option value="1">SPICE</option>
 						         <option value="2">VNC</option>
 						       </select>
@@ -44,20 +44,21 @@
 						   
 						   <p>
 						       <label>远程访问密码</label>
-						       <input class="text-input small-input" type="password" id="password">
+						       <input class="text-input small-input" type="password" id="showPassword" name="showPassword">
+						       
 						   </p>
 						 	 
 						 	 
 						   <p>
 						   <label >虚拟机描述(可选)</label>
-						   <input  class="text-input medium-input"  id="vmDesc" >
+						   <input  class="text-input medium-input"  id="vmDesc" name="vmDesc">
 						   </p>
 						   
 						   <p>
 						           <a class="button add" >添加</a>
 						           <a class="button reset" >重置</a>
 						   </p>
-						   </fieldset>
+						
 						   </form>
 						 
 						

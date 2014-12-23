@@ -4,6 +4,10 @@
  */
 
 $(document).ready(function(){	
+	$(".convert").click(function(){
+		console.log($(this).attr('vmUuid'));
+		convert('/teacher/vm/convert.do',{vmUuid:$(this).attr('vmUuid')},'/teacher/vm/list?currentPage=1');
+	});
 	$(".edit").click(function(){
 	    edit('/teacher/vm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/teacher/vm/list?currentPage=1");
 	});
@@ -21,8 +25,8 @@ $(document).ready(function(){
 	
 	$(".add").click(function(){
 		add('/teacher/vm/add.do',{"vmName":$("#vmName").val(),"vmDesc":$("#vmDesc").val(),
-		"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val(),"srcVmUuid":$("#srcVmUuid").val(),
-		"showType":$("#showType").val(),"password":$("#password").val()},"/teacher/vm/list?currentPage=1");
+		"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#memory").val(),"srcVmUuid":$("#srcVmUuid").val(),
+		"showType":$("#showType").val(),"password":$("#showPassword").val()},"/teacher/vm/list?currentPage=1");
 		
 	});
 	
@@ -133,3 +137,32 @@ function hidePass(){
     $("#box").html("<input class='text-input small-input'  type='password' id='vmPassword' value="+$("#vmPassword").val()+"><a href='javascript:showPass()' class='button '>显示密码</a>");
 	//$("#box").html("<input type='password' id='vmPassword' value="+$("#vmPassword").val()+"><a  class='button showPass '>显示密码</a>");
 } 
+function convert(url,data,replace){
+	if(confirm("此操作会将私有虚拟机转换为模板虚拟机，转换后再也无法对虚拟机进行更改，确定转换？")){
+		$.ajax({
+		 url:url,
+		 data:data,
+		 dataType:"json",
+		 success:function(data){
+		 	if(!data.isLogin){
+		 		alert("请登陆");
+		 		window.location.replace("/login");
+		 	}
+		 	else if(!data.isAuth){
+		 		alert("您没有权限");
+		 	}
+		 	else{
+		 		if(!data.isSuccess){
+		 			alert(data.message);
+		 		}
+		 		else{
+		 			window.location.replace(replace);
+		 		}
+		 	}
+		 },
+		 error:function(data,status){
+		 	alert(status);
+		 } 
+	});		
+	}
+}

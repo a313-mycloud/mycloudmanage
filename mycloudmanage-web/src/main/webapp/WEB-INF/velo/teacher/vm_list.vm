@@ -66,18 +66,24 @@
                                          <!--开启关闭按钮-->
 										 #if($!vm.vmStatus.status==0)
 										 <a class="start" vmUuid="$!vm.vmUuid">
-										 <image src="/resources/images/icons/tick_circle.png"  alt="开启" title="开启">
+										 <image src="/resources/images/icons/start.png"  alt="开启" title="开启">
                                          </a>
 										 #else
 										 <a class="shutdown" vmUuid="$!vm.vmUuid">
-										 <image src="/resources/images/icons/cross_circle.png" alt="关闭" title="关闭">
+										 <image src="/resources/images/icons/shutdown.png" alt="关闭" title="关闭">
                                          </a>
 										 #end
 										 
 										 <!--删除按钮-->
-										 <a  href="">
+										 <a  href="#">
 										 <image src="/resources/images/icons/cross.png"  alt="删除" title="删除">
                                          </a>
+                                         
+                                          <!--转换按钮-->
+										 <a  class="convert" vmUuid="$!{vm.vmUuid}">
+										 <image src="/resources/images/icons/convert.gif"  alt="转换" title="转换">
+                                         </a>
+                                         
 									</td>
 								</tr>
 								#end

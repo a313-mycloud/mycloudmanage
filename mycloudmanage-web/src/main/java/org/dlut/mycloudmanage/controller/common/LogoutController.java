@@ -5,7 +5,7 @@
  * use it only in accordance with the terms of the license agreement you entered
  * into with etao.com .
  */
-package org.dlut.mycloudmanage.controller;
+package org.dlut.mycloudmanage.controller.common;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

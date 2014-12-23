@@ -1,13 +1,13 @@
 <div id="sidebar"><div id="sidebar-wrapper"> <!-- Sidebar with logo and menu -->
 			
-			<h1 id="sidebar-title"><a href="#">Simpla Admin</a></h1>
+			<h1 id="sidebar-title"><a href="#">MyCloud</a></h1>
 		  
 			<!-- Logo (221px wide) -->
-			<a href="#"><img id="logo" src="/resources/images/logo.png" alt="Simpla Admin logo" /></a>
+			<a href="#"><img id="logo" src="/resources/images/logo.png" alt="mycloud logo" /></a>
 		  
 			<!-- Sidebar Profile links -->
 			<div id="profile-links">
-				Hello, 罗劼 | <a href="/logout" title="Sign Out">退出</a>
+				你好, $!{loginUser.account}  | <a href="/logout" title="Sign Out">退出</a>
 			</div>        
 			<br/>
 			<br/>

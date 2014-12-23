@@ -5,7 +5,7 @@
  * use it only in accordance with the terms of the license agreement you entered
  * into with etao.com .
  */
-package org.dlut.mycloudmanage.controller;
+package org.dlut.mycloudmanage.controller.common;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,33 +15,33 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.dlut.mycloudmanage.biz.UserBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.SessionConstant;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.obj.MenuVO;
 import org.dlut.mycloudmanage.interceptor.LoginInterceptor;
-import org.dlut.mycloudserver.client.common.MyCloudResult;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
-import org.dlut.mycloudserver.client.service.usermanage.IUserManageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.ModelMap;
 
 /**
  * 类BaseController.java的实现描述：TODO 类实现描述
+ * 该类提供了Controller具有的一些基础的功能，是所有Controller类的父类
  * 
- * @author luojie 2014年9月21日 下午5:30:34
+ * @author xuyizhen 2014年12月23日 下午11:08:41
  */
 public abstract class BaseController {
 
-    private static Logger      log = LoggerFactory.getLogger(LoginInterceptor.class);
+    private static Logger log = LoggerFactory.getLogger(LoginInterceptor.class);
 
-    @Resource
-    private IUserManageService userManageService;
+    @Resource(name = "userBiz")
+    private UserBiz       userBiz;
 
     /**
-     * 设置默认的一些属性
+     * 设置当前页面的上下文
      * 
      * @param request
      * @param response
@@ -52,18 +52,18 @@ public abstract class BaseController {
 
         // 设置登陆用户的信息
         String account = (String) request.getSession().getAttribute(SessionConstant.USER_ACCOUNT);
-        MyCloudResult<UserDTO> userDTOResult = userManageService.getUserByAccount(account);
-        if (!userDTOResult.isSuccess() || userDTOResult.getModel() == null) {
+        UserDTO userDTO = userBiz.getUserByAccount(account);
+        if (userDTO == null) {
             log.error("用户账号" + account + "不存在");
             return "用户账号" + account + "不存在";
         }
-        model.put("loginUser", userDTOResult.getModel());
+        model.put("loginUser", userDTO);
 
         return null;
     }
 
     /**
-     * 设置需要展示的菜单
+     * 设置当前角色要展示的功能菜单
      * 
      * @param roleEnum
      * @param currentMenu
@@ -99,18 +99,6 @@ public abstract class BaseController {
         return "redirect:" + UrlConstant.LOGIN_URL;
     }
 
-    protected String goDefaultPage(RoleEnum role) {
-        StringBuilder page = new StringBuilder("redirect:");
-        if (role == RoleEnum.ADMIN) {
-            page.append(UrlConstant.ADMIN_DEFAULT_URL);
-        } else if (role == RoleEnum.STUDENT) {
-            page.append(UrlConstant.STUDENT_DEFAULT_URL);
-        } else if (role == RoleEnum.TEACHER) {
-            page.append(UrlConstant.TEACHER_DEFAULT_URL);
-        }
-        return page.toString();
-    }
-
     /**
      * 跳转到错误页面
      * 
@@ -121,9 +109,15 @@ public abstract class BaseController {
         return "redirect:" + UrlConstant.ERROR_URL + "?errorDesc=" + errorDesc;
     }
 
-    protected void outputResponseJson(HttpServletResponse response, String jsonMap) {
+    /**
+     * 将String类型的json写入到response流中
+     * 
+     * @param response
+     * @param jsonString
+     */
+    protected void outputResponseJson(HttpServletResponse response, String jsonString) {
         try {
-            response.getWriter().println(jsonMap);
+            response.getWriter().println(jsonString);
         } catch (IOException e) {
             e.printStackTrace();
         }

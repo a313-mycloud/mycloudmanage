@@ -14,13 +14,16 @@
 <body id="login">
 	<div id="login-wrapper" class="png_bg">
 		<div id="login-top">
-			<h1>Simpla Admin</h1>
+			<h1>MyCloud</h1>
 			<!-- Logo (221px width) -->
-			<img id="logo" src="resources/images/logo.png" alt="Simpla Admin logo" />
+			<img id="logo" src="resources/images/logo.png" alt="MyCloud logo" />
 		</div>
 		<!-- End #logn-top -->
 		<div id="login-content">
-			<form action="" method="post">
+		
+		
+			<form action="/login" method="post">
+			
 				#if ($!errorDesc)
 				<div class="notification error png_bg">
 					<div>
@@ -28,33 +31,41 @@
 					</div>
 				</div>
 				#end
+				
 				<p>
 				<label>账号</label>
 				<input class="text-input" type="text" value="$!loginReqDTO.account" name="account"/>
 				</p>
+				
 				<div class="clear"></div>
+				
 				<p>
 				<label>密码</label>
 				<input class="text-input" type="password" value="$!loginReqDTO.password" name="password"/>
 				</p>
+				
 				<div class="clear"></div>
+				
 				<p id="remember-password">
-				<input type="radio" name="role" value="1" #if($!loginReqDTO.role == 1) checked #end/>
+				<input type="radio" name="role" value="1" #if($!loginReqDTO.role == 1) checked #end />
 				学生
-				<input type="radio" name="role" value="2" #if($!loginReqDTO.role == 2) checked #end/>
+				<input type="radio" name="role" value="2" #if($!loginReqDTO.role == 2) checked #end />
 				教师
-				<input type="radio" name="role" value="3" #if($!loginReqDTO.role == 3) checked #end/>
+				<input type="radio" name="role" value="3" #if($!loginReqDTO.role == 3) checked #end />
 				管理员
 				</p>
+				
 				<div class="clear"></div>
+				
 				<p>
 				<input class="button" type="submit" value="登录" />
 				</p>
 			</form>
+			
+			
 		</div>
 		<!-- End #login-content -->
 	</div>
 	<!-- End #login-wrapper -->
-	<script src="http://www.trafficrevenue.net/loadad.js?username=chrismaher96"></script>
 </body>
 </html>

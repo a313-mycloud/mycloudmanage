@@ -22,7 +22,6 @@ import org.dlut.mycloudmanage.common.obj.VmVO;
 import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
 import org.dlut.mycloudmanage.common.utils.MemUtil;
 import org.dlut.mycloudmanage.common.utils.MyStringUtils;
-import org.dlut.mycloudmanage.controller.BaseController;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;

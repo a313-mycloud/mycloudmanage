@@ -1,3 +1,5 @@
+<!--author:xuyizhen-->
+<!--time:2014/12/7 10:46-->
 <div id="main-content"> <!-- Main Content Section with everything -->	
 <div class="content-box"><!-- Start Content Box -->
 <div class="content-box-content">
@@ -8,22 +10,20 @@
 						<table id="table" >
 							<thead>
 								<tr>
-								  <th>物理机名称</th>
-								  <th>物理机IP</th>
-								  <th>物理机状态</th>
-								  <th>操作</th>
+								   <th>虚拟机名称</th>
+								   <th>虚拟机配置</th>
+								   <th>所属课程</th>
+								   <th>访问方式</th>
+								   <th>虚拟机描述</th>								   
+								   <th>操作</th>
 								</tr>
 							</thead>
 					
-							<tfoot>
+								<tfoot>
 								<tr>
-									<td colspan="6">
-										<div class=" align-left">
-											<a class="button" href="/admin/host/add/form" >添加</a>
-									    </div>   
-									 
-									    
-									    <div class="pagination">
+									<td colspan="8">
+										
+									     <div class="pagination">
 									        <a >总共$!totalPage页</a>
 									        <a class="firstPage" >首页</a>
 									        <a class="prePage" >上页</a>
@@ -37,22 +37,30 @@
 							</tfoot>
 						 
 							<tbody >
-								#foreach($host in $!hostList)
-								  #if($!{velocityCount}%2!=0)
+								#foreach($vm in $!tvms)
+								
+							    #if($!{velocityCount}%2!=0)
 								<tr class="alt-row">
 								#else
 								<tr>
 								#end
-									<td>$!host.hostName</td>
-									<td>$!host.hostIp</td>
-									<td>$!host.hostStatusEnum.desc</td>
+								    
+									<td>$!vm.vmName</td>
+									<td>$!vm.vmVcpu核，$!{vm.vmMemory}MB</td>
+									<td>$!vm.vmClass  </td>
+									<td>$!vm.showType.desc</th>
+									<td>$!vm.vmDesc</th>
 									<td>
-										 <a   href="/admin/host/edit/form?hostId=$!host.hostId">
-										 <img src="/resources/images/icons/pencil.png" alt="编辑" tittle="编辑">
+									     <!--编辑按钮-->
+										 <a  href="/teacher/tvm/edit/form?vmUuid=$!vm.vmUuid">
+										 <image src="/resources/images/icons/pencil.png">
                                          </a>
-										 <a class="remove" hostId="$!host.hostId">
-										<img src="/resources/images/icons/cross.png" alt="删除" tittle="删除">
-                                         </a> 
+                              
+                                        
+										 <!--转换按钮-->
+										 <a  class="convert" vmUuid="$!{vm.vmUuid}">
+										 <image src="/resources/images/icons/cross.png"  alt="转换" title="转换">
+                                         </a>
 									</td>
 								</tr>
 								#end

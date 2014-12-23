@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.dlut.mycloudmanage.biz.HostBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
-import org.dlut.mycloudmanage.controller.BaseController;
+import org.dlut.mycloudmanage.controller.common.BaseController;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.hostmanage.HostDTO;
 import org.dlut.mycloudserver.client.common.hostmanage.QueryHostCondition;

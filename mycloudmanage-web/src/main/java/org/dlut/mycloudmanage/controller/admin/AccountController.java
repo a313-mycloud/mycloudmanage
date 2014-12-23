@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
-import org.dlut.mycloudmanage.controller.BaseController;
-import org.dlut.mycloudmanage.controller.LoginController;
+import org.dlut.mycloudmanage.controller.common.BaseController;
+import org.dlut.mycloudmanage.controller.common.LoginController;
 import org.dlut.mycloudserver.client.common.MyCloudResult;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.usermanage.QueryUserCondition;

@@ -6,7 +6,7 @@
 						
 						
 						   <form>
-						  <field>
+						  <fieldset>
 						   <p>
 						   <label >虚拟机名称</label>
 						   <input  class="text-input small-input" type="text"  id="vmName" name="vmName">
@@ -42,8 +42,8 @@
 						   </p>
 						   
 						   <p>
-						       <label>远程访问密码</label>
-						       <input class="text-input small-input" type="text" id="vmPassword" name="vmPassword">
+						       <label>远程访问密码</label> 
+						       <input class="text-input small-input" type="text"  id="vmPassword" name="vmPassword">
 						       
 						   </p>
 						   
@@ -59,7 +59,7 @@
 						           <a class="button reset" >重置</a>
 						   </p>
 						
-						   </field>
+						   </fieldset>
 						   
 						   <form>
 						

@@ -59,7 +59,9 @@
 				
 				<p>
 				<input class="button" type="submit" value="登录" />
+			
 				</p>
+				</fieldset>
 			</form>
 			
 			

@@ -67,8 +67,10 @@ public class BaseVmController extends BaseController {
         queryVmCondition.setOffset((currentPage - 1) * PAGESIZE);
         queryVmCondition.setIsTemplateVm(false);
         Pagination<VmDTO> pageVmDTO = this.vmBiz.query(queryVmCondition);
-        if (pageVmDTO.getTotalPage() >= 1 && (currentPage < 1 || currentPage > pageVmDTO.getTotalPage()))
+        if (pageVmDTO.getTotalPage() >= 1 && (currentPage < 1 || currentPage > pageVmDTO.getTotalPage())) {
+
             return this.goErrorPage("该页面不存在");
+        }
         List<VmDTO> vmDTOList = pageVmDTO.getList();
         List<VmVO> vmList = new ArrayList<VmVO>();
         for (VmDTO vmDTO : vmDTOList) {

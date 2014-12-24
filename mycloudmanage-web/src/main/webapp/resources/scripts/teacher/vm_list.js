@@ -4,9 +4,12 @@
  */
 
 $(document).ready(function(){	
+	$(".remove").click(function(){
+	   remove('/teacher/vm/remove.do',{"vmUuid":$(this).attr('vmUuid')},'/teacher/vm/list?currentPage=1');
+	});
 	$(".convert").click(function(){
 		console.log($(this).attr('vmUuid'));
-		convert('/teacher/vm/convert.do',{vmUuid:$(this).attr('vmUuid')},'/teacher/vm/list?currentPage=1');
+		convert('/teacher/vm/convert.do',{"vmUuid":$(this).attr('vmUuid')},'/teacher/vm/list?currentPage=1');
 	});
 	$(".edit").click(function(){
 	    edit('/teacher/vm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/teacher/vm/list?currentPage=1");

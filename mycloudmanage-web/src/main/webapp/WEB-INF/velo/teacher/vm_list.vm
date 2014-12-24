@@ -75,7 +75,7 @@
 										 #end
 										 
 										 <!--删除按钮-->
-										 <a  href="#">
+										 <a  class="remove" vmUuid="$!vm.vmUuid">
 										 <image src="/resources/images/icons/cross.png"  alt="删除" title="删除">
                                          </a>
                                          

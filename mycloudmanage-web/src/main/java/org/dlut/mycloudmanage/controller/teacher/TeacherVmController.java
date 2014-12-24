@@ -39,7 +39,7 @@ import com.alibaba.fastjson.JSONObject;
 /**
  * 类TeacherVmController.java的实现描述：TODO 类实现描述
  * 
- * @author xuyizhen Dec 16, 2014 7:11:45 PM
+ * @author xuyizhen 2014年12月24日 下午8:40:36
  */
 @Controller
 public class TeacherVmController extends BaseVmController {
@@ -263,4 +263,23 @@ public class TeacherVmController extends BaseVmController {
         }
         return MyJsonUtils.getFailJsonString(json, "转换失败");
     }
+
+    @RequestMapping(value = UrlConstant.TEACHER_VM_REMOVE, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public String removeVm(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid) {
+        JSONObject json = new JSONObject();
+
+        // 检查vmUuid是否存在
+        QueryVmCondition queryVmCondition = new QueryVmCondition();
+        queryVmCondition.setVmUuid(vmUuid);
+        Pagination<VmDTO> page = this.vmBiz.query(queryVmCondition);
+        if (page.getTotalCount() <= 0) {
+            return MyJsonUtils.getFailJsonString(json, "要操作的虚拟机不存在");
+        }
+        if (this.vmBiz.deleteVm(vmUuid)) {
+            return MyJsonUtils.getSuccessJsonString(json, "删除成功");
+        }
+        return MyJsonUtils.getFailJsonString(json, "删除失败");
+    }
+
 }

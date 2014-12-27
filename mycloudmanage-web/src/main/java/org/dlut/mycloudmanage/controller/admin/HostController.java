@@ -38,10 +38,10 @@ import com.alibaba.fastjson.JSONObject;
 @Controller
 public class HostController extends BaseController {
 
-    private static Logger    log      = LoggerFactory.getLogger(HostController.class);
-    private static final int PAGESIZE = 5;
+    private static Logger log = LoggerFactory.getLogger(HostController.class);
+
     @Resource(name = "hostBiz")
-    private HostBiz          hostBiz;
+    private HostBiz       hostBiz;
 
     /**
      * 管理员-物理机-显示列表

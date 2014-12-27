@@ -39,16 +39,15 @@ import com.alibaba.fastjson.JSONObject;
  * @author xuyizhen Dec 16, 2014 6:51:22 PM
  */
 public class BaseVmController extends BaseController {
-    public static final int PAGESIZE = 5;
 
     @Resource(name = "vmBiz")
-    private VmBiz           vmBiz;
+    private VmBiz    vmBiz;
 
     @Resource(name = "classBiz")
-    private ClassBiz        classBiz;
+    private ClassBiz classBiz;
 
     @Resource(name = "hostBiz")
-    private HostBiz         hostBiz;
+    private HostBiz  hostBiz;
 
     public String vmList(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer currentPage) {
 

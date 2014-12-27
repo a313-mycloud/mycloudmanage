@@ -21,6 +21,7 @@ import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.SessionConstant;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.obj.MenuVO;
+import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
 import org.dlut.mycloudmanage.interceptor.LoginInterceptor;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
@@ -36,10 +37,11 @@ import org.springframework.ui.ModelMap;
  */
 public abstract class BaseController {
 
-    private static Logger log = LoggerFactory.getLogger(LoginInterceptor.class);
-
+    private static Logger   log      = LoggerFactory.getLogger(LoginInterceptor.class);
+    public static final int PAGESIZE = Integer.parseInt(MyPropertiesUtil.getValue("pagesize"));
+    //public static final int PAGESIZE = 5;
     @Resource(name = "userBiz")
-    private UserBiz       userBiz;
+    private UserBiz         userBiz;
 
     /**
      * 设置当前页面的上下文

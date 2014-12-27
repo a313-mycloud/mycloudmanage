@@ -45,11 +45,9 @@ import com.alibaba.fastjson.JSONObject;
 public class TeacherTVmController extends BaseController {
 
     @Resource(name = "vmBiz")
-    private VmBiz           vmBiz;
+    private VmBiz    vmBiz;
     @Resource(name = "classBiz")
-    private ClassBiz        classBiz;
-
-    public static final int PAGESIZE = 5;
+    private ClassBiz classBiz;
 
     /**
      * 教师-模板虚拟机-列表

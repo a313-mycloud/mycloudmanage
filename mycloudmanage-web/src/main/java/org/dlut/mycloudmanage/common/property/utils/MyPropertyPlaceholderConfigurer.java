@@ -32,7 +32,7 @@ public class MyPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigur
         for (Object key : props.keySet()) {
             String keyStr = key.toString();
             String value = props.getProperty(keyStr);
-            System.out.println(keyStr + " : " + value);
+            //System.out.println(keyStr + " : " + value);
             myProperties.put(keyStr, value);
         }
     }

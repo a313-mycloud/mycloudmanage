@@ -38,7 +38,6 @@ public class MyPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigur
     }
 
     public static Object getContextProperty(String name) {
-        System.out.println("从propertyConfigurer取值正常");
         return myProperties.get(name);
     }
 }

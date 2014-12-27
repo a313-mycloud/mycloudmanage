@@ -22,10 +22,7 @@
 			</list>
 		</property>
 	</bean>
-    
-	<!--创建bean，以注入ApplicationContext-->
-    <bean id="myPropertiesUtil" class="org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil" />
- 
-    <import resource="consume/*.xml"/>
+	<bean  class="org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil"/>
 
+    <import resource="consume/*.xml"/>
 </beans>

@@ -239,7 +239,7 @@ public class TeacherVmController extends BaseVmController {
 
         if (Integer.parseInt(vmNetworkType) == 1)
             destVm.setVmNetworkType(NetworkTypeEnum.NAT);
-        else if (Integer.parseInt(showType) == 2)
+        else if (Integer.parseInt(vmNetworkType) == 2)
             destVm.setVmNetworkType(NetworkTypeEnum.BRIDGE);
         else
             return MyJsonUtils.getFailJsonString(json, "网络格式不正确");

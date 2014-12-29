@@ -7,6 +7,7 @@
  */
 package org.dlut.mycloudmanage.common.obj;
 
+import org.dlut.mycloudserver.client.common.vmmanage.NetworkTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmStatusEnum;
 
@@ -16,104 +17,123 @@ import org.dlut.mycloudserver.client.common.vmmanage.VmStatusEnum;
  * @author xuyizhen Dec 12, 2014 3:46:36 AM
  */
 public class VmVO {
-	private String vmName;
-	private String vmClass;
-	private VmStatusEnum vmStatus;
-	private String hostIp;
-	private String showPort;
-	private ShowTypeEnum showType;
-	private String vmUuid;
-	private Integer vmVcpu;
-	private String vmMemory;// 单位MB
-	private String vmDesc;
-	private String vmPass;
+    private String          vmName;
+    private String          vmClass;
+    private VmStatusEnum    vmStatus;
+    private String          hostIp;
+    private String          showPort;
+    private ShowTypeEnum    showType;
+    private String          vmUuid;
+    private Integer         vmVcpu;
+    private String          vmMemory;     // 单位MB
+    private String          vmDesc;
+    private String          vmPass;
+    private String          vmMacAddress;
 
-	public String getVmPass() {
-		return vmPass;
-	}
+    private NetworkTypeEnum vmNetworkType;
 
-	public void setVmPass(String vmPass) {
-		this.vmPass = vmPass;
-	}
+    public String getVmPass() {
+        return vmPass;
+    }
 
-	public String getVmDesc() {
-		return vmDesc;
-	}
+    public void setVmPass(String vmPass) {
+        this.vmPass = vmPass;
+    }
 
-	public void setVmDesc(String vmDesc) {
-		this.vmDesc = vmDesc;
-	}
+    public String getVmDesc() {
+        return vmDesc;
+    }
 
-	public Integer getVmVcpu() {
-		return vmVcpu;
-	}
+    public void setVmDesc(String vmDesc) {
+        this.vmDesc = vmDesc;
+    }
 
-	public void setVmVcpu(Integer vmVcpu) {
-		this.vmVcpu = vmVcpu;
-	}
+    public Integer getVmVcpu() {
+        return vmVcpu;
+    }
 
-	public String getVmMemory() {
-		return vmMemory;
-	}
+    public void setVmVcpu(Integer vmVcpu) {
+        this.vmVcpu = vmVcpu;
+    }
 
-	public void setVmMemory(String vmMemory) {
-		this.vmMemory = vmMemory;
-	}
+    public String getVmMemory() {
+        return vmMemory;
+    }
 
-	public String getVmUuid() {
-		return vmUuid;
-	}
+    public void setVmMemory(String vmMemory) {
+        this.vmMemory = vmMemory;
+    }
 
-	public void setVmUuid(String vmUuid) {
-		this.vmUuid = vmUuid;
-	}
+    public String getVmUuid() {
+        return vmUuid;
+    }
 
-	public String getVmName() {
-		return vmName;
-	}
+    public void setVmUuid(String vmUuid) {
+        this.vmUuid = vmUuid;
+    }
 
-	public void setVmName(String vmName) {
-		this.vmName = vmName;
-	}
+    public String getVmName() {
+        return vmName;
+    }
 
-	public String getVmClass() {
-		return vmClass;
-	}
+    public void setVmName(String vmName) {
+        this.vmName = vmName;
+    }
 
-	public void setVmClass(String vmClass) {
-		this.vmClass = vmClass;
-	}
+    public String getVmClass() {
+        return vmClass;
+    }
 
-	public VmStatusEnum getVmStatus() {
-		return vmStatus;
-	}
+    public void setVmClass(String vmClass) {
+        this.vmClass = vmClass;
+    }
 
-	public void setVmStatus(VmStatusEnum vmStatus) {
-		this.vmStatus = vmStatus;
-	}
+    public VmStatusEnum getVmStatus() {
+        return vmStatus;
+    }
 
-	public String getHostIp() {
-		return hostIp;
-	}
+    public void setVmStatus(VmStatusEnum vmStatus) {
+        this.vmStatus = vmStatus;
+    }
 
-	public void setHostIp(String hostIp) {
-		this.hostIp = hostIp;
-	}
+    public String getHostIp() {
+        return hostIp;
+    }
 
-	public String getShowPort() {
-		return showPort;
-	}
+    public void setHostIp(String hostIp) {
+        this.hostIp = hostIp;
+    }
 
-	public void setShowPort(String showPort) {
-		this.showPort = showPort;
-	}
+    public String getShowPort() {
+        return showPort;
+    }
 
-	public ShowTypeEnum getShowType() {
-		return showType;
-	}
+    public void setShowPort(String showPort) {
+        this.showPort = showPort;
+    }
 
-	public void setShowType(ShowTypeEnum showType) {
-		this.showType = showType;
-	}
+    public ShowTypeEnum getShowType() {
+        return showType;
+    }
+
+    public void setShowType(ShowTypeEnum showType) {
+        this.showType = showType;
+    }
+
+    public String getVmMacAddress() {
+        return vmMacAddress;
+    }
+
+    public void setVmMacAddress(String vmMacAddress) {
+        this.vmMacAddress = vmMacAddress;
+    }
+
+    public NetworkTypeEnum getVmNetworkType() {
+        return vmNetworkType;
+    }
+
+    public void setVmNetworkType(NetworkTypeEnum vmNetworkType) {
+        this.vmNetworkType = vmNetworkType;
+    }
 
 }

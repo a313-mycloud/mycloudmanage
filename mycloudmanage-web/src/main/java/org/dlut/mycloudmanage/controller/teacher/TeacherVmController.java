@@ -26,6 +26,7 @@ import org.dlut.mycloudmanage.controller.common.BaseVmController;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
+import org.dlut.mycloudserver.client.common.vmmanage.NetworkTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
@@ -116,9 +117,10 @@ public class TeacherVmController extends BaseVmController {
     @ResponseBody
     public String vmEdit(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid,
                          String vmName, String showType, String vmDesc, String showPassword, String vmVcpu,
-                         String vmMemory) {
+                         String vmMemory, String vmNetworkType) {
 
-        return super.vmEdit(request, response, model, vmUuid, vmName, showType, vmDesc, showPassword, vmVcpu, vmMemory);
+        return super.vmEdit(request, response, model, vmUuid, vmName, showType, vmDesc, showPassword, vmVcpu, vmMemory,
+                vmNetworkType);
     }
 
     /**
@@ -188,7 +190,7 @@ public class TeacherVmController extends BaseVmController {
     @ResponseBody
     public String addVm(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmName,
                         String vmVcpu, String vmMemory, String srcVmUuid, String showType, String showPassword,
-                        String vmDesc) {
+                        String vmDesc, String vmNetworkType) {
         String errorDesc = setDefaultEnv(request, response, model);
         if (errorDesc != null) {
             return goErrorPage(errorDesc);
@@ -211,6 +213,9 @@ public class TeacherVmController extends BaseVmController {
         if (!MyStringUtils.isInteger(showType)) {
             return MyJsonUtils.getFailJsonString(json, "显示类型格式不正确");
         }
+        if (!MyStringUtils.isInteger(vmNetworkType)) {
+            return MyJsonUtils.getFailJsonString(json, "网络格式不正确");
+        }
         // 获取作为模板的虚拟机的信息
 
         VmDTO srcVm = this.vmBiz.getVmByUuid(srcVmUuid);
@@ -231,6 +236,14 @@ public class TeacherVmController extends BaseVmController {
             destVm.setShowType(ShowTypeEnum.VNC);
         else
             return MyJsonUtils.getFailJsonString(json, "显示类型格式不正确");
+
+        if (Integer.parseInt(vmNetworkType) == 1)
+            destVm.setVmNetworkType(NetworkTypeEnum.NAT);
+        else if (Integer.parseInt(showType) == 2)
+            destVm.setVmNetworkType(NetworkTypeEnum.BRIDGE);
+        else
+            return MyJsonUtils.getFailJsonString(json, "网络格式不正确");
+
         destVm.setClassId(0);// 在没有绑定课程的情况下，默认为0
         if (StringUtils.isBlank(vmDesc))
             destVm.setDesc("");

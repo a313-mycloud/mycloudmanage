@@ -41,6 +41,14 @@
 						       </select>
 						   </p>
 						   
+						    <p>
+						   <label>网络类型</label>
+						       <select id="vmNetworkType"  name="vmNetworkType" class="small-input"> 
+						         <option value="1">NAT</option>
+						         <option value="2">桥接</option>
+						       </select>
+						   </p>
+						   
 						   <p>
 						       <label>远程访问密码</label> 
 						       <input class="text-input small-input" type="text"  id="vmPassword" name="vmPassword">

@@ -16,6 +16,8 @@
 								   <th>状态</th>
 								   <th>访问地址</th>
 								   <th>访问方式</th>
+								    <th>MAC地址</th>
+								   <th>网络类型</th>
 								   <th>虚拟机描述</th>								   
 								   <th>操作</th>
 								</tr>
@@ -47,7 +49,9 @@
 									<td>$!vm.vmStatus.desc</td>
 									<td>$!vm.hostIp:$!vm.showPort</td>
 									<td>$!vm.showType.desc</th>
-									<td>$!vm.vmDesc</th>
+										<td>$!vm.vmMacAddress</td>
+									<td>$!vm.vmNetworkType.desc</td>
+									<td>$!vm.vmDesc</td>
 									<td>
 										 <a class="button"  href="/student/vm/edit/form?vmUuid=$!vm.vmUuid">编辑</a>
 										 #if($!vm.vmStatus.status==0)

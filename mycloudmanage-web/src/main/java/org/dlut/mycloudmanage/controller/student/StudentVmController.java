@@ -83,9 +83,10 @@ public class StudentVmController extends BaseVmController {
     @ResponseBody
     public String vmEdit(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid,
                          String vmName, String showType, String vmDesc, String showPassword, String vmVcpu,
-                         String vmMemory) {
+                         String vmMemory, String vmNetworkType) {
 
-        return super.vmEdit(request, response, model, vmUuid, vmName, showType, vmDesc, showPassword, vmVcpu, vmMemory);
+        return super.vmEdit(request, response, model, vmUuid, vmName, showType, vmDesc, showPassword, vmVcpu, vmMemory,
+                vmNetworkType);
     }
 
     /**

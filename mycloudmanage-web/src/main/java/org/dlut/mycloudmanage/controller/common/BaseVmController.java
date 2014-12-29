@@ -25,6 +25,7 @@ import org.dlut.mycloudmanage.common.utils.MemUtil;
 import org.dlut.mycloudmanage.common.utils.MyStringUtils;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
+import org.dlut.mycloudserver.client.common.vmmanage.NetworkTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
@@ -98,6 +99,8 @@ public class BaseVmController extends BaseController {
                 vmVO.setVmDesc("--");
             else
                 vmVO.setVmDesc(vmDTO.getDesc());
+            vmVO.setVmMacAddress(vmDTO.getVmMacAddress());
+            vmVO.setVmNetworkType(vmDTO.getVmNetworkType());
             vmList.add(vmVO);
         }
         model.put("vmList", vmList);
@@ -132,6 +135,7 @@ public class BaseVmController extends BaseController {
         vm.setShowType(vmDTO.getShowType());
         vm.setVmPass(vmDTO.getShowPassword());
         vm.setVmUuid(vmDTO.getVmUuid());
+        vm.setVmNetworkType(vmDTO.getVmNetworkType());
         model.put("vm", vm);
 
         return "default";
@@ -154,7 +158,7 @@ public class BaseVmController extends BaseController {
 
     public String vmEdit(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid,
                          String vmName, String showType, String vmDesc, String showPassword, String vmVcpu,
-                         String vmMemory) {
+                         String vmMemory, String vmNetworkType) {
         String errorDesc = setDefaultEnv(request, response, model);
         if (errorDesc != null) {
             return goErrorPage(errorDesc);
@@ -188,11 +192,17 @@ public class BaseVmController extends BaseController {
         vmDTO.setDesc(vmDesc);
         vmDTO.setShowPassword(showPassword);
         vmDTO.setVmVcpu(Integer.parseInt(vmVcpu));
+
         vmDTO.setVmMemory(MemUtil.getMem(Integer.parseInt(vmMemory), MemUnitEnum.MB));
         if (Integer.parseInt(showType) == 1)
             vmDTO.setShowType(ShowTypeEnum.SPICE);
         else
             vmDTO.setShowType(ShowTypeEnum.VNC);
+        if (Integer.parseInt(vmNetworkType) == 1)
+            vmDTO.setVmNetworkType(NetworkTypeEnum.NAT);
+        else
+            vmDTO.setVmNetworkType(NetworkTypeEnum.BRIDGE);
+
         if (this.vmBiz.updateVm(vmDTO)) {
             json.put("isSuccess", true);
             json.put("message", "更新成功");

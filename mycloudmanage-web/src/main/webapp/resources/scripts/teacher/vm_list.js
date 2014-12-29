@@ -1,5 +1,5 @@
 /**
- *  *
+ *  *教师的vm_list
  * @author xuyizhen Dec 7, 2014 10:47 AM
  */
 
@@ -12,11 +12,12 @@ $(document).ready(function(){
 		convert('/teacher/vm/convert.do',{"vmUuid":$(this).attr('vmUuid')},'/teacher/vm/list?currentPage=1');
 	});
 	$(".edit").click(function(){
-	    edit('/teacher/vm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/teacher/vm/list?currentPage=1");
+	    edit('/teacher/vm/edit.do',{"vmNetworkType":$("#vmNetworkType").val(),"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/teacher/vm/list?currentPage=1");
 	});
 	$(".resetEdit").click(function(){
 		console.log($("#preName").val());
 		console.log($("#preShowType").val());
+		console.log($("#preVmNetworkType").val());
 		$("#vmName").val($("#preName").val());
 		$("#showType").val($("#preShowType").val());
 		$("#vmDesc").val($("#preVmDesc").val());
@@ -24,12 +25,13 @@ $(document).ready(function(){
 		$("#vmVcpu").val($("#preVmVcpu").val());
 		$("#vmMemory").val($("#preVmMemory").val());
 		$("#showType").val($("#preShowType").val());
+		$("#vmNetworkType").val($("#preVmNetworkType").val());
 	});	
 	
 	$(".add").click(function(){
 		add('/teacher/vm/add.do',{"vmName":$("#vmName").val(),"vmDesc":$("#vmDesc").val(),
 		"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val(),"srcVmUuid":$("#srcVmUuid").val(),
-		"showType":$("#showType").val(),"showPassword":$("#vmPassword").val()},"/teacher/vm/list?currentPage=1");
+		"showType":$("#showType").val(),"showPassword":$("#vmPassword").val(),"vmNetworkType":$("#vmNetworkType").val()},"/teacher/vm/list?currentPage=1");
 		
 	});
 	

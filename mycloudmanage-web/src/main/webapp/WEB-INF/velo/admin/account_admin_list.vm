@@ -39,7 +39,7 @@
 									<td colspan="6">
 										<div class="bulk-actions align-left">
 											<a class="button" href="#">全部删除</a>
-											<a class="button" href="/admin/account/add?role=$!role">添加</a>
+											<a class="button" href="/admin/account/add?/role=$!role">添加</a>
 											
 												
 										<a class="shortcut" href='#message' rel="modal"><span>

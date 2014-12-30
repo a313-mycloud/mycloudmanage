@@ -133,9 +133,7 @@ public class AccountController extends BaseController {
         UserDTO userDTO = (UserDTO) model.get("loginUser");
 
         this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
-        if (role == 1) {
-            model.put("screen", "admin/account_add");
-        }
+        model.put("screen", "admin/account_add");
         return "default";
     }
 }

@@ -14,14 +14,15 @@
 	<context:component-scan base-package="org.dlut.mycloudmanage" />
 
 	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location">
-			<value>classpath:config.properties</value>
+		class="org.dlut.mycloudmanage.common.property.utils.MyPropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config.properties</value>
+				<value>classpath:myconfig.properties</value>
+			</list>
 		</property>
 	</bean>
+	<bean  class="org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil"/>
 
-	<import resource="consume/*.xml" />
-
-	<!-- <import resource="classpath*:usermanage-context.xml" /> -->
-
+    <import resource="consume/*.xml"/>
 </beans>

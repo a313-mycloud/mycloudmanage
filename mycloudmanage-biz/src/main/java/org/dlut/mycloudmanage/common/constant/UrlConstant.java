@@ -91,6 +91,7 @@ public class UrlConstant {
     public static final String TEACHER_VM_ADD_FORM        = "/teacher/vm/add/form";
     public static final String TEACHER_VM_ADD             = "/teacher/vm/add.do";
     public static final String TEACHER_VM_CONVERT         = "/teacher/vm/convert.do";
+    public static final String TEACHER_VM_REMOVE          = "/teacher/vm/remove.do";
     /**
      * 教师-模板虚拟机-操作
      */

@@ -8,6 +8,7 @@
 package org.dlut.mycloudmanage.controller.common;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public abstract class BaseController {
 
     private static Logger log = LoggerFactory.getLogger(LoginInterceptor.class);
 
+    //public static final int PAGESIZE = 5;
     @Resource(name = "userBiz")
     private UserBiz       userBiz;
 
@@ -106,7 +108,7 @@ public abstract class BaseController {
      * @return
      */
     protected String goErrorPage(String errorDesc) {
-        return "redirect:" + UrlConstant.ERROR_URL + "?errorDesc=" + errorDesc;
+        return "redirect:" + UrlConstant.ERROR_URL + "?errorDesc=" + URLEncoder.encode(errorDesc);
     }
 
     /**

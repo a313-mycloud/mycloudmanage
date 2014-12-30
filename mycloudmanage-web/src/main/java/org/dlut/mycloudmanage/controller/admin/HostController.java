@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.dlut.mycloudmanage.biz.HostBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
+import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
 import org.dlut.mycloudmanage.controller.common.BaseController;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.hostmanage.HostDTO;
@@ -38,10 +39,10 @@ import com.alibaba.fastjson.JSONObject;
 @Controller
 public class HostController extends BaseController {
 
-    private static Logger    log      = LoggerFactory.getLogger(HostController.class);
-    private static final int PAGESIZE = 5;
+    private static Logger log = LoggerFactory.getLogger(HostController.class);
+
     @Resource(name = "hostBiz")
-    private HostBiz          hostBiz;
+    private HostBiz       hostBiz;
 
     /**
      * 管理员-物理机-显示列表
@@ -64,7 +65,7 @@ public class HostController extends BaseController {
         }
         if (currentPage == null)
             currentPage = 1;
-
+        int PAGESIZE = Integer.parseInt(MyPropertiesUtil.getValue("pagesize"));
         QueryHostCondition queryHostCondition = new QueryHostCondition();
         queryHostCondition.setLimit(PAGESIZE);
         queryHostCondition.setOffset((currentPage - 1) * PAGESIZE);

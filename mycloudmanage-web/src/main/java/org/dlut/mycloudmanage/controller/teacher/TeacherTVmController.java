@@ -19,6 +19,7 @@ import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.obj.VmVO;
+import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
 import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
 import org.dlut.mycloudmanage.common.utils.MemUtil;
 import org.dlut.mycloudmanage.common.utils.MyJsonUtils;
@@ -45,11 +46,9 @@ import com.alibaba.fastjson.JSONObject;
 public class TeacherTVmController extends BaseController {
 
     @Resource(name = "vmBiz")
-    private VmBiz           vmBiz;
+    private VmBiz    vmBiz;
     @Resource(name = "classBiz")
-    private ClassBiz        classBiz;
-
-    public static final int PAGESIZE = 5;
+    private ClassBiz classBiz;
 
     /**
      * 教师-模板虚拟机-列表
@@ -68,6 +67,7 @@ public class TeacherTVmController extends BaseController {
         if (errorDesc != null) {
             return goErrorPage(errorDesc);
         }
+        int PAGESIZE = Integer.parseInt(MyPropertiesUtil.getValue("pagesize"));
         UserDTO userDTO = (UserDTO) model.get("loginUser");
         if (currentPage == null)
             currentPage = 1;

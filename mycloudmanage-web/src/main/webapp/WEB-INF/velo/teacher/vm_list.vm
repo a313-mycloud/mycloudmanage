@@ -16,6 +16,8 @@
 								   <th>状态</th>
 								   <th>访问地址</th>
 								   <th>访问方式</th>
+								   <th>MAC地址</th>
+								   <th>网络类型</th>
 								   <th>虚拟机描述</th>								   
 								   <th>操作</th>
 								</tr>
@@ -49,14 +51,16 @@
 								#else
 								<tr>
 								#end
-								
+						
 									<td>$!vm.vmName</td>
 									<td>$!vm.vmVcpu核，$!{vm.vmMemory}MB</td>
 									<td>$!vm.vmClass</td>
 									<td>$!vm.vmStatus.desc</td>
 									<td>$!vm.hostIp:$!vm.showPort</td>
-									<td>$!vm.showType.desc</th>
-									<td>$!vm.vmDesc</th>
+									<td>$!vm.showType.desc</td>
+									<td>$!vm.vmMacAddress</td>
+									<td>$!vm.vmNetworkType.desc</td>
+									<td>$!vm.vmDesc</td>
 									<td>
 									     <!--编辑按钮-->
 										 <a  href="/teacher/vm/edit/form?vmUuid=$!vm.vmUuid">
@@ -75,7 +79,7 @@
 										 #end
 										 
 										 <!--删除按钮-->
-										 <a  href="#">
+										 <a  class="remove" vmUuid="$!vm.vmUuid">
 										 <image src="/resources/images/icons/cross.png"  alt="删除" title="删除">
                                          </a>
                                          

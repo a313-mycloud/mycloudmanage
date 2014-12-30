@@ -19,11 +19,13 @@ import org.dlut.mycloudmanage.biz.HostBiz;
 import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.obj.VmVO;
+import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
 import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
 import org.dlut.mycloudmanage.common.utils.MemUtil;
 import org.dlut.mycloudmanage.common.utils.MyStringUtils;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
+import org.dlut.mycloudserver.client.common.vmmanage.NetworkTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
@@ -39,16 +41,15 @@ import com.alibaba.fastjson.JSONObject;
  * @author xuyizhen Dec 16, 2014 6:51:22 PM
  */
 public class BaseVmController extends BaseController {
-    public static final int PAGESIZE = 5;
 
     @Resource(name = "vmBiz")
-    private VmBiz           vmBiz;
+    private VmBiz    vmBiz;
 
     @Resource(name = "classBiz")
-    private ClassBiz        classBiz;
+    private ClassBiz classBiz;
 
     @Resource(name = "hostBiz")
-    private HostBiz         hostBiz;
+    private HostBiz  hostBiz;
 
     public String vmList(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer currentPage) {
 
@@ -61,14 +62,18 @@ public class BaseVmController extends BaseController {
 
         if (currentPage == null)
             currentPage = 1;
+
+        int PAGESIZE = Integer.parseInt(MyPropertiesUtil.getValue("pagesize"));
         QueryVmCondition queryVmCondition = new QueryVmCondition();
         queryVmCondition.setUserAccount(userDTO.getAccount());
         queryVmCondition.setLimit(PAGESIZE);
         queryVmCondition.setOffset((currentPage - 1) * PAGESIZE);
         queryVmCondition.setIsTemplateVm(false);
         Pagination<VmDTO> pageVmDTO = this.vmBiz.query(queryVmCondition);
-        if (pageVmDTO.getTotalPage() >= 1 && (currentPage < 1 || currentPage > pageVmDTO.getTotalPage()))
+        if (pageVmDTO.getTotalPage() >= 1 && (currentPage < 1 || currentPage > pageVmDTO.getTotalPage())) {
+
             return this.goErrorPage("该页面不存在");
+        }
         List<VmDTO> vmDTOList = pageVmDTO.getList();
         List<VmVO> vmList = new ArrayList<VmVO>();
         for (VmDTO vmDTO : vmDTOList) {
@@ -94,6 +99,8 @@ public class BaseVmController extends BaseController {
                 vmVO.setVmDesc("--");
             else
                 vmVO.setVmDesc(vmDTO.getDesc());
+            vmVO.setVmMacAddress(vmDTO.getVmMacAddress());
+            vmVO.setVmNetworkType(vmDTO.getVmNetworkType());
             vmList.add(vmVO);
         }
         model.put("vmList", vmList);
@@ -128,6 +135,7 @@ public class BaseVmController extends BaseController {
         vm.setShowType(vmDTO.getShowType());
         vm.setVmPass(vmDTO.getShowPassword());
         vm.setVmUuid(vmDTO.getVmUuid());
+        vm.setVmNetworkType(vmDTO.getVmNetworkType());
         model.put("vm", vm);
 
         return "default";
@@ -150,7 +158,7 @@ public class BaseVmController extends BaseController {
 
     public String vmEdit(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid,
                          String vmName, String showType, String vmDesc, String showPassword, String vmVcpu,
-                         String vmMemory) {
+                         String vmMemory, String vmNetworkType) {
         String errorDesc = setDefaultEnv(request, response, model);
         if (errorDesc != null) {
             return goErrorPage(errorDesc);
@@ -184,11 +192,17 @@ public class BaseVmController extends BaseController {
         vmDTO.setDesc(vmDesc);
         vmDTO.setShowPassword(showPassword);
         vmDTO.setVmVcpu(Integer.parseInt(vmVcpu));
+
         vmDTO.setVmMemory(MemUtil.getMem(Integer.parseInt(vmMemory), MemUnitEnum.MB));
         if (Integer.parseInt(showType) == 1)
             vmDTO.setShowType(ShowTypeEnum.SPICE);
         else
             vmDTO.setShowType(ShowTypeEnum.VNC);
+        if (Integer.parseInt(vmNetworkType) == 1)
+            vmDTO.setVmNetworkType(NetworkTypeEnum.NAT);
+        else
+            vmDTO.setVmNetworkType(NetworkTypeEnum.BRIDGE);
+
         if (this.vmBiz.updateVm(vmDTO)) {
             json.put("isSuccess", true);
             json.put("message", "更新成功");

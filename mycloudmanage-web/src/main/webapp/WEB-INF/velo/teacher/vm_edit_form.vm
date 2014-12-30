@@ -13,7 +13,9 @@
 						   <input type="hidden"  id="preShowPassword" value="$!vm.vmPass"/>
 						   <input type="hidden"  id="preVmVcpu" value="$!vm.vmVcpu"/>
 						   <input type="hidden"  id="preVmMemory" value="$!vm.vmMemory"/>
-						   
+					   <input type="hidden"  id="preVmNetworkType" value="$!vm.vmNetworkType.value"/>
+						    
+					
 						   
 								
 						   <p>
@@ -46,6 +48,14 @@
 						       <select id="showType"  class="small-input" > 
 						         <option value="1">SPICE</option>
 						         <option value="2">VNC</option>
+						       </select>
+						   </p>
+						   
+						     <p>
+						   <label>网络类型</label>
+						       <select id="vmNetworkType"  name="vmNetworkType"  class="small-input"> 
+						         <option value="1">NAT</option>
+						         <option value="2">桥接</option>
 						       </select>
 						   </p>
 						   

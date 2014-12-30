@@ -1,5 +1,5 @@
 /**
- *  *
+ *  *学生的vm_list
  * @author xuyizhen Dec 7, 2014 10:47 AM
  */
 
@@ -8,15 +8,17 @@ $(document).ready(function(){
 		$("#showType").val($("#preShowType").val());
 	});
 	$(".edit").click(function(){
-	    edit('/student/vm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/student/vm/list?currentPage=1");
+	    edit('/student/vm/edit.do',{"vmNetworkType":$("#vmNetworkType").val(),"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/student/vm/list?currentPage=1");
 	});
 	$(".resetEdit").click(function(){
 		console.log($("#preName").val());
 		console.log($("#preShowType").val());
+		console.log($("#preVmNetworkType").val());
 		$("#vmName").val($("#preName").val());
 		$("#showType").val($("#preShowType").val());
 		$("#vmDesc").val($("#preVmDesc").val());
 		$("#vmPassword").val($("#preShowPassword").val());
+		$("#vmNetworkType").val($("#preVmNetworkType").val());
 	});	
 	
 	

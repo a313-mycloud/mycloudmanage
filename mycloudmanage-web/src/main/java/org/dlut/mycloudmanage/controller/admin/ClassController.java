@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.dlut.mycloudmanage.biz.ClassBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
+import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
 import org.dlut.mycloudmanage.controller.common.BaseController;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.classmanage.ClassDTO;
@@ -64,7 +65,7 @@ public class ClassController extends BaseController {
         }
         if (currentPage == null)
             currentPage = 1;
-
+        int PAGESIZE = Integer.parseInt(MyPropertiesUtil.getValue("pagesize"));
         QueryClassCondition queryClassCondition = new QueryClassCondition();
         queryClassCondition.setLimit(PAGESIZE);
         queryClassCondition.setOffset((currentPage - 1) * PAGESIZE);

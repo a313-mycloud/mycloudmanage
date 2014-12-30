@@ -20,7 +20,6 @@
 								<tr>
 									<td colspan="6">
 										<div class=" align-left">
-											<a class="button removeAll" >全部删除</a>
 											<a class="button" href="/admin/class/add/form" >添加</a>
 									    </div>   
 									    <div class="align-right">
@@ -41,8 +40,12 @@
 									<td>$!class.className</td>
 									<td>$!class.teacherAccount</td>
 									<td>
-										 <a class="button"  href="/admin/class/edit/form?classId=$!class.classId">编辑</a>
-										 <a class="button remove" classId="$!class.classId">删除</a> 
+										 <a href="/admin/class/edit/form?classId=$!class.classId">
+										 <img src="/resources/images/icons/pencil.png" alt="编辑" tittle="编辑">
+                                         </a>
+										 <a class="remove" classId="$!class.classId">
+										<img src="/resources/images/icons/cross.png" alt="删除" tittle="删除">
+                                         </a> 
 									</td>
 								</tr>
 								#end

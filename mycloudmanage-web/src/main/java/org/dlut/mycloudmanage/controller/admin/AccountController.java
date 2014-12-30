@@ -124,7 +124,7 @@ public class AccountController extends BaseController {
     }
 
     @RequestMapping(value = "/admin/account/add")
-    public String accountAdd(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+    public String accountAdd(HttpServletRequest request, HttpServletResponse response, ModelMap model, int role) {
         String errorDesc = this.setDefaultEnv(request, response, model);
         if (errorDesc != null) {
             log.warn(errorDesc);
@@ -133,7 +133,9 @@ public class AccountController extends BaseController {
         UserDTO userDTO = (UserDTO) model.get("loginUser");
 
         this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
-        model.put("screen", "admin/account_add");
+        if (role == 1) {
+            model.put("screen", "admin/account_add");
+        }
         return "default";
     }
 }

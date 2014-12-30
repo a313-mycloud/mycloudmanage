@@ -5,37 +5,36 @@
 
 $(document).ready(function(){	
 	$(".remove").click(function() {
+                console.log("lalalalal;");
 		remove("/admin/class/remove.do",{classId:$(this).attr('classId')},"/admin/class/list?currentPage=1");
 	});
-	$(".removeAll").click(function(){
-		removeAll("/admin/class/removeAll.do","/admin/class/list?currentPage=1");
-	
-	});
 	$(".add").click(function(){
+                console.log("running add function")
 		add('/admin/class/add.do',{className:$("#className").val(),teacherAccount:$("#teacherAccount").val()},"/admin/class/list?currentPage=1");
 	});
 	$(".edit").click(function(){
-	    edit('/admin/host/edit.do',{"hostId":$("#hostId").val(),"hostName":$("#hostName").val(),"hostIp":$("#hostIp").val()},"/admin/host/list?currentPage=1");
+            console.log("running edit function")
+	    edit('/admin/class/edit.do',{"classId":$("#classId").val(),"className":$("#className").val(),"teacherAccount":$("#teacherAccount").val()},"/admin/class/list?currentPage=1");
 	});
 	$(".reset").click(function(){
-		$("#hostName").val("");
-		$("#hostIp").val("");
+		$("#className").val("");
+		$("#teacherAccount").val("");
 	});	
 	$(".resetEdit").click(function(){
-		$("#hostName").val($("#preName").val());
-		$("#hostIp").val($("#preIp").val());
+		$("#className").val($("#preName").val());
+		$("#teacherAccount").val($("#preAccount").val());
 	});	
 	$(".prePage").click(function(){
-	     showPrePage("/admin/host/list",$("#page").attr("currentPage"));
+	     showPrePage("/admin/class/list",$("#page").attr("currentPage"));
 	});
 	$(".nextPage").click(function(){
-	     showNextPage("/admin/host/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
+	     showNextPage("/admin/class/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
 	$(".firstPage").click(function(){
-	     showFirstPage("/admin/host/list",$("#page").attr("currentPage"));
+	     showFirstPage("/admin/class/list",$("#page").attr("currentPage"));
 	});
 	$(".lastPage").click(function(){
-	     showLastPage("/admin/host/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
+	     showLastPage("/admin/class/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
 	
 });

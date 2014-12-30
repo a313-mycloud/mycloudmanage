@@ -6,22 +6,19 @@
 					
 					    <form>
 						 	<fieldset>
+						 	<input id ="classId" type="hidden" value="$class.classId">
 						  	<p>
 							  	<label for="className">课程名称</label>
-							  	<input class="text-input small-input " type="text" id="className"/>
+							  	<input class="text-input big-input " type="text" id="className" value="$!class.className">
 						  	</p>
 						  	<p>
 							  	<label for="teacherAccount">教师帐号</label>
-						        <select id = "teacherAccount">
-						        #foreach($user in $!userList)
-						        <option><value =$!user.account">  $!user.account    </option>
-						        #end
-						       </select>
+							  	<input class="text-input big-input " type="text"  id="teacherAccount" value="$!class.teacherAccount">
 						  	</p>
 						  	
 						  	<p>
-						  	   <a class="button add"    >添加</a>
-						  	   <a class="button reset"    >重置</a>
+						  	   <a class="button edit"    >修改</a>
+						  	   <a class="button resetEdit"    >重置</a>
 						  	</p>
 						 	</fieldset>
 						 </form>

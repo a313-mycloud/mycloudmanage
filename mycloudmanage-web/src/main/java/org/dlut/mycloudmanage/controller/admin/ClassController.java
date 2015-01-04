@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.dlut.mycloudmanage.biz.ClassBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
+import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
 import org.dlut.mycloudmanage.controller.common.BaseController;
 import org.dlut.mycloudserver.client.common.MyCloudResult;
 import org.dlut.mycloudserver.client.common.Pagination;
@@ -42,11 +43,13 @@ import com.alibaba.fastjson.JSONObject;
 @Controller
 public class ClassController extends BaseController {
 
-    private static Logger    log      = LoggerFactory.getLogger(ClassController.class);
-    private static final int PAGESIZE = 10;
+    private static Logger      log = LoggerFactory.getLogger(ClassController.class);
 
     @Resource(name = "classBiz")
-    private ClassBiz         classBiz;
+    private ClassBiz           classBiz;
+
+    @Resource(name = "userManageService")
+    private IUserManageService userManageService;
 
     /**
      * 管理员-课程-显示列表
@@ -69,7 +72,7 @@ public class ClassController extends BaseController {
         }
         if (currentPage == null)
             currentPage = 1;
-
+        int PAGESIZE = Integer.parseInt(MyPropertiesUtil.getValue("pagesize"));
         QueryClassCondition queryClassCondition = new QueryClassCondition();
         queryClassCondition.setLimit(PAGESIZE);
         queryClassCondition.setOffset((currentPage - 1) * PAGESIZE);
@@ -131,9 +134,6 @@ public class ClassController extends BaseController {
         json.put("data", "");
         return json.toString();
     }
-
-    @Resource(name = "userManageService")
-    private IUserManageService userManageService;
 
     @RequestMapping(value = UrlConstant.ADMIN_CLASS_ADD_FORM)
     public String addClassForm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {

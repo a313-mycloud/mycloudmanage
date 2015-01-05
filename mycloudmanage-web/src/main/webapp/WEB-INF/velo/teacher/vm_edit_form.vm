@@ -46,16 +46,29 @@
 						   <p>
 						   <label >访问方式</label>
 						       <select id="showType"  class="small-input" > 
-						         <option value="1">SPICE</option>
-						         <option value="2">VNC</option>
+						           
+						         <option value="1" 
+						         #if($!vm.showType.value==1) 
+						         selected 
+						         #end>SPICE</option>
+						         <option value="2"
+						         #if($!vm.showType.value==2) 
+						         selected 
+						         #end>VNC</option>
 						       </select>
 						   </p>
 						   
 						     <p>
 						   <label>网络类型</label>
 						       <select id="vmNetworkType"  name="vmNetworkType"  class="small-input"> 
-						         <option value="1">NAT</option>
-						         <option value="2">桥接</option>
+						         <option value="1"
+						           #if($!vm.vmNetworkType.value==1) 
+						         selected 
+						         #end>NAT</option>
+						         <option value="2"
+						         #if($!vm.vmNetworkType.value==2) 
+						         selected 
+						         #end>桥接</option>
 						       </select>
 						   </p>
 						   

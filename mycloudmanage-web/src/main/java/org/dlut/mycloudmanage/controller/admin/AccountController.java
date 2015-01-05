@@ -62,7 +62,7 @@ public class AccountController extends BaseController {
         Pagination<UserDTO> paginateion = result.getModel();
         model.put("userList", paginateion.getList());
 
-        this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
+        this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_ACCOUNT_LIST, model);
         model.put("screen", "admin/account_student_list");
         model.put("js", "admin/account_student_list");
         return "default";
@@ -77,7 +77,7 @@ public class AccountController extends BaseController {
         }
         UserDTO userDTO = (UserDTO) model.get("loginUser");
 
-        this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
+        this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_ACCOUNT_LIST, model);
         model.put("screen", "admin/account_student_list");
         model.put("js", "admin/account_student_list");
         return "default";
@@ -103,7 +103,7 @@ public class AccountController extends BaseController {
         List<UserDTO> userList = result.getModel().getList();
         model.put("userList", userList);
         model.put("role", roleEnum.getStatus());
-        this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
+        this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_ACCOUNT_LIST, model);
         //        if (roleEnum == RoleEnum.ADMIN) {
         //            model.put("screen", "admin/account_admin_list");
         //        } else if (roleEnum == RoleEnum.STUDENT) {
@@ -119,21 +119,54 @@ public class AccountController extends BaseController {
     @RequestMapping(value = "/admin/account/delete.do")
     @ResponseBody
     public String accountDelete(HttpServletRequest request, HttpServletResponse response, ModelMap model,
-                                String userAccount) {
+                                String userName, String password) {
         return "true";
     }
 
-    @RequestMapping(value = "/admin/account/add")
-    public String accountAdd(HttpServletRequest request, HttpServletResponse response, ModelMap model, int role) {
+    @RequestMapping(value = UrlConstant.ADMIN_ACCOUNT_ADD_FORM)
+    public String addAccountForm(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer role) {
         String errorDesc = this.setDefaultEnv(request, response, model);
         if (errorDesc != null) {
-            log.warn(errorDesc);
             return this.goErrorPage(errorDesc);
         }
-        UserDTO userDTO = (UserDTO) model.get("loginUser");
-
-        this.setShowMenuList(userDTO.getRole(), MenuEnum.ADMIN_MENU_ACCOUNT, model);
-        model.put("screen", "admin/account_add");
+        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_ACCOUNT_LIST, model);
+        model.put("role", role);
+        model.put("screen", "admin/account_add_form");
+        model.put("js", "admin/account_add_form");
         return "default";
     }
+
+    //    @RequestMapping(value = UrlConstant.ADMIN_HOST_ADD, produces = { "application/json;charset=UTF-8" })
+    //    @ResponseBody
+    //    public String addHost(HttpServletRequest request, HttpServletResponse response, ModelMap model, String hostName,
+    //                          String hostIp) {
+    //
+    //        JSONObject json = new JSONObject();
+    //        json.put("isLogin", true);
+    //        json.put("isAuth", true);
+    //        // 检查IP
+    //        QueryHostCondition queryHostCondition = new QueryHostCondition();
+    //        queryHostCondition.setHostIp(hostIp);
+    //
+    //        if (this.UserBiz.query(queryHostCondition).getTotalCount() > 0) {
+    //            json.put("isSuccess", false);
+    //            json.put("message", "要添加的IP已经存在");
+    //            return json.toString();
+    //        }
+    //
+    //        // 添加记录
+    //        UserCreateReqDTO userDTO = new HostDTO();
+    //        hostDTO.setHostIp(hostIp);
+    //        hostDTO.setHostName(hostName);
+    //
+    //        if (this.hostBiz.createHost(hostDTO) > 0) {
+    //            json.put("isSuccess", true);
+    //            json.put("message", "添加成功");
+    //            return json.toString();
+    //        }
+    //
+    //        json.put("isSuccess", false);
+    //        json.put("message", "添加失败");
+    //        return json.toString();
+    //    }
 }

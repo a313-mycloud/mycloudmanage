@@ -72,6 +72,17 @@ public class UrlConstant {
     public static final String ADMIN_CLASS_EDIT           = "/admin/class/edit.do";
 
     /**
+     * 管理员-帐号-操作
+     */
+    public static final String ADMIN_ACCOUNT_LIST         = "/admin/account/list";
+    public static final String ADMIN_ACCOUNT_REMOVE       = "/admin/account/remove.do";
+    public static final String ADMIN_ACCOUNT_REMOVEALL    = "/admin/account/removeAll.do";
+    public static final String ADMIN_ACCOUNT_ADD_FORM     = "/admin/account/add/form";
+    public static final String ADMIN_ACCOUNT_ADD          = "/admin/account/add.do";
+    public static final String ADMIN_ACCOUNT_EDIT_FORM    = "/admin/account/edit/form";
+    public static final String ADMIN_ACCOUNT_EDIT         = "/admin/account/edit.do";
+
+    /**
      * 学生-虚拟机-操作
      */
     public static final String STUDENT_VM_LIST            = "/student/vm/list";

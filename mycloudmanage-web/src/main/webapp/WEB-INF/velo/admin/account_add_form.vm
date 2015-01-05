@@ -11,15 +11,19 @@
 						  	<p>
 							  	<label>#if($role == 1)学生帐号#end
 							  	       #if($role == 2)教师帐号#end
-							  	       #if($role == 3) 管理员帐号#end
-							  	       帐号</label>
-							  	<input class="text-input small-input " type="text"  id="Name" name="Name">
+							  	       #if($role == 3)管理员帐号#end
+							  	 </label>
+							  	<input class="text-input small-input " type="text"  id="userName" name="Name">
 						  	</p>
 						  	<p>
 							  	<label>密码</label>
 							  	<input class="text-input small-input " type="text"  id="password" name="password">
 						  	</p>
 						  	
+						  	<p>
+							  	<label>确认密码</label>
+							  	<input class="text-input small-input " type="text"  id="password" name="password">
+						  	</p>
 						  	<p>
 						  	   <a class="button add"    >添加</a>
 						  	   <a class="button reset"    >重置</a>

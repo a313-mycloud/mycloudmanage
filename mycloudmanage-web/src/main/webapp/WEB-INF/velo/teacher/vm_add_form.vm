@@ -38,6 +38,7 @@
 						       <select id="showType"  name="showType" class="small-input"> 
 						         <option value="1">SPICE</option>
 						         <option value="2">VNC</option>
+						         <option value="3">WEB</option>
 						       </select>
 						   </p>
 						   

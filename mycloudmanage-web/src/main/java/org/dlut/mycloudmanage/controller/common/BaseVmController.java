@@ -22,6 +22,7 @@ import org.dlut.mycloudmanage.common.obj.VmVO;
 import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
 import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
 import org.dlut.mycloudmanage.common.utils.MemUtil;
+import org.dlut.mycloudmanage.common.utils.MyJsonUtils;
 import org.dlut.mycloudmanage.common.utils.MyStringUtils;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
@@ -194,10 +195,10 @@ public class BaseVmController extends BaseController {
         vmDTO.setVmVcpu(Integer.parseInt(vmVcpu));
 
         vmDTO.setVmMemory(MemUtil.getMem(Integer.parseInt(vmMemory), MemUnitEnum.MB));
-        if (Integer.parseInt(showType) == 1)
-            vmDTO.setShowType(ShowTypeEnum.SPICE);
-        else
-            vmDTO.setShowType(ShowTypeEnum.VNC);
+        if (ShowTypeEnum.getShowTypeByValue(Integer.parseInt(showType)) == null)
+            MyJsonUtils.getSuccessJsonString(json, "显示类型不存在");
+        vmDTO.setShowType(ShowTypeEnum.getShowTypeByValue(Integer.parseInt(showType)));
+
         if (Integer.parseInt(vmNetworkType) == 1)
             vmDTO.setVmNetworkType(NetworkTypeEnum.NAT);
         else

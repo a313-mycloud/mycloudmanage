@@ -230,12 +230,10 @@ public class TeacherVmController extends BaseVmController {
         destVm.setUserAccount(userDTO.getAccount());
         destVm.setVmMemory(MemUtil.getMem(Integer.parseInt(vmMemory), MemUnitEnum.MB));
         destVm.setVmVcpu(Integer.parseInt(vmVcpu));
-        if (Integer.parseInt(showType) == 1)
-            destVm.setShowType(ShowTypeEnum.SPICE);
-        else if (Integer.parseInt(showType) == 2)
-            destVm.setShowType(ShowTypeEnum.VNC);
-        else
-            return MyJsonUtils.getFailJsonString(json, "显示类型格式不正确");
+
+        if (ShowTypeEnum.getShowTypeByValue(Integer.parseInt(showType)) == null)
+            MyJsonUtils.getSuccessJsonString(json, "显示类型不存在");
+        destVm.setShowType(ShowTypeEnum.getShowTypeByValue(Integer.parseInt(showType)));
 
         if (Integer.parseInt(vmNetworkType) == 1)
             destVm.setVmNetworkType(NetworkTypeEnum.NAT);

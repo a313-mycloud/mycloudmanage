@@ -88,6 +88,17 @@
 										 <image src="/resources/images/icons/convert.gif"  alt="转换" title="转换">
                                          </a>
                                          
+                                         <!--web显示-->
+                                         #if($!vm.vmStatus.status==1 && $!vm.showType.value==3)
+                                         <a  class="" href="/spicehtml5?hostIp=$!vm.hostIp&port=$!vm.showPort" target="_blank">
+										 <image src="/resources/images/icons/web_enable.png"  alt="web显示" title="web显示">
+                                         </a>
+                                         #else
+                                         <a  class="" vmUuid="$!{vm.vmUuid}">
+										 <image src="/resources/images/icons/web_disable.png"  alt="" title="">
+                                         </a>
+                                         #end
+                                         
 									</td>
 								</tr>
 								#end

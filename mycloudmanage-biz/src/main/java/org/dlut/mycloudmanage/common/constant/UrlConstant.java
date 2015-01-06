@@ -28,6 +28,11 @@ public class UrlConstant {
      */
     public static final String ERROR_URL                  = "/error";
 
+    /**
+     * spcie_html5显示页面
+     */
+    public static final String SPICE_HTML5_URL            = "/spicehtml5";
+
     public static final String DEFAULT_URL                = "index";
 
     /**

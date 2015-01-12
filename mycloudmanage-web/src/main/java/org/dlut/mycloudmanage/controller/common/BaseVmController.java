@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.dlut.mycloudmanage.biz.ClassBiz;
 import org.dlut.mycloudmanage.biz.HostBiz;
 import org.dlut.mycloudmanage.biz.VmBiz;
-import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.obj.VmVO;
 import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
 import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
@@ -31,8 +30,6 @@ import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -123,7 +120,7 @@ public class BaseVmController extends BaseController {
         if (errorDesc != null) {
             return goErrorPage(errorDesc);
         }
-        UserDTO userDTO = (UserDTO) model.get("loginUser");
+        //UserDTO userDTO = (UserDTO) model.get("loginUser");
         // 查询要修改的内容，以显示在编辑表单中
         QueryVmCondition queryVmCondition = new QueryVmCondition();
         queryVmCondition.setVmUuid(vmUuid);
@@ -221,8 +218,7 @@ public class BaseVmController extends BaseController {
      * @param vmUuid
      * @return
      */
-    @RequestMapping(value = { UrlConstant.STUDENT_VM_START, UrlConstant.TEACHER_VM_START }, produces = { "application/json;charset=UTF-8" })
-    @ResponseBody
+
     public String vmStart(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid) {
         String errorDesc = setDefaultEnv(request, response, model);
         if (errorDesc != null) {

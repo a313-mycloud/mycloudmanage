@@ -21,14 +21,14 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
  * @author xuyizhen 2014年12月26日 下午7:48:56
  */
 public class MyPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
-    private static Map myProperties;
+    private static Map<String, String> myProperties;
 
     @Override
     protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties props)
             throws BeansException {
         //super.processProperties(beanFactoryToProcess, props);
         super.processProperties(beanFactoryToProcess, props);
-        myProperties = new HashMap();
+        myProperties = new HashMap<String, String>();
         for (Object key : props.keySet()) {
             String keyStr = key.toString();
             String value = props.getProperty(keyStr);

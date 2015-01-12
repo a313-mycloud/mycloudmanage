@@ -115,5 +115,13 @@ public class UrlConstant {
     public static final String TEACHER_TVM_EDIT_FORM      = "/teacher/tvm/edit/form";
     public static final String TEACHER_TVM_EDIT           = "/teacher/tvm/edit.do";
     public static final String TEACHER_TVM_CONVERT        = "/teacher/tvm/convert.do";
+    /**
+     * 教师-虚拟硬盘-操作
+     */
+    public static final String TEACHER_DISK_LIST          = "/teacher/disk/list";
+    public static final String TEACHER_DISK_REMOVE        = "/teacher/disk/remove.do";
+    public static final String TEACHER_DISK_ATTACH_FORM   = "/teacher/disk/attach/form";
+    public static final String TEACHER_DISK_ATTACH        = "/teacher/disk/attach.do";
+    public static final String TEACHER_DISK_UNLOAD        = "/teacher/disk/unload.do";
 
 }

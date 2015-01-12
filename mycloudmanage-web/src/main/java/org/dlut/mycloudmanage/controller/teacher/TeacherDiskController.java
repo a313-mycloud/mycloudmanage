@@ -25,6 +25,7 @@ import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
 import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
 import org.dlut.mycloudmanage.common.utils.MemUtil;
 import org.dlut.mycloudmanage.common.utils.MyJsonUtils;
+import org.dlut.mycloudmanage.common.utils.MyStringUtils;
 import org.dlut.mycloudmanage.controller.common.BaseVmController;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.storemanage.DiskDTO;
@@ -90,6 +91,7 @@ public class TeacherDiskController extends BaseVmController {
             return this.goErrorPage("该页面不存在");
 
         List<DiskVO> disks = new ArrayList<DiskVO>();
+
         for (DiskDTO diskDTO : pageDiskDTO.getList()) {
             DiskVO diskVO = new DiskVO();
             String attachVmUuid = diskDTO.getAttachVmUuid();
@@ -142,6 +144,13 @@ public class TeacherDiskController extends BaseVmController {
         return MyJsonUtils.getFailJsonString(json, "删除失败");
     }
 
+    /**
+     * @param request
+     * @param response
+     * @param model
+     * @param diskUuid
+     * @return
+     */
     @RequestMapping(value = UrlConstant.TEACHER_DISK_ATTACH_FORM)
     public String attachForm(HttpServletRequest request, HttpServletResponse response, ModelMap model, String diskUuid) {
         String errorDesc = this.setDefaultEnv(request, response, model);
@@ -180,7 +189,15 @@ public class TeacherDiskController extends BaseVmController {
 
     }
 
-    @RequestMapping(value = UrlConstant.TEACHER_DISK_ATTACH)
+    /**
+     * @param request
+     * @param response
+     * @param model
+     * @param diskUuid
+     * @param vmUuid
+     * @return
+     */
+    @RequestMapping(value = UrlConstant.TEACHER_DISK_ATTACH, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String attach(HttpServletRequest request, HttpServletResponse response, ModelMap model, String diskUuid,
                          String vmUuid) {
@@ -202,7 +219,7 @@ public class TeacherDiskController extends BaseVmController {
         return MyJsonUtils.getSuccessJsonString(json, "操作成功");
     }
 
-    @RequestMapping(value = UrlConstant.TEACHER_DISK_UNLOAD)
+    @RequestMapping(value = UrlConstant.TEACHER_DISK_UNLOAD, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String unload(HttpServletRequest request, HttpServletResponse response, ModelMap model, String diskUuid) {
 
@@ -215,4 +232,50 @@ public class TeacherDiskController extends BaseVmController {
         return MyJsonUtils.getSuccessJsonString(json, "操作成功");
     }
 
+    @RequestMapping(value = UrlConstant.TEACHER_DISK_ADD_FORM)
+    public String addForm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return this.goErrorPage(errorDesc);
+        }
+        //获取当前用户帐号
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
+
+        this.setShowMenuList(RoleEnum.TEACHER, MenuEnum.TEACHER_DISK_LIST, model);
+        model.put("screen", "teacher/disk_add_form");
+        model.put("js", "teacher/disk_list");
+        return "default";
+
+    }
+
+    @RequestMapping(value = UrlConstant.TEACHER_DISK_ADD, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public String add(HttpServletRequest request, HttpServletResponse response, ModelMap model, String diskName,
+                      String diskSize, String dizkDesc) {
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return this.goErrorPage(errorDesc);
+        }
+        //获取当前用户帐号
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
+
+        JSONObject json = new JSONObject();
+        if (StringUtils.isBlank(diskName))
+            return MyJsonUtils.getFailJsonString(json, "硬盘名不能为空");
+        if (StringUtils.isBlank(diskSize))
+            return MyJsonUtils.getFailJsonString(json, "硬盘大小不能为空");
+        if (!MyStringUtils.isInteger(diskSize))
+            return MyJsonUtils.getFailJsonString(json, "硬盘大小必须为数字");
+        DiskDTO diskDTO = new DiskDTO();
+        if (StringUtils.isBlank(dizkDesc))
+            diskDTO.setDesc("");
+        else
+            diskDTO.setDesc(dizkDesc);
+        diskDTO.setDiskTotalSize(MemUtil.getMem(Integer.parseInt(diskSize), MemUnitEnum.MB));
+        diskDTO.setDiskName(diskName);
+        diskDTO.setUserAccount(userDTO.getAccount());
+        if (this.diskBiz.createDisk(diskDTO) != null)
+            return MyJsonUtils.getSuccessJsonString(json, "");
+        return MyJsonUtils.getFailJsonString(json, "创建失败");
+    }
 }

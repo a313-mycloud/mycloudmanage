@@ -1,5 +1,9 @@
 
 $(document).ready(function(){	
+	$(".add").click(function(){
+	   add('/teacher/disk/add.do',{"diskName":$("#diskName").val(),"diskSize":$("#diskSize").val(),"diskDesc":$("#diskDesc").val()},'/teacher/disk/list?currentPage=1');
+	});
+	
 	
 	$(".remove").click(function(){
 	   remove('/teacher/disk/remove.do',{"diskUuid":$(this).attr('diskUuid')},'/teacher/disk/list?currentPage=1');

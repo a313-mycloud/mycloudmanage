@@ -123,5 +123,7 @@ public class UrlConstant {
     public static final String TEACHER_DISK_ATTACH_FORM   = "/teacher/disk/attach/form";
     public static final String TEACHER_DISK_ATTACH        = "/teacher/disk/attach.do";
     public static final String TEACHER_DISK_UNLOAD        = "/teacher/disk/unload.do";
+    public static final String TEACHER_DISK_ADD_FORM      = "/teacher/disk/add/form";
+    public static final String TEACHER_DISK_ADD           = "/teacher/disk/add";
 
 }

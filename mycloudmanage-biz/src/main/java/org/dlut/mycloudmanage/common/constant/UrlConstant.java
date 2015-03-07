@@ -125,5 +125,10 @@ public class UrlConstant {
     public static final String TEACHER_DISK_UNLOAD        = "/teacher/disk/unload.do";
     public static final String TEACHER_DISK_ADD_FORM      = "/teacher/disk/add/form";
     public static final String TEACHER_DISK_ADD           = "/teacher/disk/add";
+    /**
+     * 教师-课程虚拟机-操作
+     */
+    public static final String TEACHER_CLASS_LIST         = "/teacher/class/list";
+    public static final String TEACHER_CLASS_STUDENT_LIST = "/teacher/class/student/list";
 
 }

@@ -10,19 +10,16 @@
 						<table id="table" >
 							<thead>
 								<tr>
-								   <th>虚拟机名称</th>
-								   <th>虚拟机配置</th>
-								   <th>所属课程</th>
-								   <th>访问方式</th>
-								   <th>虚拟机描述</th>								   
+								   <th>课程名称</th>
 								   <th>操作</th>
 								</tr>
 							</thead>
 					
 								<tfoot>
 								<tr>
-									<td colspan="6">
+									<td colspan="2">
 										
+									
 									     <div class="pagination">
 									        <a >总共$!totalPage页</a>
 									        <a class="firstPage" >首页</a>
@@ -37,30 +34,21 @@
 							</tfoot>
 						 
 							<tbody >
-								#foreach($vm in $!tvms)
+								#foreach($class in $!classes)
 								
 							    #if($!{velocityCount}%2!=0)
 								<tr class="alt-row">
 								#else
 								<tr>
 								#end
-								    
-									<td>$!vm.vmName</td>
-									<td>$!vm.vmVcpu核，$!{vm.vmMemory}MB</td>
-									<td>$!vm.vmClass  </td>
-									<td>$!vm.showType.desc</th>
-									<td>$!vm.vmDesc</th>
+						             
+									<td>$!class.className</td>
 									<td>
-									     <!--编辑按钮-->
-										 <a  href="/teacher/tvm/edit/form?vmUuid=$!vm.vmUuid">
-										 <image src="/resources/images/icons/pencil.png">
-                                         </a>
-                              
-                                        
-										 <!--转换按钮-->
-										 <a  class="convert" vmUuid="$!{vm.vmUuid}">
-										 <image src="/resources/images/icons/convert.gif"  alt="转换" title="转换">
-                                         </a>
+									<a  >
+									<!--	 <a  href="/teacher/class/student/list?classId=$!class.classId">  -->
+									<a  href="#">
+										 <image src="/resources/images/icons/person.gif"  alt="查看选课学生" title="查看选课学生">
+                                         </a>                                         
 									</td>
 								</tr>
 								#end

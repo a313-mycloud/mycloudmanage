@@ -1,0 +1,39 @@
+<div id="main-content"> <!-- Main Content Section with everything -->	
+<div class="content-box"><!-- Start Content Box -->
+<div class="content-box-content">
+<div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
+						
+						
+						 <form>
+						 <fieldset>
+						     <p>
+						   <label>课程名称</label>
+						   <input class="text-input small-input" type="text"  id="className" value="$!class.className">
+						
+						   </p>
+						  
+								
+						   <p>
+						   <label>模板虚拟机名称</label>
+						   <select id="classVmUuid"  name="classVmUuid"  class="small-input"> 
+						       #foreach($tvm in $!tvms)
+						         <option value="$!tvm.vmUuid">$!tvm.vmName</option>
+						        #end
+						   </select>
+						   </p>
+						  
+						   					  
+						   <p>
+						   <a class="button bind" classId="$!class.classId" >关联</a>
+						
+						   </p>
+						   </fieldset>
+						   </form>
+					
+						
+						
+					</div> <!-- End #tab2 -->    
+				</div> <!-- End .content-box-content -->
+			</div> <!-- End .content-box -->		
+</div> <!-- End #main-content -->
+

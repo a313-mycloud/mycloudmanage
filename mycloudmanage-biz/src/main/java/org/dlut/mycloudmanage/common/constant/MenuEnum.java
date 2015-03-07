@@ -16,8 +16,9 @@ import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
  */
 public enum MenuEnum {
     TEACHER_INDEX("首页", UrlConstant.TEACHER_DEFAULT_URL, RoleEnum.TEACHER),
-    TEACHER_TVM_LIST("模板虚拟机管理", UrlConstant.TEACHER_TVM_LIST, RoleEnum.TEACHER),
     TEACHER_VM_LIST("私有虚拟机管理", UrlConstant.TEACHER_VM_LIST, RoleEnum.TEACHER),
+    TEACHER_TVM_LIST("模板虚拟机管理", UrlConstant.TEACHER_TVM_LIST, RoleEnum.TEACHER),
+
     TEACHER_CLASS_LIST("课程虚拟机管理", UrlConstant.TEACHER_CLASS_LIST, RoleEnum.TEACHER),
     TEACHER_DISK_LIST("虚拟硬盘管理", UrlConstant.TEACHER_DISK_LIST, RoleEnum.TEACHER),
 

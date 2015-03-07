@@ -10,15 +10,17 @@
 						<table id="table" >
 							<thead>
 								<tr>
-								   <th>课程名称</th>
-								   <th>操作</th>
+								   <th>学生帐号</th>
+								   <th>学生姓名</th>
+								   <th>所属课程</th>
 								</tr>
 							</thead>
 					
 								<tfoot>
 								<tr>
-									<td colspan="2">
+									<td colspan="3">
 										
+									
 									     <div class="pagination">
 									        <a >总共$!totalPage页</a>
 									        <a class="firstPage" >首页</a>
@@ -33,7 +35,7 @@
 							</tfoot>
 						 
 							<tbody >
-								#foreach($class in $!classes)
+								#foreach($student in $!students)
 								
 							    #if($!{velocityCount}%2!=0)
 								<tr class="alt-row">
@@ -41,29 +43,19 @@
 								<tr>
 								#end
 						             
-									<td>$!class.className</td>
-									<td>
-									 <a  href="/teacher/class/student/list?classId=$!class.classId"> 
-										 <image src="/resources/images/icons/person.gif"  alt="查看选课学生" title="查看选课学生">
-                                     </a>     
-                                     
-                                     
-                                      <a  href="#"> 
-										 <image src="/resources/images/icons/person.gif"  alt="查看已经绑定虚拟机" title="查看已经绑定虚拟机">
-                                     </a>   
-                                     <!--将该项放入到上一想跳转到的页面中-->
-                                      <a  href="/teacher/class/vm/form?classId=$!class.classId"> 
-										 <image src="/resources/images/icons/person.gif"  alt="为课程绑定虚拟机" title="为课程绑定虚拟机">
-                                     </a>      
-                                                                        
-									</td>
+									<td>$!student.userName</td>
+									<td>$!student.account</td>
+									<td>$!class.className		</td>
 									
+									<input type="hidden"  id="classId" value= "$!class.classId"/>
+								 
 								</tr>
 								#end
 							</tbody>
 						</table>
 						
-							
+						
+						
 					</div> <!-- End #tab2 -->    
 				</div> <!-- End .content-box-content -->
 			</div> <!-- End .content-box -->		

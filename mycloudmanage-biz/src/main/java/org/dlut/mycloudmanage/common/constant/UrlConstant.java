@@ -130,5 +130,6 @@ public class UrlConstant {
      */
     public static final String TEACHER_CLASS_LIST         = "/teacher/class/list";
     public static final String TEACHER_CLASS_STUDENT_LIST = "/teacher/class/student/list";
-
+    public static final String TEACHER_CLASS_VM_EDIT      = "/teacher/class/vm/form";
+    public static final String TEACHER_CLASS_VM_BIND      = "/teacher/class/vm/bind.do";
 }

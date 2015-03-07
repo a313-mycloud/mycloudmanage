@@ -14,20 +14,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.dlut.mycloudmanage.biz.ClassBiz;
+import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
+import org.dlut.mycloudmanage.common.utils.MyJsonUtils;
 import org.dlut.mycloudmanage.controller.common.BaseController;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.classmanage.ClassDTO;
 import org.dlut.mycloudserver.client.common.classmanage.QueryClassCondition;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
+import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
+import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 类TeacherClassController.java的实现描述：TODO 类实现描述 教师-课程虚拟机-管理
@@ -39,6 +46,8 @@ public class TeacherClassController extends BaseController {
     private static Logger log = LoggerFactory.getLogger(TeacherClassController.class);
     @Resource(name = "classBiz")
     private ClassBiz      classBiz;
+    @Resource(name = "vmBiz")
+    private VmBiz         vmBiz;
 
     /**
      * 教师-课程虚拟机-列表
@@ -107,19 +116,85 @@ public class TeacherClassController extends BaseController {
         int PAGESIZE = Integer.parseInt(MyPropertiesUtil.getValue("pagesize"));
 
         if (classId == null)
-            this.goErrorPage("课程ID不能为空");
+            return this.goErrorPage("课程ID不能为空");
+
+        //查看当前课程
+
         if (this.classBiz.getClassById(classId) == null)
-            this.goErrorPage("当前账户不存在该课程");
-        /* 从student_class表中查询 */
-        //        List<UserDTO> students = new ArrayList<UserDTO>();
-        //
-        //        model.put("students", students);//不同的查询页面对应不同的查询列表
-        //        model.put("totalPage", pageClassDTO.getTotalPage());//不同的查询页面对应不同的总页数
-        //        model.put("currentPage", currentPage);
-        //        this.setShowMenuList(RoleEnum.TEACHER, MenuEnum.TEACHER_CLASS_LIST, model);
-        //        model.put("screen", "teacher/class_student_list");
-        //        model.put("js", "teacher/class_list");
+            return this.goErrorPage("当前账户不存在该课程");
+
+        //获得选择一门课程的所有学生
+        Pagination<UserDTO> pagination = this.classBiz.getStudentsInOneClass(classId, (currentPage - 1) * PAGESIZE,
+                PAGESIZE);
+        List<UserDTO> studentsInOneClass = pagination.getList();
+        model.put("class", this.classBiz.getClassById(classId));
+        model.put("students", studentsInOneClass);//不同的查询页面对应不同的查询列表
+        model.put("totalPage", pagination.getTotalPage());//不同的查询页面对应不同的总页数
+        model.put("currentPage", currentPage);
+        this.setShowMenuList(RoleEnum.TEACHER, MenuEnum.TEACHER_CLASS_LIST, model);
+        model.put("screen", "teacher/class_student_list");
+        model.put("js", "teacher/class_student_list");
         return "default";
+
+    }
+
+    /**
+     * 教师-课程绑定虚拟机-编辑
+     * 
+     * @param request
+     * @param response
+     * @param model
+     * @param currentPage
+     * @return
+     */
+    @RequestMapping(value = UrlConstant.TEACHER_CLASS_VM_EDIT)
+    public String classVmEdit(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer classId) {
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return this.goErrorPage(errorDesc);
+        }
+        //获取当前用户帐号
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
+
+        if (classId == null)
+            return this.goErrorPage("课程ID不能为空");
+
+        //查看当前课程
+
+        if (this.classBiz.getClassById(classId) == null)
+            return this.goErrorPage("当前账户不存在该课程");
+        QueryVmCondition queryVmCondition = new QueryVmCondition();
+        queryVmCondition.setUserAccount(userDTO.getAccount());
+        queryVmCondition.setLimit(1000);
+        queryVmCondition.setOffset(0);
+        queryVmCondition.setIsTemplateVm(true);
+        Pagination<VmDTO> pageVmDTO = this.vmBiz.query(queryVmCondition);
+        //要绑定虚拟机的课程
+        model.put("class", this.classBiz.getClassById(classId));
+        //可以使用的模板虚拟机
+        model.put("tvms", pageVmDTO.getList());
+        this.setShowMenuList(RoleEnum.TEACHER, MenuEnum.TEACHER_CLASS_LIST, model);
+        model.put("screen", "teacher/class_vm_form");
+        model.put("js", "teacher/class_list");
+        return "default";
+
+    }
+
+    @RequestMapping(value = UrlConstant.TEACHER_CLASS_VM_BIND, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public String classVmBind(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid,
+                              Integer classId) {
+        System.out.println(vmUuid + "---------");
+        JSONObject json = new JSONObject();
+        if (classId == null)
+            return MyJsonUtils.getFailJsonString(json, "课程不能为空");
+        if (this.classBiz.getClassById(classId) == null)
+            return MyJsonUtils.getFailJsonString(json, "课程不存在");
+        if (this.vmBiz.getVmByUuid(vmUuid) == null)
+            return MyJsonUtils.getFailJsonString(json, "模板虚拟机不存在");
+        if (!this.classBiz.addTemplateVmToClass(vmUuid, classId))
+            return MyJsonUtils.getFailJsonString(json, "关联失败");
+        return MyJsonUtils.getSuccessJsonString(json, "关联成功");
 
     }
 }

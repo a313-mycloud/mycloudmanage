@@ -133,4 +133,5 @@ public class UrlConstant {
     public static final String TEACHER_CLASS_VM_LIST      = "/teacher/class/vm/list";
     public static final String TEACHER_CLASS_VM_BIND_FORM = "/teacher/class/vm/bind/form";
     public static final String TEACHER_CLASS_VM_BIND      = "/teacher/class/vm/bind.do";
+    public static final String TEACHER_CLASS_VM_UNBIND    = "/teacher/class/vm/unbind.do";
 }

@@ -62,8 +62,9 @@ public class VmBiz {
     }
 
     /**
-     * 克隆虚拟机，必须设置vmVcpu、vmMemory、userAccount、showType、showPassword，
-     * 可选：classId、desc
+     * 克隆虚拟机，必须设置vmName,
+     * vmVcpu、vmMemory、userAccount、showType、showPassword，classId,
+     * isTemplateVM,isPublicTemplate,vmNetworkType 可选：desc
      * 
      * @param destVmDTO
      * @param srcVmUuid

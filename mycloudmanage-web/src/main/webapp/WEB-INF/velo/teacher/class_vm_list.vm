@@ -20,9 +20,11 @@
 								<tr>
 									<td colspan="3">
 										<div class="align-left">
-										    <a  href="/teacher/class/vm/bind/form?classId=$!class.classId"> 
+										    <a  class="button" href="/teacher/class/vm/bind/form?classId=$!class.classId"> 
 										    继续关联虚拟机
 											</a>
+											
+										</div>
 										</div>
 									     <div class="pagination">
 									        <a >总共$!totalPage页</a>
@@ -50,7 +52,9 @@
 									<td>$!tvm.vmName</td>
 									<td>
 							
-                                    
+                                     <a class="unbind" classId="$!class.classId" tvmUuid="tvm.vmUuid">
+										 <image src="/resources/images/icons/start.png"  alt="解除关联" title="解除关联">
+                                      </a>
                                                                         
 									</td>
 									

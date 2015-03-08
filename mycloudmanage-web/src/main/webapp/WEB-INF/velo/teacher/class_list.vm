@@ -49,7 +49,7 @@
                                      
                                      
                                      <a  href="/teacher/class/vm/list?classId=$!class.classId">
-										 <image src="/resources/images/icons/person.gif"  alt="查看已经绑定虚拟机" title="查看已经绑定虚拟机">
+										 <image src="/resources/images/icons/classtvms.gif"  alt="查看已经绑定虚拟机" title="查看已经绑定虚拟机">
                                      </a>   
                                      
                                  

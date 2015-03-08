@@ -19,9 +19,13 @@ $(document).ready(function(){
 	});
 	
 	$(".bind").click(function(){
-		console.log($(this).attr('classId'));
-		console.log($("#classVmUuid").val());
+		
 		bind('/teacher/class/vm/bind.do',{"vmUuid":$("#classVmUuid").val(),"classId":$(this).attr('classId')},'/teacher/class/list?currentPage=1');
+	});
+	$(".unbind").click(function(){
+		console.log($(this).attr('classId'));
+		console.log($(this).attr('tvmUuid'));
+		unbind('/teacher/class/vm/unbind.do',{"vmUuid":$(this).attr('tvmUuid'),"classId":$(this).attr('classId')},'/teacher/class/list?currentPage=1');
 	});
 	
 });
@@ -32,6 +36,40 @@ $(document).ready(function(){
  * @param {} replace
  */
 function bind(url,data,replace){
+	$.ajax({
+		 url:url,
+		 data:data,
+		 dataType:"json",
+		 success:function(data){
+		 	if(!data.isLogin){
+		 		alert("请登陆");
+		 		window.location.replace("/login");
+		 	}
+		 	else if(!data.isAuth){
+		 		alert("您没有权限");
+		 	}
+		 	else{
+		 		if(!data.isSuccess){
+		 			alert(data.message);
+		 		}
+		 		else{
+		 			window.location.replace(replace);
+		 		}
+		 	}
+		 },
+		 error:function(data,status){
+		 	alert(status);
+		 } 
+	});	
+}
+
+/**
+ * 异步为课程解除绑定虚拟机
+ * @param {} url
+ * @param {} data
+ * @param {} replace
+ */
+function unbind(url,data,replace){
 	$.ajax({
 		 url:url,
 		 data:data,

@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dlut.mycloudmanage.biz.ClassBiz;
 import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
@@ -237,15 +238,38 @@ public class TeacherClassController extends BaseController {
             return MyJsonUtils.getFailJsonString(json, "课程不能为空");
         if (this.classBiz.getClassById(classId) == null)
             return MyJsonUtils.getFailJsonString(json, "课程不存在");
-        if (this.vmBiz.getVmByUuid(vmUuid) == null)
+        VmDTO srcVmDTO = this.vmBiz.getVmByUuid(vmUuid);
+        if (srcVmDTO == null)
             return MyJsonUtils.getFailJsonString(json, "模板虚拟机不存在");
         if (this.classBiz.isBind(classId, vmUuid)) {
             System.out.println("此模板虚拟机已关联到该课程");
             return MyJsonUtils.getFailJsonString(json, "此模板虚拟机已经关联到该课程");
         }
-        if (!this.classBiz.addTemplateVmToClass(vmUuid, classId))
-            return MyJsonUtils.getFailJsonString(json, "关联失败");
+        /***** 以下理论上应该使用事务 ****/
+        if (!this.classBiz.addTemplateVmToClass(vmUuid, classId)) {
+            return MyJsonUtils.getFailJsonString(json, "课程虚拟机关联失败");
+        }
+        List<UserDTO> students = this.classBiz.getStudentsInOneClass(classId, 0, 1000).getList();
+        for (UserDTO student : students) {
+            VmDTO destVmDTO = new VmDTO();
+            destVmDTO.setVmName(srcVmDTO.getVmName());
+            destVmDTO.setVmVcpu(srcVmDTO.getVmVcpu());
+            destVmDTO.setVmMemory(srcVmDTO.getVmMemory());
+            destVmDTO.setShowType(srcVmDTO.getShowType());
+            destVmDTO.setShowPassword(srcVmDTO.getShowPassword());
+            destVmDTO.setClassId(classId);
+            destVmDTO.setUserAccount(student.getAccount());
+            destVmDTO.setVmNetworkType(srcVmDTO.getVmNetworkType());
+            destVmDTO.setIsTemplateVm(false);
+            destVmDTO.setIsPublicTemplate(false);
+            destVmDTO.setDesc("克隆自" + this.classBiz.getClassById(classId).getClassName());
+            if (StringUtils.isBlank(this.vmBiz.cloneVm(destVmDTO, vmUuid))) {
+                log.error(student.getAccount() + "关联" + this.classBiz.getClassById(classId).getClassName() + "课程失败");
+            }
+            /***** 以上理论上应该使用事务 ****/
+        }
         return MyJsonUtils.getSuccessJsonString(json, "关联成功");
 
     }
+
 }

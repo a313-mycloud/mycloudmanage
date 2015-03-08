@@ -240,7 +240,7 @@ public class TeacherClassController extends BaseController {
         if (this.vmBiz.getVmByUuid(vmUuid) == null)
             return MyJsonUtils.getFailJsonString(json, "模板虚拟机不存在");
         if (this.classBiz.isBind(classId, vmUuid)) {
-            System.out.println("此模板虚拟机已经关联到该课程");
+            System.out.println("此模板虚拟机已关联到该课程");
             return MyJsonUtils.getFailJsonString(json, "此模板虚拟机已经关联到该课程");
         }
         if (!this.classBiz.addTemplateVmToClass(vmUuid, classId))

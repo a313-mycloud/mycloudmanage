@@ -139,7 +139,44 @@ public class TeacherClassController extends BaseController {
     }
 
     /**
-     * 教师-课程绑定虚拟机-编辑
+     * 教师-课程绑定虚拟机-列表
+     */
+    @RequestMapping(value = UrlConstant.TEACHER_CLASS_VM_LIST)
+    public String classVmList(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+                              Integer currentPage, Integer classId) {
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return this.goErrorPage(errorDesc);
+        }
+        //获取当前用户帐号
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
+        //默认显示第一页
+        if (currentPage == null)
+            currentPage = 1;
+        int PAGESIZE = Integer.parseInt(MyPropertiesUtil.getValue("pagesize"));
+        if (classId == null)
+            return this.goErrorPage("课程ID不能为空");
+        //查看当前课程
+
+        if (this.classBiz.getClassById(classId) == null)
+            return this.goErrorPage("当前账户不存在该课程");
+
+        Pagination<VmDTO> pagination = this.classBiz.getTemplateVmsInOneClass(classId, (currentPage - 1) * PAGESIZE,
+                PAGESIZE);
+        List<VmDTO> tvms = pagination.getList();
+        model.put("class", this.classBiz.getClassById(classId));
+        model.put("tvms", tvms);
+        model.put("totalPage", pagination.getTotalPage());//不同的查询页面对应不同的总页数
+        model.put("currentPage", currentPage);
+        this.setShowMenuList(RoleEnum.TEACHER, MenuEnum.TEACHER_CLASS_LIST, model);
+        model.put("screen", "teacher/class_vm_list");
+        model.put("js", "teacher/class_list");
+        return "default";
+
+    }
+
+    /**
+     * 教师-课程绑定虚拟机-编辑表单
      * 
      * @param request
      * @param response
@@ -147,7 +184,7 @@ public class TeacherClassController extends BaseController {
      * @param currentPage
      * @return
      */
-    @RequestMapping(value = UrlConstant.TEACHER_CLASS_VM_EDIT)
+    @RequestMapping(value = UrlConstant.TEACHER_CLASS_VM_BIND_FORM)
     public String classVmEdit(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer classId) {
         String errorDesc = this.setDefaultEnv(request, response, model);
         if (errorDesc != null) {
@@ -180,6 +217,16 @@ public class TeacherClassController extends BaseController {
 
     }
 
+    /**
+     * 教师-课程绑定虚拟机-异步绑定
+     * 
+     * @param request
+     * @param response
+     * @param model
+     * @param vmUuid
+     * @param classId
+     * @return
+     */
     @RequestMapping(value = UrlConstant.TEACHER_CLASS_VM_BIND, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String classVmBind(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid,
@@ -192,6 +239,10 @@ public class TeacherClassController extends BaseController {
             return MyJsonUtils.getFailJsonString(json, "课程不存在");
         if (this.vmBiz.getVmByUuid(vmUuid) == null)
             return MyJsonUtils.getFailJsonString(json, "模板虚拟机不存在");
+        if (this.classBiz.isBind(classId, vmUuid)) {
+            System.out.println("此模板虚拟机已经关联到该课程");
+            return MyJsonUtils.getFailJsonString(json, "此模板虚拟机已经关联到该课程");
+        }
         if (!this.classBiz.addTemplateVmToClass(vmUuid, classId))
             return MyJsonUtils.getFailJsonString(json, "关联失败");
         return MyJsonUtils.getSuccessJsonString(json, "关联成功");

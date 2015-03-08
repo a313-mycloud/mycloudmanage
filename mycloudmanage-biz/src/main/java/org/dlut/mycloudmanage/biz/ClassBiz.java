@@ -342,4 +342,20 @@ public class ClassBiz {
         return result.getModel();
     }
 
+    /**
+     * 判断课程与模板虚拟机是否已经关联
+     * 
+     * @param classId
+     * @param templateVmUuid
+     * @return
+     */
+    public boolean isBind(int classId, String templateVmUuid) {
+        MyCloudResult<Boolean> result = this.classManageService.isBind(classId, templateVmUuid);
+        if (!result.isSuccess()) {
+            log.warn("调用classManageService.isBind()出错，" + result.getMsgCode() + ":" + result.getMsgInfo());
+            return false;
+        }
+        return result.getModel();
+    }
+
 }

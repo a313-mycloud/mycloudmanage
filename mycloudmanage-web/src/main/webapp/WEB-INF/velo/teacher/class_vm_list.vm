@@ -10,8 +10,8 @@
 						<table id="table" >
 							<thead>
 								<tr>
-								   <th>课程名称</th>
-								   <th>已关联的虚拟机</th>
+								   <th>《$!{class.className}》已关联的虚拟机</th>
+								  
 								   <th>操作</th>
 								</tr>
 							</thead>
@@ -48,12 +48,12 @@
 								<tr>
 								#end
 						             
-									<td>$!class.className</td>
+									
 									<td>$!tvm.vmName</td>
 									<td>
-							
-                                     <a class="unbind" classId="$!class.classId" tvmUuid="tvm.vmUuid">
-										 <image src="/resources/images/icons/start.png"  alt="解除关联" title="解除关联">
+							         
+                                     <a class="unbind" classId="$!class.classId" tvmUuid="$!tvm.vmUuid">
+										 <image src="/resources/images/icons/unbind.gif"  alt="解除关联" title="解除关联">
                                       </a>
                                                                         
 									</td>

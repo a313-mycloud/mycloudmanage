@@ -266,10 +266,59 @@ public class TeacherClassController extends BaseController {
             if (StringUtils.isBlank(this.vmBiz.cloneVm(destVmDTO, vmUuid))) {
                 log.error(student.getAccount() + "关联" + this.classBiz.getClassById(classId).getClassName() + "课程失败");
             }
-            /***** 以上理论上应该使用事务 ****/
         }
+        /***** 以上理论上应该使用事务 ****/
         return MyJsonUtils.getSuccessJsonString(json, "关联成功");
 
     }
 
+    /**
+     * 教师-课程绑定虚拟机-异步解除绑定
+     * 
+     * @param request
+     * @param response
+     * @param model
+     * @param vmUuid
+     * @param classId
+     * @return
+     */
+    @RequestMapping(value = UrlConstant.TEACHER_CLASS_VM_UNBIND, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public String classVmUnBind(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+                                String vmUuid, Integer classId) {
+        System.out.println(vmUuid + "--------------" + classId);
+        JSONObject json = new JSONObject();
+        if (classId == null)
+            return MyJsonUtils.getFailJsonString(json, "课程不能为空");
+        if (this.classBiz.getClassById(classId) == null)
+            return MyJsonUtils.getFailJsonString(json, "课程不存在");
+        VmDTO srcVmDTO = this.vmBiz.getVmByUuid(vmUuid);
+        if (srcVmDTO == null)
+            return MyJsonUtils.getFailJsonString(json, "模板虚拟机不存在");
+        if (!this.classBiz.isBind(classId, vmUuid)) {
+            return MyJsonUtils.getFailJsonString(json, "此模板虚拟机未关联到该课程，无须解绑定");
+        }
+        /***** 以下理论上应该使用事务 ****/
+        if (!this.classBiz.deleteOneTemplateVmInOneClass(vmUuid, classId))
+            return MyJsonUtils.getFailJsonString(json, "课程虚拟机解绑定失败");
+        List<UserDTO> students = this.classBiz.getStudentsInOneClass(classId, 0, 1000).getList();
+        if (!students.isEmpty()) {
+            for (UserDTO student : students) {
+                QueryVmCondition queryVmCondition = new QueryVmCondition();
+                queryVmCondition.setClassId(classId);
+                queryVmCondition.setUserAccount(student.getAccount());
+                queryVmCondition.setOffset(0);
+                queryVmCondition.setLimit(1000);
+                List<VmDTO> vms = this.vmBiz.query(queryVmCondition).getList();
+                for (VmDTO vm : vms) {
+                    if (!this.vmBiz.deleteVm(vm.getVmUuid())) {
+                        log.error("课程号" + classId + "下的学生" + student.getAccount() + "解绑定失败");
+                    }
+                }
+            }
+        }
+        /***** 以上理论上应该使用事务 ****/
+        return MyJsonUtils.getSuccessJsonString(json, "解绑成功");
+
+    }
 }

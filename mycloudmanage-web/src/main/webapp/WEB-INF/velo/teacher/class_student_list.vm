@@ -43,9 +43,8 @@
 								#else
 								<tr>
 								#end
-						             
+						             <td>$!student.account</td>
 									<td>$!student.userName</td>
-									<td>$!student.account</td>
 									<td>$!class.className		</td>
 									
 									<input type="hidden"  id="classId" value= "$!class.classId"/>

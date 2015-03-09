@@ -20,12 +20,12 @@ $(document).ready(function(){
 	
 	$(".bind").click(function(){
 		
-		bind('/teacher/class/vm/bind.do',{"vmUuid":$("#classVmUuid").val(),"classId":$(this).attr('classId')},'/teacher/class/list?currentPage=1');
+		bind('/teacher/class/vm/bind.do',{"vmUuid":$("#classVmUuid").val(),"classId":$(this).attr('classId')},'/teacher/class/vm/list?currentPage=1&classId='+$(this).attr('classId'));
 	});
 	$(".unbind").click(function(){
 		console.log($(this).attr('classId'));
 		console.log($(this).attr('tvmUuid'));
-		unbind('/teacher/class/vm/unbind.do',{"vmUuid":$(this).attr('tvmUuid'),"classId":$(this).attr('classId')},'/teacher/class/list?currentPage=1');
+		unbind('/teacher/class/vm/unbind.do',{"vmUuid":$(this).attr('tvmUuid'),"classId":$(this).attr('classId')},'/teacher/class/vm/list?currentPage=&classId='+$(this).attr('classId'));
 	});
 	
 });

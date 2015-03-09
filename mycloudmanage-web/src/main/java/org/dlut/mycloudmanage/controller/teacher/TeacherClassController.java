@@ -205,7 +205,9 @@ public class TeacherClassController extends BaseController {
         queryVmCondition.setUserAccount(userDTO.getAccount());
         queryVmCondition.setLimit(1000);
         queryVmCondition.setOffset(0);
+        //只有老师自己创建的模板虚拟机可以用做模板
         queryVmCondition.setIsTemplateVm(true);
+        queryVmCondition.setIsPublicTemplate(false);
         Pagination<VmDTO> pageVmDTO = this.vmBiz.query(queryVmCondition);
         //要绑定虚拟机的课程
         model.put("class", this.classBiz.getClassById(classId));

@@ -76,6 +76,7 @@ public class TeacherTVmController extends BaseController {
         queryVmCondition.setLimit(PAGESIZE);
         queryVmCondition.setOffset((currentPage - 1) * PAGESIZE);
         queryVmCondition.setIsTemplateVm(true);
+        queryVmCondition.setIsPublicTemplate(false);//仅仅自己创建的模板虚拟机可见
         Pagination<VmDTO> pageVmDTO = this.vmBiz.query(queryVmCondition);
         if (pageVmDTO.getTotalPage() >= 1 && (currentPage < 1 || currentPage > pageVmDTO.getTotalPage()))
             return this.goErrorPage("该页面不存在");

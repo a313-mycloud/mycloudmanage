@@ -18,13 +18,12 @@ public enum MenuEnum {
     TEACHER_INDEX("首页", UrlConstant.TEACHER_DEFAULT_URL, RoleEnum.TEACHER),
     TEACHER_VM_LIST("私有虚拟机管理", UrlConstant.TEACHER_VM_LIST, RoleEnum.TEACHER),
     TEACHER_TVM_LIST("模板虚拟机管理", UrlConstant.TEACHER_TVM_LIST, RoleEnum.TEACHER),
-
     TEACHER_CLASS_LIST("课程虚拟机管理", UrlConstant.TEACHER_CLASS_LIST, RoleEnum.TEACHER),
     TEACHER_DISK_LIST("虚拟硬盘管理", UrlConstant.TEACHER_DISK_LIST, RoleEnum.TEACHER),
 
     STUDENT_INDEX("首页", UrlConstant.STUDENT_DEFAULT_URL, RoleEnum.STUDENT),
     STUDENT_VM_LIST("私有虚拟机管理", UrlConstant.STUDENT_VM_LIST, RoleEnum.STUDENT),
-    STUDENT_MENU_DISK("硬盘管理", "", RoleEnum.STUDENT),
+    STUDENT_DiSK_LIST("虚拟硬盘管理", UrlConstant.STUDENT_DISK_LIST, RoleEnum.STUDENT),
 
     ADMIN_INDEX("首页", UrlConstant.ADMIN_DEFAULT_URL, RoleEnum.ADMIN),
     ADMIN_HOST_LIST("物理机管理", UrlConstant.ADMIN_HOST_LIST, RoleEnum.ADMIN),

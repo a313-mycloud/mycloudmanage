@@ -1,39 +1,39 @@
 
 $(document).ready(function(){	
 	$(".add").click(function(){
-	   add('/teacher/disk/add.do',{"diskName":$("#diskName").val(),"diskSize":$("#diskSize").val(),"diskDesc":$("#diskDesc").val()},'/teacher/disk/list?currentPage=1');
+	   add('/student/disk/add.do',{"diskName":$("#diskName").val(),"diskSize":$("#diskSize").val(),"diskDesc":$("#diskDesc").val()},'/student/disk/list?currentPage=1');
 	});
 	
 	
 	$(".remove").click(function(){
-	   remove('/teacher/disk/remove.do',{"diskUuid":$(this).attr('diskUuid')},'/teacher/disk/list?currentPage=1');
+	   remove('/student/disk/remove.do',{"diskUuid":$(this).attr('diskUuid')},'/student/disk/list?currentPage=1');
 	});
 	
 	$(".attach").click(function(){
-	   attach('/teacher/disk/attach.do',{"diskUuid":$("#diskUuid").val(),"vmUuid":$("#vmUuid").val()},'/teacher/disk/list?currentPage=1');
+	   attach('/student/disk/attach.do',{"diskUuid":$("#diskUuid").val(),"vmUuid":$("#vmUuid").val()},'/student/disk/list?currentPage=1');
 	});
 	$(".resetEdit").click(function(){	
 		$("#vmUuid").val($("#preVmUuid").val());
 	});	
 	$(".unload").click(function(){
-	   unload('/teacher/disk/unload.do',{"diskUuid":$(this).attr('diskUuid')},'/teacher/disk/list?currentPage=1');
+	   unload('/student/disk/unload.do',{"diskUuid":$(this).attr('diskUuid')},'/student/disk/list?currentPage=1');
 	});
 	
 	$(".edit").click(function(){
-	    edit('/teacher/tvm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/teacher/tvm/list?currentPage=1");
+	    edit('/student/tvm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/student/tvm/list?currentPage=1");
 	});
 	
 	$(".prePage").click(function(){
-	     showPrePage("/teacher/disk/list",$("#page").attr("currentPage"));
+	     showPrePage("/student/disk/list",$("#page").attr("currentPage"));
 	});
 	$(".nextPage").click(function(){
-	     showNextPage("/teacher/disk/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
+	     showNextPage("/student/disk/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
 	$(".firstPage").click(function(){
-	     showFirstPage("/teacher/disk/list",$("#page").attr("currentPage"));
+	     showFirstPage("/student/disk/list",$("#page").attr("currentPage"));
 	});
 	$(".lastPage").click(function(){
-	     showLastPage("/teacher/disk/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
+	     showLastPage("/student/disk/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
 	
 	

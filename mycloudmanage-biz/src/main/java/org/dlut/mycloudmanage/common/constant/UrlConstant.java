@@ -88,7 +88,7 @@ public class UrlConstant {
     public static final String ADMIN_ACCOUNT_EDIT         = "/admin/account/edit.do";
 
     /**
-     * 学生-虚拟机-操作
+     * 学生-私有虚拟机-操作
      */
     public static final String STUDENT_VM_LIST            = "/student/vm/list";
     public static final String STUDENT_VM_EDIT_FORM       = "/student/vm/edit/form";
@@ -96,6 +96,16 @@ public class UrlConstant {
     public static final String STUDENT_VM_START           = "/student/vm/start.do";
     public static final String STUDENT_VM_SHUTDOWN        = "/student/vm/shutdown.do";
 
+    /**
+     * 学生-虚拟硬盘-操作
+     */
+    public static final String STUDENT_DISK_LIST          = "/student/disk/list";
+    public static final String STUDENT_DISK_REMOVE        = "/student/disk/remove.do";
+    public static final String STUDENT_DISK_ATTACH_FORM   = "/student/disk/attach/form";
+    public static final String STUDENT_DISK_ATTACH        = "/student/disk/attach.do";
+    public static final String STUDENT_DISK_UNLOAD        = "/student/disk/unload.do";
+    public static final String STUDENT_DISK_ADD_FORM      = "/student/disk/add/form";
+    public static final String STUDENT_DISK_ADD           = "/student/disk/add";
     /**
      * 教师-私有虚拟机-操作
      */

@@ -73,7 +73,7 @@ $(document).ready(function(){
  * @param {} replace
  */
 function shutdown(url,data,replace){
-	if(confirm("可能丢失数据，确定关闭？")){
+	if(confirm("请先确认虚拟机内无数据操作，否则可能丢失数据，确定关闭？")){
 		$.ajax({
 		 url:url,
 		 data:data,

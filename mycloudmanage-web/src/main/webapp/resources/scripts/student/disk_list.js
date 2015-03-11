@@ -46,7 +46,7 @@ $(document).ready(function(){
  * @param {} replace
  */
 function attach(url,data,replace){
-	if(confirm("挂载后需要重启虚拟机方能使用硬盘，确定挂载？")){
+	if(confirm("确定挂载？")){
 		$.ajax({
 		 url:url,
 		 data:data,
@@ -82,7 +82,7 @@ function attach(url,data,replace){
  * @param {} replace
  */
 function unload(url,data,replace){
-	if(confirm("确定卸载？")){
+	if(confirm("请先关闭该硬盘关联的虚拟机，否则可能丢失数据，确定卸载？")){
 		$.ajax({
 		 url:url,
 		 data:data,

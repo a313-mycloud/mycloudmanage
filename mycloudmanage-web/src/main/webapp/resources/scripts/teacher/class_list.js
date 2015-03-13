@@ -70,6 +70,7 @@ function bind(url,data,replace){
  * @param {} replace
  */
 function unbind(url,data,replace){
+	if(confirm("此操作将会删除所有以此虚拟机为模板的学生虚拟机，确定转换？")){
 	$.ajax({
 		 url:url,
 		 data:data,
@@ -95,4 +96,5 @@ function unbind(url,data,replace){
 		 	alert(status);
 		 } 
 	});	
+	}
 }

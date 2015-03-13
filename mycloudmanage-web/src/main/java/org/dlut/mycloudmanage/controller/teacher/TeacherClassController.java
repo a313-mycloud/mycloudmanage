@@ -308,6 +308,7 @@ public class TeacherClassController extends BaseController {
             for (UserDTO student : students) {
                 QueryVmCondition queryVmCondition = new QueryVmCondition();
                 queryVmCondition.setClassId(classId);
+                queryVmCondition.setParentVmUuid(vmUuid);
                 queryVmCondition.setUserAccount(student.getAccount());
                 queryVmCondition.setOffset(0);
                 queryVmCondition.setLimit(1000);

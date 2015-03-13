@@ -30,6 +30,8 @@ import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,11 +46,11 @@ import com.alibaba.fastjson.JSONObject;
  */
 @Controller
 public class TeacherTVmController extends BaseController {
-
+    private static Logger log = LoggerFactory.getLogger(TeacherTVmController.class);
     @Resource(name = "vmBiz")
-    private VmBiz    vmBiz;
+    private VmBiz         vmBiz;
     @Resource(name = "classBiz")
-    private ClassBiz classBiz;
+    private ClassBiz      classBiz;
 
     /**
      * 教师-模板虚拟机-列表
@@ -190,12 +192,16 @@ public class TeacherTVmController extends BaseController {
         if (page.getTotalCount() <= 0) {
             return MyJsonUtils.getFailJsonString(json, "要操作的虚拟机不存在");
         }
-        /** 以下本来应该使用事务 **/
+        /***** 以下理论上应该使用事务 ****/
+        //模板虚拟机转换为私有虚拟机
+        //必须先处理tvm_class表,因为该表只允许删除与模板虚拟机有关的关联
+        this.classBiz.deleteAllClassWithTemplateVm(vmUuid);
         if (!this.vmBiz.changeToNonTempalteVm(vmUuid)) {
             return MyJsonUtils.getFailJsonString(json, "转换失败");
         }
-        this.classBiz.deleteAllClassWithTemplateVm(vmUuid);
-        /** 以上本来应该使用事务 **/
+
+        /***** 以上理论上应该使用事务 ****/
+
         return MyJsonUtils.getSuccessJsonString(json, "转换成功");
 
     }

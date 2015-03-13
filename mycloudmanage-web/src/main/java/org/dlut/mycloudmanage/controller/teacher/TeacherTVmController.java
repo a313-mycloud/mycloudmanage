@@ -190,11 +190,14 @@ public class TeacherTVmController extends BaseController {
         if (page.getTotalCount() <= 0) {
             return MyJsonUtils.getFailJsonString(json, "要操作的虚拟机不存在");
         }
-
-        if (this.vmBiz.changeToNonTempalteVm(vmUuid)) {
-            return MyJsonUtils.getSuccessJsonString(json, "转换成功");
+        /** 以下本来应该使用事务 **/
+        if (!this.vmBiz.changeToNonTempalteVm(vmUuid)) {
+            return MyJsonUtils.getFailJsonString(json, "转换失败");
         }
-        return MyJsonUtils.getFailJsonString(json, "转换失败");
+        this.classBiz.deleteAllClassWithTemplateVm(vmUuid);
+        /** 以上本来应该使用事务 **/
+        return MyJsonUtils.getSuccessJsonString(json, "转换成功");
+
     }
 
 }

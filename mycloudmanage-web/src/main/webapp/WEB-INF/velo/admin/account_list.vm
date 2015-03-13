@@ -55,14 +55,14 @@
 							<tbody>
 								#foreach($user in $!userList)
 								<tr>
-								
+								    <input id="role" name="role" value="$!role" type="hidden">
 								    <td>$user.account</td>
 									<td>$user.userName</td>
 									
 									<td>
 	
 								
-										 <a class="remove" account="$!user.account">
+										 <a class="remove" account="$!user.account" role="$!role">
 											<img src="/resources/images/icons/cross.png" alt="删除" tittle="删除">
                                          </a> 
 									</td>

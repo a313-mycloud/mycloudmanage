@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.dlut.mycloudmanage.biz.ClassBiz;
 import org.dlut.mycloudmanage.biz.ImageBiz;
 import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
@@ -50,6 +51,9 @@ public class TeacherVmController extends BaseVmController {
 
     @Resource(name = "vmBiz")
     private VmBiz    vmBiz;
+
+    @Resource(name = "classBiz")
+    private ClassBiz classBiz;
 
     /**
      * 教师-虚拟机-列表

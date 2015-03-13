@@ -32,7 +32,6 @@ public class UserBiz {
     @Resource(name = "userManageService")
     private IUserManageService userManageService;
 
-    
     public void hello() {
         System.out.println("hello");
     }
@@ -54,22 +53,19 @@ public class UserBiz {
         }
         return result.getModel();
     }
-    
+
     /**
-     * 
      * @param account
      * @return
      */
-    public UserDTO getUserByAccount(String account){
-    	MyCloudResult<UserDTO> result=this.userManageService.getUserByAccount(account);
-    	if(!result.isSuccess()){
-    		log.warn("调用userManageService.getUserByAccount()出错");
-    		return null;
-    	}
-    	return result.getModel();
+    public UserDTO getUserByAccount(String account) {
+        MyCloudResult<UserDTO> result = this.userManageService.getUserByAccount(account);
+        if (!result.isSuccess()) {
+            log.warn("调用userManageService.getUserByAccount()出错");
+            return null;
+        }
+        return result.getModel();
     }
-
- 
 
     /**
      * 创建新用户，如果账号存在，则返回false
@@ -79,13 +75,13 @@ public class UserBiz {
      * @param roleEnum
      * @return
      */
-    public  boolean createUser(UserCreateReqDTO userCreateReqDTO){
-    	MyCloudResult<Boolean> result =  this.userManageService.createUser(userCreateReqDTO);
-    	if(!result.isSuccess()){
-    		log.warn("调用userManageService.createUser()出错");
-    		return false;
-    	}
-    	return result.getModel();
+    public boolean createUser(UserCreateReqDTO userCreateReqDTO) {
+        MyCloudResult<Boolean> result = this.userManageService.createUser(userCreateReqDTO);
+        if (!result.isSuccess()) {
+            log.warn("调用userManageService.createUser()出错");
+            return false;
+        }
+        return result.getModel();
     }
 
     /**
@@ -94,13 +90,13 @@ public class UserBiz {
      * @param queryUserCondition
      * @return
      */
-    public int countQuery(QueryUserCondition queryUserCondition){
-    	MyCloudResult<Integer> result =  this.userManageService.countQuery(queryUserCondition);
-    	if(!result.isSuccess()){
-    		log.warn("调用userManageService.countQuery()出错");
-    		return 0;
-    	}
-    	return result.getModel();
+    public int countQuery(QueryUserCondition queryUserCondition) {
+        MyCloudResult<Integer> result = this.userManageService.countQuery(queryUserCondition);
+        if (!result.isSuccess()) {
+            log.warn("调用userManageService.countQuery()出错");
+            return 0;
+        }
+        return result.getModel();
     }
 
     /**
@@ -109,13 +105,29 @@ public class UserBiz {
      * @param queryUserCondition
      * @return
      */
-    public Pagination<UserDTO> query(QueryUserCondition queryUserCondition){
-    	MyCloudResult<Pagination<UserDTO>> result =  this.userManageService.query(queryUserCondition);
-    	if(!result.isSuccess()){
-    		log.warn("调用userManageService.query()出错");
-    		return null;
-    	}
-    	return result.getModel();
-    	
+    public Pagination<UserDTO> query(QueryUserCondition queryUserCondition) {
+        MyCloudResult<Pagination<UserDTO>> result = this.userManageService.query(queryUserCondition);
+        if (!result.isSuccess()) {
+            log.warn("调用userManageService.query()出错");
+            return null;
+        }
+        return result.getModel();
+
+    }
+
+    /**
+     * 根据account删除用户
+     * 
+     * @param account
+     * @return
+     */
+    public boolean deleteUserByAccount(String account) {
+        MyCloudResult<Boolean> result = this.userManageService.deleteUserByAccount(account);
+        if (!result.isSuccess()) {
+            log.warn("调用userManageService.deleteUserByAccount()出错");
+            return false;
+        }
+        return result.getModel();
+
     }
 }

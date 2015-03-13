@@ -35,24 +35,12 @@ public class UrlConstant {
 
     public static final String DEFAULT_URL                = "index";
 
-    /**
-     * 学生角色登陆后的默认页
-     */
-    public static final String STUDENT_DEFAULT_URL        = "/student/index";
-
-    /**
-     * 教师角色登陆后的默认页
-     */
-    public static final String TEACHER_DEFAULT_URL        = "/teacher/index";
+    /************** 以下为管理员相关 **********************/
 
     /**
      * 管理员登陆后的默认页
      */
     public static final String ADMIN_DEFAULT_URL          = "/admin/index";
-
-    public static final String ADMIN_ACCOUNT_STUDENT_LIST = "/admin/account/student/list"; // 管理员-账号管理-学生列表
-    public static final String ADMIN_ACCOUNT_TEACHER_LIST = "/admin/account/teacher/list"; // 管理员-账号管理-教师列表
-    public static final String ADMIN_ACCOUNT_ADMIN_LIST   = "/admin/account/admin/list";  // 管理员-账号管理-管理员列表
 
     /**
      * 管理员-物理机-操作
@@ -64,6 +52,13 @@ public class UrlConstant {
     public static final String ADMIN_HOST_ADD             = "/admin/host/add.do";
     public static final String ADMIN_HOST_EDIT_FORM       = "/admin/host/edit/form";
     public static final String ADMIN_HOST_EDIT            = "/admin/host/edit.do";
+    /**
+     * 管理员-账户管理-操作
+     */
+    public static final String ADMIN_ACCOUNT_LIST         = "/admin/account/list";
+    public static final String ADMIN_ACCOUNT_ADD_FORM     = "/admin/account/add/form";
+    public static final String ADMIN_ACCOUNT_ADD          = "/admin/account/add.do";
+    public static final String ADMIN_ACCOUNT_REMOVE       = "/admin/account/remove.do";
 
     /**
      * 管理员-课程-操作
@@ -76,17 +71,13 @@ public class UrlConstant {
     public static final String ADMIN_CLASS_EDIT_FORM      = "/admin/class/edit/form";
     public static final String ADMIN_CLASS_EDIT           = "/admin/class/edit.do";
 
-    /**
-     * 管理员-帐号-操作
-     */
-    public static final String ADMIN_ACCOUNT_LIST         = "/admin/account/list";
-    public static final String ADMIN_ACCOUNT_REMOVE       = "/admin/account/remove.do";
-    public static final String ADMIN_ACCOUNT_REMOVEALL    = "/admin/account/removeAll.do";
-    public static final String ADMIN_ACCOUNT_ADD_FORM     = "/admin/account/add/form";
-    public static final String ADMIN_ACCOUNT_ADD          = "/admin/account/add.do";
-    public static final String ADMIN_ACCOUNT_EDIT_FORM    = "/admin/account/edit/form";
-    public static final String ADMIN_ACCOUNT_EDIT         = "/admin/account/edit.do";
+    /************** 以上为管理员相关 **********************/
 
+    /************** 以下为学生相关 **********************/
+    /**
+     * 学生角色登陆后的默认页
+     */
+    public static final String STUDENT_DEFAULT_URL        = "/student/index";
     /**
      * 学生-私有虚拟机-操作
      */
@@ -106,6 +97,14 @@ public class UrlConstant {
     public static final String STUDENT_DISK_UNLOAD        = "/student/disk/unload.do";
     public static final String STUDENT_DISK_ADD_FORM      = "/student/disk/add/form";
     public static final String STUDENT_DISK_ADD           = "/student/disk/add";
+
+    /************** 以上为学生相关 **********************/
+
+    /************** 以下为教师相关 **********************/
+    /**
+     * 教师角色登陆后的默认页
+     */
+    public static final String TEACHER_DEFAULT_URL        = "/teacher/index";
     /**
      * 教师-私有虚拟机-操作
      */
@@ -144,4 +143,6 @@ public class UrlConstant {
     public static final String TEACHER_CLASS_VM_BIND_FORM = "/teacher/class/vm/bind/form";
     public static final String TEACHER_CLASS_VM_BIND      = "/teacher/class/vm/bind.do";
     public static final String TEACHER_CLASS_VM_UNBIND    = "/teacher/class/vm/unbind.do";
+
+    /************** 以上为教师相关 **********************/
 }

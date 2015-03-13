@@ -33,20 +33,15 @@ public class MyPropertiesUtil implements ApplicationContextAware {
     }
 
     /**
-     * 获取配置文件中的内容
+     * 获取配置文件myconfig.properties中的内容
      *
      * @param key
      * @return
      */
     public static String getValue(String key) {
-        if (applicationContext == null) {
-            //    System.out.println("使用时 applicationContext is null");
-            return 5 + "";//默认页大小为5
-        }
-        // System.out.println("使用时 applicationContext is not null");
         MyPropertyPlaceholderConfigurer cp = (MyPropertyPlaceholderConfigurer) applicationContext.getBean(KEY);
         String result = cp.getContextProperty(key).toString();
-        //System.out.println(key + ":" + result);
+
         return result;
     }
 

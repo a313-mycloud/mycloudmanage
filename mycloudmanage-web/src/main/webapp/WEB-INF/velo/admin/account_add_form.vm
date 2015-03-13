@@ -8,22 +8,23 @@
 						 
 						 <form>
 						 	<fieldset>
+						 	<input type="hidden"  id="role" name="role" value="$!role"/>
 						  	<p>
-							  	<label>#if($role == 1)学生帐号#end
-							  	       #if($role == 2)教师帐号#end
-							  	       #if($role == 3)管理员帐号#end
-							  	 </label>
-							  	<input class="text-input small-input " type="text"  id="userName" name="Name">
-						  	</p>
-						  	<p>
-							  	<label>密码</label>
-							  	<input class="text-input small-input " type="text"  id="password" name="password">
+							  	<label>登陆账号</label>
+							  	<input class="text-input small-input " type="text"  id="account" name="account">
 						  	</p>
 						  	
 						  	<p>
-							  	<label>确认密码</label>
-							  	<input class="text-input small-input " type="text"  id="password" name="password">
+							  	<label>账号角色</label>
+							  	<input class="text-input small-input " type="text"  readonly="true"  value="$!roleDesc">
 						  	</p>
+						  	
+						  	<p>
+							  	<label>初始密码</label>
+							  	<input class="text-input small-input " type="text"    readonly="true" value="$!password">	
+						  	</p>
+						  	
+								 
 						  	<p>
 						  	   <a class="button add"    >添加</a>
 						  	   <a class="button reset"    >重置</a>
@@ -32,10 +33,10 @@
 						 </form>
 						
 						
-						
 					
 						
 					</div> <!-- End #tab2 -->    
 				</div> <!-- End .content-box-content -->
 			</div> <!-- End .content-box -->		
 </div> <!-- End #main-content -->
+

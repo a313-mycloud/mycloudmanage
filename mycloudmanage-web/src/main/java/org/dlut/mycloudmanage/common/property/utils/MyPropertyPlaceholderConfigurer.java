@@ -26,13 +26,13 @@ public class MyPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigur
     @Override
     protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties props)
             throws BeansException {
-        //super.processProperties(beanFactoryToProcess, props);
+
         super.processProperties(beanFactoryToProcess, props);
         myProperties = new HashMap<String, String>();
         for (Object key : props.keySet()) {
             String keyStr = key.toString();
             String value = props.getProperty(keyStr);
-            //System.out.println(keyStr + " : " + value);
+
             myProperties.put(keyStr, value);
         }
     }

@@ -13,19 +13,20 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dlut.mycloudmanage.biz.ClassBiz;
+import org.dlut.mycloudmanage.biz.UserBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
+import org.dlut.mycloudmanage.common.utils.MyJsonUtils;
 import org.dlut.mycloudmanage.controller.common.BaseController;
-import org.dlut.mycloudserver.client.common.MyCloudResult;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.classmanage.ClassDTO;
 import org.dlut.mycloudserver.client.common.classmanage.QueryClassCondition;
 import org.dlut.mycloudserver.client.common.usermanage.QueryUserCondition;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
-import org.dlut.mycloudserver.client.service.usermanage.IUserManageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -43,13 +44,13 @@ import com.alibaba.fastjson.JSONObject;
 @Controller
 public class ClassController extends BaseController {
 
-    private static Logger      log = LoggerFactory.getLogger(ClassController.class);
+    private static Logger log = LoggerFactory.getLogger(ClassController.class);
 
     @Resource(name = "classBiz")
-    private ClassBiz           classBiz;
+    private ClassBiz      classBiz;
 
-    @Resource(name = "userManageService")
-    private IUserManageService userManageService;
+    @Resource(name = "userBiz")
+    private UserBiz       userBiz;
 
     /**
      * 管理员-课程-显示列表
@@ -61,7 +62,6 @@ public class ClassController extends BaseController {
      * @param perPage
      * @return
      */
-
     @RequestMapping(value = UrlConstant.ADMIN_CLASS_LIST)
     public String adminClassList(HttpServletRequest request, HttpServletResponse response, ModelMap model,
                                  Integer currentPage) {
@@ -73,6 +73,7 @@ public class ClassController extends BaseController {
         if (currentPage == null)
             currentPage = 1;
         int PAGESIZE = Integer.parseInt(MyPropertiesUtil.getValue("pagesize"));
+
         QueryClassCondition queryClassCondition = new QueryClassCondition();
         queryClassCondition.setLimit(PAGESIZE);
         queryClassCondition.setOffset((currentPage - 1) * PAGESIZE);
@@ -96,100 +97,79 @@ public class ClassController extends BaseController {
      * @param classId
      * @return
      */
+
     @RequestMapping(value = UrlConstant.ADMIN_CLASS_REMOVE, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
-    public String removeClass(int classId) {
+    public String removeClass(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer classId) {
         JSONObject json = new JSONObject();
-        json.put("isLogin", true);
-        json.put("isAuth", true);
-        if (this.classBiz.deleteClass(classId)) {
-            log.info("删除" + classId + "成功");
-            json.put("isSuccess", true);
-            json.put("message", "删除成功");
-            json.put("data", "");
-            return json.toString();
-        }
-        log.info("删除" + classId + "失败");
-        json.put("isSuccess", false);
-        json.put("message", "该课程不存在");
-        json.put("data", "");
 
-        return json.toString();
-
-    }
-
-    /**
-     * 管理员-课程-删除全部 处理异步请求，返回JSON 没有实现
-     * 
-     * @return
-     */
-    @RequestMapping(value = UrlConstant.ADMIN_CLASS_REMOVEALL, produces = { "application/json;charset=UTF-8" })
-    @ResponseBody
-    public String removeAll() {
-        JSONObject json = new JSONObject();
-        json.put("isLogin", true);
-        json.put("isAuth", true);
-        json.put("isSuccess", true);
-        json.put("message", "删除成功");
-        json.put("data", "");
-        return json.toString();
+        if (classId == null)
+            return MyJsonUtils.getFailJsonString(json, "classId不能为空");
+        QueryClassCondition queryClassCondition = new QueryClassCondition();
+        queryClassCondition.setClassId(classId);
+        if (this.classBiz.countQuery(queryClassCondition) <= 0)
+            return MyJsonUtils.getFailJsonString(json, "要删除的课程不存在");
+        if (!this.classBiz.deleteClass(classId))
+            return MyJsonUtils.getFailJsonString(json, "删除失败");
+        return MyJsonUtils.getSuccessJsonString(json, "删除成功");
     }
 
     @RequestMapping(value = UrlConstant.ADMIN_CLASS_ADD_FORM)
     public String addClassForm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_CLASS_LIST, model);
+
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return this.goErrorPage(errorDesc);
+        }
+        //获取当前用户帐号
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
 
         QueryUserCondition queryUserCondition = new QueryUserCondition();
         queryUserCondition.setRole(RoleEnum.TEACHER);
-        MyCloudResult<Pagination<UserDTO>> result = userManageService.query(queryUserCondition);
-        if (!result.isSuccess()) {
-            log.warn("查询用户失败，原因：" + result.getMsgInfo());
-            return this.goErrorPage("查询用户失败");
+        Pagination<UserDTO> pagination = this.userBiz.query(queryUserCondition);
+        if (pagination == null) {
+            log.warn("查询用户失败，原因：");
+            return this.goErrorPage("无法跳转到添加页面");
         }
-        Pagination<UserDTO> paginateion = result.getModel();
-        model.put("userList", paginateion.getList());
 
+        model.put("userList", pagination.getList());
+        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_CLASS_LIST, model);
         model.put("screen", "admin/class_add_form");
         model.put("js", "admin/class_list");
         return "default";
     }
 
+    /**
+     * 异步添加课程操作
+     * 
+     * @param request
+     * @param response
+     * @param model
+     * @param className
+     * @param teacherAccount
+     * @return
+     */
     @RequestMapping(value = UrlConstant.ADMIN_CLASS_ADD, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String addClass(HttpServletRequest request, HttpServletResponse response, ModelMap model, String className,
                            String teacherAccount) {
-
         JSONObject json = new JSONObject();
-        json.put("isLogin", true);
-        json.put("isAuth", true);
-
-        if (className.isEmpty()) {
-            json.put("isSuccess", false);
-            json.put("message", "课程名不能为空");
-            return json.toString();
-        }
-
+        if (StringUtils.isBlank(className))
+            return MyJsonUtils.getFailJsonString(json, "课程名不能为空");
+        if (StringUtils.isBlank(teacherAccount))
+            return MyJsonUtils.getFailJsonString(json, "教师不能为空");
         // 检查该老师的课程是否已经存在
         QueryClassCondition queryClassCondition = new QueryClassCondition();
         queryClassCondition.setClassName(className);
         queryClassCondition.setTeacherAccount(teacherAccount);
-        if (this.classBiz.query(queryClassCondition).getTotalCount() > 0) {
-            json.put("isSuccess", false);
-            json.put("message", "要添加的记录已经存在");
-            return json.toString();
-        }
-
+        if (this.classBiz.query(queryClassCondition).getTotalCount() > 0)
+            return MyJsonUtils.getFailJsonString(json, "该老师的该课程已经存在");
         ClassDTO classDTO = new ClassDTO();
         classDTO.setClassName(className);
         classDTO.setTeacherAccount(teacherAccount);
-        if (this.classBiz.createClass(classDTO) > 0) {
-            json.put("isSuccess", true);
-            json.put("message", "添加成功");
-            return json.toString();
-        }
-        json.put("isSuccess", false);
-        json.put("message", "添加失败");
-        return json.toString();
+        if (this.classBiz.createClass(classDTO) <= 0)
+            return MyJsonUtils.getFailJsonString(json, "添加课程失败");
+        return MyJsonUtils.getSuccessJsonString(json, "添加成功");
     }
 
     /**
@@ -202,16 +182,31 @@ public class ClassController extends BaseController {
      * @return
      */
     @RequestMapping(value = UrlConstant.ADMIN_CLASS_EDIT_FORM)
-    public String editForm(HttpServletRequest request, HttpServletResponse response, ModelMap model, int classId) {
+    public String editForm(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer classId) {
         String errorDesc = this.setDefaultEnv(request, response, model);
         if (errorDesc != null) {
             return this.goErrorPage(errorDesc);
         }
-        // 查询要修改的内容，以显示在编辑表单中
-        QueryClassCondition queryclassCondition = new QueryClassCondition();
-        queryclassCondition.setClassId(classId);
-        ClassDTO classDTO = this.classBiz.query(queryclassCondition).getList().get(0);
+        //获取当前用户帐号
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
+
+        if (classId == null)
+            return this.goErrorPage("classId不能为空");
+        ClassDTO classDTO = this.classBiz.getClassById(classId);
+        if (classDTO == null)
+            return this.goErrorPage("要编辑的课程不存在");
+
+        QueryUserCondition queryUserCondition = new QueryUserCondition();
+        queryUserCondition.setRole(RoleEnum.TEACHER);
+        Pagination<UserDTO> pagination = this.userBiz.query(queryUserCondition);
+        if (pagination == null) {
+            log.warn("查询用户失败，原因：");
+            return this.goErrorPage("无法跳转到编辑页面");
+        }
+
+        model.put("userList", pagination.getList());
         model.put("class", classDTO);
+
         this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_CLASS_LIST, model);
         model.put("screen", "admin/class_edit_form");
         model.put("js", "admin/class_list");
@@ -232,40 +227,32 @@ public class ClassController extends BaseController {
     @RequestMapping(value = UrlConstant.ADMIN_CLASS_EDIT, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String editClass(HttpServletRequest request, HttpServletResponse response, ModelMap model, String className,
-                            String teacherAccount, int classId) {
+                            String teacherAccount, Integer classId) {
         JSONObject json = new JSONObject();
-        json.put("isLogin", true);
-        json.put("isAuth", true);
-
-        if (className.isEmpty()) {
-            json.put("isSuccess", false);
-            json.put("message", "课程名不能为空");
-            return json.toString();
-        }
-
-        // 检查教师是否存在
-        QueryClassCondition queryclassCondition2 = new QueryClassCondition();
-        queryclassCondition2.setTeacherAccount(teacherAccount);
-        Pagination<ClassDTO> page2 = this.classBiz.query(queryclassCondition2);
-
-        if (page2.getTotalCount() <= 0) {
-            json.put("isSuccess", false);
-            json.put("message", "要编辑的教师不存在");
-            return json.toString();
-        }
+        if (classId == null)
+            return MyJsonUtils.getFailJsonString(json, "classId不能为空");
+        if (StringUtils.isBlank(className))
+            return MyJsonUtils.getFailJsonString(json, "课程名不能为空");
+        if (StringUtils.isBlank(teacherAccount))
+            return MyJsonUtils.getFailJsonString(json, "教师不能为空");
+        QueryUserCondition queryUserCondition = new QueryUserCondition();
+        queryUserCondition.setRole(RoleEnum.TEACHER);
+        queryUserCondition.setAccount(teacherAccount);
+        if (this.userBiz.countQuery(queryUserCondition) <= 0)
+            return MyJsonUtils.getFailJsonString(json, "该教师不存在");
+        QueryClassCondition queryClassCondition = new QueryClassCondition();
+        queryClassCondition.setClassName(className);
+        queryClassCondition.setTeacherAccount(teacherAccount);
+        if (this.classBiz.countQuery(queryClassCondition) > 0)
+            return MyJsonUtils.getFailJsonString(json, "该记录已经存在，不需要重新编辑");
 
         ClassDTO classDTO = new ClassDTO();
-        classDTO.setClassId(classId);
         classDTO.setClassName(className);
         classDTO.setTeacherAccount(teacherAccount);
-        if (this.classBiz.updateClass(classDTO)) {
-            json.put("isSuccess", true);
-            json.put("message", "更新成功");
-            return json.toString();
-        }
-        json.put("isSuccess", false);
-        json.put("message", "更新失败");
-        return json.toString();
-
+        classDTO.setClassId(classId);
+        if (!this.classBiz.updateClass(classDTO))
+            return MyJsonUtils.getFailJsonString(json, "更新失败");
+        return MyJsonUtils.getSuccessJsonString(json, "更新成功");
     }
+
 }

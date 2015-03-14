@@ -11,40 +11,57 @@
 							<thead>
 								<tr>
 								  <th>课程名称</th>
-								  <th>教师帐号</th>
+								  <th>任课教师账号</th>
 								  <th>操作</th>
 								</tr>
 							</thead>
 					
 							<tfoot>
 								<tr>
-									<td colspan="6">
-										<div class=" align-left">
+									<td colspan="3">
+								    	<div class=" align-left">
 											<a class="button" href="/admin/class/add/form" >添加</a>
 									    </div>   
-									    <div class="align-right">
-									        <a class="button" >总共$!totalPage页</a>
-									        <a class="button firstPage">首页</a>
-									        <a class="button prePage" >上页</a>
-									        <a class="button "  id="page" currentPage="$!currentPage" totalPage="$!totalPage">$!currentPage</a>
-									        <a class="button nextPage" >下页</a>
-									        <a class="button lastPage" >末页</a>
+									    
+									      <div class="pagination">
+									        <a >总共$!totalPage页</a>
+									        <a class="firstPage" >首页</a>
+									        <a class="prePage" >上页</a>
+									        <a class="number"  id="page" currentPage="$!currentPage" totalPage="$!totalPage"  title="current">$!currentPage</a>
+									        <a class="nextPage" >下页</a>
+									        <a class="lastPage" >末页</a>
 									    </div>
+									    
 									</td>
 								</tr>
 							</tfoot>
 						 
 							<tbody >
 								#foreach($class in $!classList)
+								  #if($!{velocityCount}%2!=0)
+								<tr class="alt-row">
+								#else
 								<tr>
+								#end
 									<td>$!class.className</td>
 									<td>$!class.teacherAccount</td>
 									<td>
-										 <a href="/admin/class/edit/form?classId=$!class.classId">
-										 <img src="/resources/images/icons/pencil.png" alt="编辑" tittle="编辑">
+									    
+									    
+									     <a   href="/admin/class/edit/form?classId=$!class.classId">
+										 <img src="/resources/images/icons/pencil.png" alt="编辑" title="编辑">
                                          </a>
+                                         
+									     <a class="addstudent" classId="$!class.classId">
+										 <img src="/resources/images/icons/add_student.gif"  alt="添加学生" title="添加学生" >
+                                         </a> 
+                                         
+                                          <a class="addstudents" classId="$!class.classId" >
+										 <img src="/resources/images/icons/add_students.gif" alt="添加学生组" title="添加学生组" >
+                                         </a> 
+										  
 										 <a class="remove" classId="$!class.classId">
-										<img src="/resources/images/icons/cross.png" alt="删除" tittle="删除">
+										 <img src="/resources/images/icons/cross.png"  alt="删除" title="删除">
                                          </a> 
 									</td>
 								</tr>

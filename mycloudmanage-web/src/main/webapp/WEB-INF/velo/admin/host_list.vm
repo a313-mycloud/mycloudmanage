@@ -17,7 +17,7 @@
 					
 							<tfoot>
 								<tr>
-									<td colspan="6">
+									<td colspan="4">
 										<div class=" align-left">
 											<a class="button" href="/admin/host/add/form" >添加</a>
 									    </div>   
@@ -48,10 +48,10 @@
 									<td>$!host.hostStatusEnum.desc</td>
 									<td>
 										 <a   href="/admin/host/edit/form?hostId=$!host.hostId">
-										 <img src="/resources/images/icons/pencil.png" alt="编辑" tittle="编辑">
+										 <img src="/resources/images/icons/pencil.png" alt="编辑" title="编辑">
                                          </a>
 										 <a class="remove" hostId="$!host.hostId">
-										<img src="/resources/images/icons/cross.png" alt="删除" tittle="删除">
+										<img src="/resources/images/icons/cross.png" alt="删除" title="删除">
                                          </a> 
 									</td>
 								</tr>

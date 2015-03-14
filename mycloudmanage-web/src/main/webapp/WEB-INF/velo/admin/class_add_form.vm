@@ -8,13 +8,15 @@
 						 	<fieldset>
 						  	<p>
 							  	<label for="className">课程名称</label>
-							  	<input class="text-input small-input " type="text" id="className"/>
+							  	<input class="text-input medium-input " type="text" id="className"/>
 						  	</p>
 						  	<p>
-							  	<label for="teacherAccount">教师帐号</label>
-						        <select id = "teacherAccount">
+							  	<label for="teacherAccount">任课教师账号</label>
+						        <select id = "teacherAccount" class="medium-input">
 						        #foreach($user in $!userList)
-						        <option><value =$!user.account">  $!user.account    </option>
+						          <option>
+						             <value =$!user.account">  $!user.account    
+						           </option>
 						        #end
 						       </select>
 						  	</p>

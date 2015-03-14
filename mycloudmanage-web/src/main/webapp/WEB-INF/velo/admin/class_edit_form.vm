@@ -6,14 +6,28 @@
 					
 					    <form>
 						 	<fieldset>
+						 	
 						 	<input id ="classId" type="hidden" value="$class.classId">
+						 	<input id="preClassName" type="hidden" value="$!class.className">
+						 	<input id="preTeacherAccount" type="hidden" value="$!class.teacherAccount">
+						 	
 						  	<p>
 							  	<label for="className">课程名称</label>
-							  	<input class="text-input big-input " type="text" id="className" value="$!class.className">
+							  	<input class="text-input medium-input " type="text" id="className" value="$!class.className">
 						  	</p>
-						  	<p>
-							  	<label for="teacherAccount">教师帐号</label>
-							  	<input class="text-input big-input " type="text"  id="teacherAccount" value="$!class.teacherAccount">
+						
+						  	
+						  	 <p>
+							  	<label for="teacherAccount">任课教师账号</label>
+						        <select id = "teacherAccount" class="medium-input" value="$!class.teacherAccount">
+						        #foreach($user in $!userList)
+						           #if($!user.account == $!class.teacherAccount )
+						              <option value ="$!user.account"  selected>$!user.account</option>
+						            #else
+						          <option value ="$!user.account">$!user.account</option>
+						          #end
+						        #end
+						       </select>
 						  	</p>
 						  	
 						  	<p>

@@ -5,15 +5,14 @@
 
 $(document).ready(function(){	
 	$(".remove").click(function() {
-                console.log("lalalalal;");
 		remove("/admin/class/remove.do",{classId:$(this).attr('classId')},"/admin/class/list?currentPage=1");
 	});
+	
 	$(".add").click(function(){
-                console.log("running add function")
 		add('/admin/class/add.do',{className:$("#className").val(),teacherAccount:$("#teacherAccount").val()},"/admin/class/list?currentPage=1");
 	});
+	
 	$(".edit").click(function(){
-            console.log("running edit function")
 	    edit('/admin/class/edit.do',{"classId":$("#classId").val(),"className":$("#className").val(),"teacherAccount":$("#teacherAccount").val()},"/admin/class/list?currentPage=1");
 	});
 	$(".reset").click(function(){
@@ -21,8 +20,8 @@ $(document).ready(function(){
 		$("#teacherAccount").val("");
 	});	
 	$(".resetEdit").click(function(){
-		$("#className").val($("#preName").val());
-		$("#teacherAccount").val($("#preAccount").val());
+		$("#className").val($("#preClassName").val());
+		$("#teacherAccount").val($("#preTeacherAccount").val());
 	});	
 	$(".prePage").click(function(){
 	     showPrePage("/admin/class/list",$("#page").attr("currentPage"));
@@ -35,6 +34,12 @@ $(document).ready(function(){
 	});
 	$(".lastPage").click(function(){
 	     showLastPage("/admin/class/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
+	});
+	
+	$(".addstudent").click(function(){
+	});
+	
+	$(".addstudents").click(function(){
 	});
 	
 });

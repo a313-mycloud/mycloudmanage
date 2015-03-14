@@ -53,9 +53,14 @@
 							</tfoot>
 						 
 							<tbody>
+							<input id="role" name="role" value="$!role" type="hidden">
 								#foreach($user in $!userList)
+								  #if($!{velocityCount}%2!=0)
+								<tr class="alt-row">
+								#else
 								<tr>
-								    <input id="role" name="role" value="$!role" type="hidden">
+								#end
+								    
 								    <td>$user.account</td>
 									<td>$user.userName</td>
 									

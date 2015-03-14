@@ -26,9 +26,9 @@ public enum MenuEnum {
     STUDENT_DiSK_LIST("虚拟硬盘管理", UrlConstant.STUDENT_DISK_LIST, RoleEnum.STUDENT),
 
     ADMIN_INDEX("首页", UrlConstant.ADMIN_DEFAULT_URL, RoleEnum.ADMIN),
-    ADMIN_HOST_LIST("物理机管理", UrlConstant.ADMIN_HOST_LIST, RoleEnum.ADMIN),
     ADMIN_ACCOUNT_LIST("账号管理", UrlConstant.ADMIN_ACCOUNT_LIST, RoleEnum.ADMIN),
-    ADMIN_CLASS_LIST("课程管理", UrlConstant.ADMIN_CLASS_LIST, RoleEnum.ADMIN);
+    ADMIN_CLASS_LIST("课程管理", UrlConstant.ADMIN_CLASS_LIST, RoleEnum.ADMIN),
+    ADMIN_HOST_LIST("物理机管理", UrlConstant.ADMIN_HOST_LIST, RoleEnum.ADMIN);
 
     private String   name;
     private String   route;

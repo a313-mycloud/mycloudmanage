@@ -13,6 +13,8 @@ package org.dlut.mycloudmanage.common.constant;
  * @author luojie.lj 2014年9月25日 上午11:01:57
  */
 public class UrlConstant {
+
+    /***** 以下为全局常量 ******/
     /**
      * 登陆页面
      */
@@ -27,13 +29,13 @@ public class UrlConstant {
      * 错误页面
      */
     public static final String ERROR_URL                  = "/error";
-
     /**
      * spcie_html5显示页面
      */
     public static final String SPICE_HTML5_URL            = "/spicehtml5";
-
     public static final String DEFAULT_URL                = "index";
+
+    /***** 以上为全局常量 ******/
 
     /************** 以下为管理员相关 **********************/
 

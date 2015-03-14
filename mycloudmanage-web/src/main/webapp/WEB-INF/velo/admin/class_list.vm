@@ -55,14 +55,14 @@
 									     <a class="addstudent" classId="$!class.classId">
 										 <img src="/resources/images/icons/add_student.gif"  alt="添加学生" title="添加学生" >
                                          </a> 
-                                         
+                                          <a class="remove" classId="$!class.classId">
+										 <img src="/resources/images/icons/cross.png"  alt="删除" title="删除">
+                                         </a> 
                                           <a class="addstudents" classId="$!class.classId" >
 										 <img src="/resources/images/icons/add_students.gif" alt="添加学生组" title="添加学生组" >
                                          </a> 
 										  
-										 <a class="remove" classId="$!class.classId">
-										 <img src="/resources/images/icons/cross.png"  alt="删除" title="删除">
-                                         </a> 
+										
 									</td>
 								</tr>
 								#end

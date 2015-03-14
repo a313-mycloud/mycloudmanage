@@ -15,6 +15,11 @@
 						  	</p>
 						  	
 						  	<p>
+							  	<label>姓名(可选)</label>
+							  	<input class="text-input small-input " type="text"  id="username" name="username">
+						  	</p>
+						  	
+						  	<p>
 							  	<label>账号角色</label>
 							  	<input class="text-input small-input " type="text"  readonly="true"  value="$!roleDesc">
 						  	</p>

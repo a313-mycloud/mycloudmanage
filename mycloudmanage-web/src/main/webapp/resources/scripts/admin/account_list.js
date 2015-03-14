@@ -44,7 +44,7 @@ $(document).ready(function(){
 	         window.location.replace(url+"?currentPage="+totalPage+"&role="+$("#role").val());
 	});
 	$(".add").click(function(){
-		add('/admin/account/add.do',{role:$("#role").val(),account:$("#account").val()},"/admin/account/list?role="+$("#role").val());
+		add('/admin/account/add.do',{role:$("#role").val(),account:$("#account").val(),username:$("#username").val()},"/admin/account/list?role="+$("#role").val());
 	});
 	$(".reset").click(function(){
 		$("#account").val("");

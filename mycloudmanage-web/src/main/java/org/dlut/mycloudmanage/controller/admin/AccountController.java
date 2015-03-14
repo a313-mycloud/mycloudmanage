@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.dlut.mycloudmanage.biz.UserBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
@@ -143,7 +144,7 @@ public class AccountController extends BaseController {
     @RequestMapping(value = UrlConstant.ADMIN_ACCOUNT_ADD, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String addAccount(HttpServletRequest request, HttpServletResponse response, ModelMap model, String account,
-                             Integer role) {
+                             Integer role, String username) {
 
         JSONObject json = new JSONObject();
         json.put("isLogin", true);
@@ -154,6 +155,7 @@ public class AccountController extends BaseController {
             return MyJsonUtils.getFailJsonString(json, "角色不合法");
         if (account == null)
             return MyJsonUtils.getFailJsonString(json, "登陆账号不能为空");
+
         QueryUserCondition queryUserCondition = new QueryUserCondition();
         queryUserCondition.setAccount(account);
         if (this.userBiz.countQuery(queryUserCondition) > 0)
@@ -163,7 +165,10 @@ public class AccountController extends BaseController {
         userCreateReqDTO.setAccount(account);
         userCreateReqDTO.setPassword(MyPropertiesUtil.getValue("initialPassword"));
         userCreateReqDTO.setRole(RoleEnum.getRoleByStatus(role));
-        userCreateReqDTO.setUserName("");
+        if (StringUtils.isBlank(username))
+            userCreateReqDTO.setUserName("");
+        else
+            userCreateReqDTO.setUserName(username);
         if (!this.userBiz.createUser(userCreateReqDTO))
             return MyJsonUtils.getFailJsonString(json, "创建账户失败");
         return MyJsonUtils.getSuccessJsonString(json, "创建账户成功");

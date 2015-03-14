@@ -7,8 +7,11 @@ $(document).ready(function(){
 	$(function(){
 		$("#showType").val($("#preShowType").val());
 	});
-	$(".edit").click(function(){
+	$(".edit").click(
+	function(){
+		if(confirm("编辑后需要重启方能生效，确定编辑？")){
 	    edit('/student/vm/edit.do',{"vmNetworkType":$("#vmNetworkType").val(),"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/student/vm/list?currentPage=1");
+	}
 	});
 	$(".resetEdit").click(function(){
 		console.log($("#preName").val());
@@ -52,7 +55,7 @@ $(document).ready(function(){
  * @param {} replace
  */
 function shutdown(url,data,replace){
-	if(confirm("请先确认虚拟机内无数据操作，否则可能丢失数据，确定关闭？")){
+	if(confirm("请确认虚拟机内无数据操作，否则可能丢失数据，确定关闭？")){
 		$.ajax({
 		 url:url,
 		 data:data,

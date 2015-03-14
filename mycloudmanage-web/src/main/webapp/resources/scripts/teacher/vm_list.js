@@ -12,7 +12,9 @@ $(document).ready(function(){
 		convert('/teacher/vm/convert.do',{"vmUuid":$(this).attr('vmUuid')},'/teacher/vm/list?currentPage=1');
 	});
 	$(".edit").click(function(){
+		if(confirm("编辑后需要重启方能生效，确定编辑？")){
 	    edit('/teacher/vm/edit.do',{"vmNetworkType":$("#vmNetworkType").val(),"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/teacher/vm/list?currentPage=1");
+	}
 	});
 	$(".resetEdit").click(function(){
 		console.log($("#preName").val());
@@ -143,7 +145,7 @@ function hidePass(){
 	//$("#box").html("<input type='password' id='vmPassword' value="+$("#vmPassword").val()+"><a  class='button showPass '>显示密码</a>");
 } 
 function convert(url,data,replace){
-	if(confirm("此操作会将私有虚拟机转换为模板虚拟机，转换后再也无法对虚拟机进行更改，确定转换？")){
+	if(confirm("转换前需要关闭虚拟机，确定转换？")){
 		$.ajax({
 		 url:url,
 		 data:data,

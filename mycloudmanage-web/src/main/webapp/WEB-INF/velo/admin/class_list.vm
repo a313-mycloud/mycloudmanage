@@ -51,16 +51,15 @@
 									     <a   href="/admin/class/edit/form?classId=$!class.classId">
 										 <img src="/resources/images/icons/pencil.png" alt="编辑" title="编辑">
                                          </a>
-                                         
-									     <a class="addstudent" classId="$!class.classId">
-										 <img src="/resources/images/icons/add_student.gif"  alt="添加学生" title="添加学生" >
-                                         </a> 
-                                          <a class="remove" classId="$!class.classId">
+                                       
+                                         <a  href="/admin/class/student/list?classId=$!class.classId"> 
+										 <image src="/resources/images/icons/person.gif"  alt="查看选课学生" title="查看选课学生">
+                                         </a>     
+                                     
+                                    
+                                         <a class="remove" classId="$!class.classId">
 										 <img src="/resources/images/icons/cross.png"  alt="删除" title="删除">
-                                         </a> 
-                                          <a class="addstudents" classId="$!class.classId" >
-										 <img src="/resources/images/icons/add_students.gif" alt="添加学生组" title="添加学生组" >
-                                         </a> 
+                                         </a>
 										  
 										
 									</td>

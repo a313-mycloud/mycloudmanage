@@ -26,6 +26,7 @@ import org.dlut.mycloudserver.client.common.classmanage.ClassDTO;
 import org.dlut.mycloudserver.client.common.classmanage.QueryClassCondition;
 import org.dlut.mycloudserver.client.common.usermanage.QueryUserCondition;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
+import org.dlut.mycloudserver.client.common.usermanage.UserCreateReqDTO;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -255,4 +256,131 @@ public class ClassController extends BaseController {
         return MyJsonUtils.getSuccessJsonString(json, "更新成功");
     }
 
+    /**
+     * 管理员-课程-选课学生-列表
+     * 
+     * @param request
+     * @param response
+     * @param model
+     * @param currentPage
+     * @return
+     */
+    @RequestMapping(value = UrlConstant.ADMIN_CLASS_STUDENT_LIST)
+    public String classStudentList(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+                                   Integer currentPage, Integer classId) {
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return this.goErrorPage(errorDesc);
+        }
+        //获取当前用户帐号
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
+        //默认显示第一页
+        if (currentPage == null)
+            currentPage = 1;
+        int PAGESIZE = Integer.parseInt(MyPropertiesUtil.getValue("pagesize"));
+
+        if (classId == null)
+            return this.goErrorPage("课程ID不能为空");
+
+        //查看当前课程
+
+        if (this.classBiz.getClassById(classId) == null)
+            return this.goErrorPage("当前账户不存在该课程");
+
+        //获得选择一门课程的所有学生
+        Pagination<UserDTO> pagination = this.classBiz.getStudentsInOneClass(classId, (currentPage - 1) * PAGESIZE,
+                PAGESIZE);
+        List<UserDTO> studentsInOneClass = pagination.getList();
+        model.put("class", this.classBiz.getClassById(classId));
+        model.put("students", studentsInOneClass);
+
+        model.put("totalPage", pagination.getTotalPage());
+        model.put("currentPage", currentPage);
+        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_CLASS_LIST, model);
+        model.put("screen", "admin/class_student_list");
+        model.put("js", "admin/class_student_list");
+        return "default";
+    }
+
+    @RequestMapping(value = UrlConstant.ADMIN_CLASS_ADDSTUDENT_FORM)
+    public String addStudentForm(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+                                 Integer classId) {
+
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return this.goErrorPage(errorDesc);
+        }
+        //获取当前用户帐号
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
+
+        if (classId == null)
+            return this.goErrorPage("classId不能为空");
+        ClassDTO classDTO = this.classBiz.getClassById(classId);
+        if (classDTO == null)
+            return this.goErrorPage("要添加学生的课程不存在");
+
+        model.put("class", classDTO);
+
+        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_CLASS_LIST, model);
+        model.put("screen", "admin/class_addstudent_form");
+        model.put("js", "admin/class_list");
+        return "default";
+    }
+
+    @RequestMapping(value = UrlConstant.ADMIN_CLASS_ADDSTUDENT, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public String addStudent(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer classId,
+                             String account, String username) {
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return this.goErrorPage(errorDesc);
+        }
+        //获取当前用户帐号
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
+
+        JSONObject json = new JSONObject();
+        if (classId == null) {
+            log.error("classId不能为空");
+            return MyJsonUtils.getFailJsonString(json, "classId不能为空");
+        }
+        ClassDTO classDTO = this.classBiz.getClassById(classId);
+        if (classDTO == null) {
+            log.error("要添加学生的课程不存在");
+            return MyJsonUtils.getFailJsonString(json, "要添加学生的课程不存在");
+        }
+        if (StringUtils.isBlank(account)) {
+            log.error("学生账户不能为空");
+            return MyJsonUtils.getFailJsonString(json, "学生账户不能为空");
+        }
+        if (StringUtils.isBlank(username))
+            username = "";
+
+        /** 以下应该使用事物 ****/
+        QueryUserCondition queryUserCondition = new QueryUserCondition();
+        queryUserCondition.setAccount(account);
+        if (this.userBiz.countQuery(queryUserCondition) > 0) {
+            log.info("要创建的账号" + account + "已经存在");
+            return MyJsonUtils.getFailJsonString(json, "要创建的账号" + account + "已经存在");
+        }
+        //如果账号不存在，则创建学生
+        String inilPassword = MyPropertiesUtil.getValue("initialPassword");
+        UserCreateReqDTO userCreateReqDTO = new UserCreateReqDTO();
+        userCreateReqDTO.setAccount(account);
+        userCreateReqDTO.setUserName(username);
+        userCreateReqDTO.setPassword(inilPassword);
+        userCreateReqDTO.setRole(RoleEnum.STUDENT);
+        if (!this.userBiz.createUser(userCreateReqDTO)) {
+            log.error("创建学生用户" + account + "失败");
+            return MyJsonUtils.getFailJsonString(json, "创建学生用户" + account + "失败");
+        }
+        log.info("创建学生用户" + account + "--" + username + "成功");
+        if (!this.classBiz.addStudentInOneClass(account, classId)) {
+            log.error("添加学生--" + account + "--" + username + "--到课程《" + classDTO.getClassName() + "》失败");
+            return MyJsonUtils.getFailJsonString(json,
+                    "添加学生" + account + "--" + username + "到课程《" + classDTO.getClassName() + "》失败");
+        }
+        log.info("添加学生" + account + "--" + username + "到课程《" + classDTO.getClassName() + "》成功");
+        return MyJsonUtils.getSuccessJsonString(json, "添加成功");
+        /** 以上应该使用事物 ****/
+    }
 }

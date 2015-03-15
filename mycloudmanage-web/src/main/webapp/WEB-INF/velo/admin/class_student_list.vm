@@ -1,0 +1,64 @@
+<!--author:xuyizhen-->
+<!--time:2014/12/7 10:46-->
+<div id="main-content"> <!-- Main Content Section with everything -->	
+<div class="content-box"><!-- Start Content Box -->
+<div class="content-box-content">
+<div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
+					
+					
+									
+						<table id="table" >
+							<thead>
+								<tr>
+								   <th>学生帐号</th>
+								   <th>学生姓名</th>
+								   <th>所属课程</th>
+							
+								</tr>
+							</thead>
+					
+								<tfoot>
+								<tr>
+									<td colspan="3">
+									   <div class=" align-left">
+									    <a  class="button" href="/admin/class/addstudent/form?classId=$!class.classId"> 添加学生  </a> 
+                                          <a class="button" href="#" >添加学生组</a> 
+									    </div>  
+									
+									     <div class="pagination">
+									        <a >总共$!totalPage页</a>
+									        <a class="firstPage" >首页</a>
+									        <a class="prePage" >上页</a>
+									        <a class="number"  id="page" currentPage="$!currentPage" totalPage="$!totalPage"  title="current">$!currentPage</a>
+									        <a class="nextPage" >下页</a>
+									        <a class="lastPage" >末页</a>
+									    </div>
+									    
+									</td>
+								</tr>
+							</tfoot>
+						 
+							<tbody >
+							   <input type="hidden"  id="classId" value= "$!class.classId"/>
+								#foreach($student in $!students)
+							    #if($!{velocityCount}%2!=0)
+								<tr class="alt-row">
+								#else
+								<tr>
+								#end
+						             <td>$!student.account</td>
+									<td>$!student.userName</td>
+									<td>$!class.className</td>
+							
+								</tr>
+								#end
+							</tbody>
+						</table>
+						
+						
+						
+					</div> <!-- End #tab2 -->    
+				</div> <!-- End .content-box-content -->
+			</div> <!-- End .content-box -->		
+</div> <!-- End #main-content -->
+

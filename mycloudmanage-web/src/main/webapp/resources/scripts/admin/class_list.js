@@ -18,11 +18,21 @@ $(document).ready(function(){
 	$(".reset").click(function(){
 		$("#className").val("");
 		$("#teacherAccount").val("");
+		$("#account").val("");
+		$("#username").val("");
 	});	
 	$(".resetEdit").click(function(){
 		$("#className").val($("#preClassName").val());
 		$("#teacherAccount").val($("#preTeacherAccount").val());
 	});	
+	
+   $(".addstudent").click(function(){
+	     add('/admin/class/addstudent.do',{classId:$("#classId").val(),account:$("#account").val(),username:$("#username").val()},"/admin/class/student/list?classId="+$("#classId").val());
+	});	
+	/**以后扩展用**/
+	
+	
+	
 	$(".prePage").click(function(){
 	     showPrePage("/admin/class/list",$("#page").attr("currentPage"));
 	});
@@ -36,10 +46,6 @@ $(document).ready(function(){
 	     showLastPage("/admin/class/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
 	
-	$(".addstudent").click(function(){
-	});
-	
-	$(".addstudents").click(function(){
-	});
+
 	
 });

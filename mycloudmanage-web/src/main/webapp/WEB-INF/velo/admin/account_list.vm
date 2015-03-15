@@ -33,10 +33,11 @@
 							<tfoot>
 								<tr>
 									<td colspan="6">
-									
+									   #if($role!= 1 )
 										<div class=" align-left">
 											<a class="button" href="/admin/account/add/form?role=$!role" >添加</a>
 									    </div>   
+									    #end
 				
 										    
 									    <div class="pagination">

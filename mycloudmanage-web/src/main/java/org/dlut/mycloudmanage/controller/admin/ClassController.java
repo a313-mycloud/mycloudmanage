@@ -111,11 +111,12 @@ public class ClassController extends BaseController {
         if (this.classBiz.countQuery(queryClassCondition) <= 0)
             return MyJsonUtils.getFailJsonString(json, "要删除的课程不存在");
         //以下应该使用事务
-        if (!this.classBiz.deleteClass(classId))
-            return MyJsonUtils.getFailJsonString(json, "删除失败");
+
         if (!this.classBiz.deleteAllStudentInOneClass(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");
         if (!this.classBiz.deleteAllTemplateVmInOneClass(classId))
+            return MyJsonUtils.getFailJsonString(json, "删除失败");
+        if (!this.classBiz.deleteClass(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");
         return MyJsonUtils.getSuccessJsonString(json, "删除成功");
         //以上应该使用事务

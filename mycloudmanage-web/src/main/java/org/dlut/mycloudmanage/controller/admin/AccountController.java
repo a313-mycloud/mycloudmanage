@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.dlut.mycloudmanage.biz.ClassBiz;
 import org.dlut.mycloudmanage.biz.UserBiz;
+import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
@@ -23,6 +25,8 @@ import org.dlut.mycloudmanage.common.utils.MyJsonUtils;
 import org.dlut.mycloudmanage.controller.common.BaseController;
 import org.dlut.mycloudmanage.controller.common.LoginController;
 import org.dlut.mycloudserver.client.common.Pagination;
+import org.dlut.mycloudserver.client.common.classmanage.ClassDTO;
+import org.dlut.mycloudserver.client.common.classmanage.QueryClassCondition;
 import org.dlut.mycloudserver.client.common.usermanage.QueryUserCondition;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserCreateReqDTO;
@@ -44,10 +48,19 @@ import com.alibaba.fastjson.JSONObject;
 @Controller
 public class AccountController extends BaseController {
 
-    private static Logger log = LoggerFactory.getLogger(LoginController.class);
+    private static Logger   log = LoggerFactory.getLogger(LoginController.class);
 
     @Resource(name = "userBiz")
-    private UserBiz       userBiz;
+    private UserBiz         userBiz;
+
+    @Resource(name = "classBiz")
+    private ClassBiz        classBiz;
+
+    @Resource(name = "vmBiz")
+    private VmBiz           vmBiz;
+
+    @Resource(name = "classController")
+    private ClassController classController;
 
     /**
      * 管理员-账号管理-列表
@@ -194,9 +207,33 @@ public class AccountController extends BaseController {
         queryUserCondition.setAccount(account);
         if (this.userBiz.countQuery(queryUserCondition) <= 0)
             return MyJsonUtils.getFailJsonString(json, "账号不存在");
-        //删除操作不成功
-        if (!this.userBiz.deleteUserByAccount(account))
+        //以下应该使用事务
+        if (!this.userBiz.deleteUserByAccount(account)) {
+            log.error("从user表中删除账户" + account + "失败");
             return MyJsonUtils.getFailJsonString(json, "账户删除失败");
+        }
+        if (this.userBiz.getUserByAccount(account).getRole().getStatus() == RoleEnum.STUDENT.getStatus()) {
+            if (!this.classBiz.deleteStudentAllClass(account)) {
+                log.error("从student_class表中删除课程失败");
+                return MyJsonUtils.getFailJsonString(json, "账户删除失败");
+            }
+        }
+        if (this.userBiz.getUserByAccount(account).getRole().getStatus() == RoleEnum.TEACHER.getStatus()) {
+            QueryClassCondition queryClassCondition = new QueryClassCondition();
+            queryClassCondition.setTeacherAccount(account);
+            queryClassCondition.setLimit(1000);
+            queryClassCondition.setOffset(0);
+            Pagination<ClassDTO> pagination = this.classBiz.query(queryClassCondition);
+            if (pagination != null) {
+                for (ClassDTO classDTO : pagination.getList()) {
+                    String json1 = this.classController.removeClass(classDTO.getClassId());
+                    if (!(Boolean) JSONObject.parseObject(json1).get("isSuccess")) {
+                        log.error("删除课程" + classDTO.getClassName() + "出错");
+                    }
+                }
+            }
+        }
         return MyJsonUtils.getSuccessJsonString(json, "账户删除成功");
+        //以上应该使用事务
     }
 }

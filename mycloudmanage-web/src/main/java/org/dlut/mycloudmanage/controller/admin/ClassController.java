@@ -101,7 +101,7 @@ public class ClassController extends BaseController {
 
     @RequestMapping(value = UrlConstant.ADMIN_CLASS_REMOVE, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
-    public String removeClass(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer classId) {
+    public String removeClass(Integer classId) {
         JSONObject json = new JSONObject();
 
         if (classId == null)

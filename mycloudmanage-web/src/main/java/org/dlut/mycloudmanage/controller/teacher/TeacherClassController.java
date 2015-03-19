@@ -286,8 +286,7 @@ public class TeacherClassController extends BaseController {
      */
     @RequestMapping(value = UrlConstant.TEACHER_CLASS_VM_UNBIND, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
-    public String classVmUnBind(HttpServletRequest request, HttpServletResponse response, ModelMap model,
-                                String vmUuid, Integer classId) {
+    public String classVmUnBind(String vmUuid, Integer classId) {
         System.out.println(vmUuid + "--------------" + classId);
         JSONObject json = new JSONObject();
         if (classId == null)

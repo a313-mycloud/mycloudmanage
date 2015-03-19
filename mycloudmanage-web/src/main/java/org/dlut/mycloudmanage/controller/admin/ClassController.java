@@ -29,7 +29,6 @@ import org.dlut.mycloudserver.client.common.usermanage.QueryUserCondition;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserCreateReqDTO;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
-import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -119,22 +118,13 @@ public class ClassController extends BaseController {
         //删除当前课程的所有的学生
         if (!this.classBiz.deleteAllStudentInOneClass(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");
-        //将当前课程的母板虚拟机的isTemplate修改为false
-        Pagination<VmDTO> pagination = this.classBiz.getTemplateVmsInOneClass(classId, 0, 1000);
-        if (pagination != null) {
-            for (VmDTO vmDTO : pagination.getList()) {
-                vmDTO.setIsTemplateVm(false);
-                if (!this.vmBiz.updateVm(vmDTO))
-                    log.error("母板虚拟机和课程" + classId + "街绑定失败");
-            }
-        }
+
         //删除当前课程的所有关联的模板虚拟机
         if (!this.classBiz.deleteAllTemplateVmInOneClass(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");
         //删除当前课程的所有虚拟机(学生)
         if (!this.vmBiz.deleteVmByClassId(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");
-
         //删除当前课程
         if (!this.classBiz.deleteClass(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");

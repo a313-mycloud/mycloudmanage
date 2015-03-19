@@ -76,6 +76,12 @@ public class UrlConstant {
     public static final String ADMIN_CLASS_ADDSTUDENT_FORM = "/admin/class/addstudent/form";
     public static final String ADMIN_CLASS_ADDSTUDENT      = "/admin/class/addstudent.do";
 
+    /**
+     * 管理员-镜像-操作
+     */
+    public static final String ADMIN_IMAGE_LIST            = "/admin/image/list";
+    public static final String ADMIN_IMAGE_REMOVE          = "/admin/image/remove.do";
+
     /************** 以上为管理员相关 **********************/
 
     /************** 以下为学生相关 **********************/

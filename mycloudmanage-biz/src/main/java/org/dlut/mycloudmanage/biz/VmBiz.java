@@ -156,6 +156,36 @@ public class VmBiz {
     }
 
     /**
+     * 删除虚拟机
+     * 
+     * @param vmUuid
+     * @return
+     */
+    public boolean deleteVmByClassId(int classId) {
+        MyCloudResult<Boolean> result = this.vmManageService.deleteVmByClassId(classId);
+        if (!result.isSuccess()) {
+            log.warn("调用vmManageService.deleteVmByClassId()出错，" + classId + "  " + result.getMsgCode() + ":"
+                    + result.getMsgInfo());
+            return false;
+        }
+        return result.getModel();
+    }
+
+    /**
+     * @param userAccount
+     * @return
+     */
+    public boolean deleteVmByUserAccount(String userAccount) {
+        MyCloudResult<Boolean> result = this.vmManageService.deleteVmByUserAccount(userAccount);
+        if (!result.isSuccess()) {
+            log.warn("调用vmManageService.deleteVmByUserAccount()出错，" + userAccount + "  " + result.getMsgCode() + ":"
+                    + result.getMsgInfo());
+            return false;
+        }
+        return result.getModel();
+    }
+
+    /**
      * 更新虚拟机
      * 
      * @param vmDTO

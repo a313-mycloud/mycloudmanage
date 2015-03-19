@@ -208,15 +208,13 @@ public class AccountController extends BaseController {
         if (this.userBiz.countQuery(queryUserCondition) <= 0)
             return MyJsonUtils.getFailJsonString(json, "账号不存在");
         //以下应该使用事务
-        if (!this.userBiz.deleteUserByAccount(account)) {
-            log.error("从user表中删除账户" + account + "失败");
-            return MyJsonUtils.getFailJsonString(json, "账户删除失败");
-        }
+
         if (this.userBiz.getUserByAccount(account).getRole().getStatus() == RoleEnum.STUDENT.getStatus()) {
             if (!this.classBiz.deleteStudentAllClass(account)) {
                 log.error("从student_class表中删除课程失败");
                 return MyJsonUtils.getFailJsonString(json, "账户删除失败");
             }
+            //删除学生的虚拟机
         }
         if (this.userBiz.getUserByAccount(account).getRole().getStatus() == RoleEnum.TEACHER.getStatus()) {
             QueryClassCondition queryClassCondition = new QueryClassCondition();
@@ -228,10 +226,20 @@ public class AccountController extends BaseController {
                 for (ClassDTO classDTO : pagination.getList()) {
                     String json1 = this.classController.removeClass(classDTO.getClassId());
                     if (!(Boolean) JSONObject.parseObject(json1).get("isSuccess")) {
-                        log.error("删除课程" + classDTO.getClassName() + "出错");
+                        log.error("删除老师" + account + "的课程" + classDTO.getClassName() + "出错");
                     }
                 }
             }
+        }
+        //删除该用户的虚拟机
+        if (!this.vmBiz.deleteVmByUserAccount(account)) {
+            log.error("从vm表中删除账户" + account + "的虚拟机失败");
+            return MyJsonUtils.getFailJsonString(json, "账户删除失败");
+        }
+        //删除该用户的账号
+        if (!this.userBiz.deleteUserByAccount(account)) {
+            log.error("从user表中删除账户" + account + "失败");
+            return MyJsonUtils.getFailJsonString(json, "账户删除失败");
         }
         return MyJsonUtils.getSuccessJsonString(json, "账户删除成功");
         //以上应该使用事务

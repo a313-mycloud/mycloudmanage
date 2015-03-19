@@ -249,7 +249,7 @@ public class TeacherVmController extends BaseVmController {
 
         destVm.setClassId(0);// 在没有绑定课程的情况下，默认为0
         if (StringUtils.isBlank(vmDesc))
-            destVm.setDesc("");
+            destVm.setDesc("老师" + userDTO.getAccount() + "创建");
         else
             destVm.setDesc(vmDesc);
         destVm.setIsTemplateVm(false);

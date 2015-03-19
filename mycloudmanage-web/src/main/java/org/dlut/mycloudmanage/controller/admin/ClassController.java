@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.dlut.mycloudmanage.biz.ClassBiz;
 import org.dlut.mycloudmanage.biz.UserBiz;
+import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
@@ -28,6 +29,7 @@ import org.dlut.mycloudserver.client.common.usermanage.QueryUserCondition;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserCreateReqDTO;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
+import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -52,6 +54,9 @@ public class ClassController extends BaseController {
 
     @Resource(name = "userBiz")
     private UserBiz       userBiz;
+
+    @Resource(name = "vmBiz")
+    private VmBiz         vmBiz;
 
     /**
      * 管理员-课程-显示列表
@@ -111,11 +116,26 @@ public class ClassController extends BaseController {
         if (this.classBiz.countQuery(queryClassCondition) <= 0)
             return MyJsonUtils.getFailJsonString(json, "要删除的课程不存在");
         //以下应该使用事务
-
+        //删除当前课程的所有的学生
         if (!this.classBiz.deleteAllStudentInOneClass(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");
+        //将当前课程的母板虚拟机的isTemplate修改为false
+        Pagination<VmDTO> pagination = this.classBiz.getTemplateVmsInOneClass(classId, 0, 1000);
+        if (pagination != null) {
+            for (VmDTO vmDTO : pagination.getList()) {
+                vmDTO.setIsTemplateVm(false);
+                if (!this.vmBiz.updateVm(vmDTO))
+                    log.error("母板虚拟机和课程" + classId + "街绑定失败");
+            }
+        }
+        //删除当前课程的所有关联的模板虚拟机
         if (!this.classBiz.deleteAllTemplateVmInOneClass(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");
+        //删除当前课程的所有虚拟机(学生)
+        if (!this.vmBiz.deleteVmByClassId(classId))
+            return MyJsonUtils.getFailJsonString(json, "删除失败");
+
+        //删除当前课程
         if (!this.classBiz.deleteClass(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");
         return MyJsonUtils.getSuccessJsonString(json, "删除成功");
@@ -365,10 +385,7 @@ public class ClassController extends BaseController {
         /** 以下应该使用事物 ****/
         QueryUserCondition queryUserCondition = new QueryUserCondition();
         queryUserCondition.setAccount(account);
-        if (this.userBiz.countQuery(queryUserCondition) > 0) {
-            log.info("要创建的账号" + account + "已经存在");
-            return MyJsonUtils.getFailJsonString(json, "要创建的账号" + account + "已经存在");
-        }
+
         //如果账号不存在，则创建学生
         String inilPassword = MyPropertiesUtil.getValue("initialPassword");
         UserCreateReqDTO userCreateReqDTO = new UserCreateReqDTO();
@@ -376,11 +393,14 @@ public class ClassController extends BaseController {
         userCreateReqDTO.setUserName(username);
         userCreateReqDTO.setPassword(inilPassword);
         userCreateReqDTO.setRole(RoleEnum.STUDENT);
-        if (!this.userBiz.createUser(userCreateReqDTO)) {
-            log.error("创建学生用户" + account + "失败");
-            return MyJsonUtils.getFailJsonString(json, "创建学生用户" + account + "失败");
+        if (this.userBiz.countQuery(queryUserCondition) <= 0) {
+            if (!this.userBiz.createUser(userCreateReqDTO)) {
+                log.error("创建学生用户" + account + "失败");
+                return MyJsonUtils.getFailJsonString(json, "创建学生用户" + account + "失败");
+            }
+            log.info("创建学生用户" + account + "--" + username + "成功");
         }
-        log.info("创建学生用户" + account + "--" + username + "成功");
+
         if (!this.classBiz.addStudentInOneClass(account, classId)) {
             log.error("添加学生--" + account + "--" + username + "--到课程《" + classDTO.getClassName() + "》失败");
             return MyJsonUtils.getFailJsonString(json,

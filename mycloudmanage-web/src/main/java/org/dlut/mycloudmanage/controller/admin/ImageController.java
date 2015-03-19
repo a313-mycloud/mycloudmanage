@@ -7,12 +7,15 @@
  */
 package org.dlut.mycloudmanage.controller.admin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
@@ -29,7 +32,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -112,4 +117,50 @@ public class ImageController extends BaseController {
         return MyJsonUtils.getSuccessJsonString(json, "");
     }
 
+    /**
+     * 响应客户端请求，跳转到添加表单
+     * 
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = UrlConstant.ADMIN_IMAGE_ADD_FORM)
+    public String addImageForm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return this.goErrorPage(errorDesc);
+        }
+        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_IMAGE_LIST, model);
+        model.put("screen", "admin/image_add_form");
+        model.put("js", "admin/image_list");
+        return "default";
+    }
+
+    @RequestMapping(value = UrlConstant.ADMIN_IMAGE_ADD, method = RequestMethod.POST)
+    public String addImage(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+                           MultipartFile imageFile) throws IOException {
+        //如果只是上传一个文件，则只需要MultipartFile类型接收文件即可，而且无需显式指定@RequestParam注解
+        //如果想上传多个文件，那么这里就要用MultipartFile[]类型来接收文件，并且还要指定@RequestParam注解
+        //并且上传多个文件时，前台表单中的所有<input type="file"/>的name都应该是myfiles，否则参数里的myfiles无法获取到所有上传的文件
+
+        if (imageFile.isEmpty()) {
+            log.error("上传文件为空");
+            return this.goErrorPage("上传文件为空");
+        }
+        log.info("文件长度: " + imageFile.getSize());
+        log.info("文件类型: " + imageFile.getContentType());
+        log.info("文件名称: " + imageFile.getName());
+        log.info("文件原名: " + imageFile.getOriginalFilename());
+        //如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中
+String destPath = request.getSession().getServletContext().getRealPath("/");
+        //这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的
+        log.info("-" + destPath);
+        File destFile = new File("");
+        imageFile.transferTo(destFile);
+
+        FileUtils.copyFile(destFile, new File(destPath, imageFile.getOriginalFilename()));
+        log.info("上传文件成功");
+        return "redirect:" + UrlConstant.ADMIN_IMAGE_LIST;
+    }
 }

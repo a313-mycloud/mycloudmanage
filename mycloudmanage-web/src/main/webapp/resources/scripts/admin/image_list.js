@@ -4,7 +4,8 @@
  */
 
 $(document).ready(function(){	
-  
+    
+
 	$(".remove").click(function() {
 			if(confirm("该镜像可能有无数个子镜像，确定删除？")){
 					remove("/admin/image/remove.do",{vmUuid:$(this).attr('vmUuid')},"/admin/image/list?currentPage=1");
@@ -24,10 +25,3 @@ $(document).ready(function(){
 	});
 	
 });
-
- 	
-
- 	
-   		
-		
-   	

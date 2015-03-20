@@ -10,16 +10,21 @@
 									 <input class="text-input small-input " type="file" id="imageFile" name="imageFile"/>
 							  </p>
 							  <p>
-						  	  <input class="button" type="submit" value="添加新用户"/>
-						  	   <input class="button" type="submit" value="重置"/>
+							  
+							  <p>
+						  	  <input class="button add" type="submit" value="添加"  IsShowProcessBar="True" />
+						  	   <input class="button" type="reset" value="重置"/>
 						  	  </p>
 						 </fieldset>
-			 </form>
-
+			 </form>                      
+                  
 					</div> <!-- End #tab2 -->    
 				</div> <!-- End .content-box-content -->
 			</div> <!-- End .content-box -->		
 </div> <!-- End #main-content -->
+
+
+
 
 
 

@@ -4,12 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>mycloud</title>
 
-
 <link rel="stylesheet" href="/resources/css/reset.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="/resources/css/style.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="/resources/css/invalid.css" type="text/css" media="screen" />	
-<script type="text/javascript" src="/resources/scripts/jquery.min.js"></script>
+<link rel="stylesheet" href="/resources/css/invalid.css" type="text/css" media="screen" />
 
+<script type="text/javascript" src="/resources/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="/resources/scripts/facebox.js"></script>
 <script type="text/javascript" src="/resources/scripts/common.js"></script>
 

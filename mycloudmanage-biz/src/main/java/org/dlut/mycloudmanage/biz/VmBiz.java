@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 
 import org.dlut.mycloudserver.client.common.MyCloudResult;
 import org.dlut.mycloudserver.client.common.Pagination;
+import org.dlut.mycloudserver.client.common.storemanage.StoreFormat;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.dlut.mycloudserver.client.service.vmmanage.IVmManageService;
@@ -46,11 +47,9 @@ public class VmBiz {
     }
 
     /**
-     * 创建新的虚拟机，必须设置vmVcpu、vmMemory、imageUuid、userAccount、showType、
-     * showPassword，可选：classId、desc
-     * 
-     * @param vmDTO
-     * @return 新创建的vm的uuid
+     * 创建新的虚拟机，必须设置vmName, vmVcpu、vmMemory、imageUuid、userAccount、showType、
+     * showPassword ，classId(0表示没有课程),parentVmUuid(如果没有，则设为“”),isTemplateVm,
+     * isPublicTemplate 可选：desc
      */
     public String createVm(VmDTO vmDTO) {
         MyCloudResult<String> result = this.vmManageService.createVm(vmDTO);
@@ -241,7 +240,7 @@ public class VmBiz {
     public boolean changeToTemplateVm(String vmUuid) {
         MyCloudResult<Boolean> result = this.vmManageService.changeToTemplateVm(vmUuid);
         if (!result.isSuccess()) {
-            log.warn("调用vmManageService.changeToTemplateVm()");
+            log.warn("调用vmManageService.changeToTemplateVm()出错");
             return false;
         }
         return result.getModel();
@@ -257,11 +256,26 @@ public class VmBiz {
 
         MyCloudResult<Boolean> result = this.vmManageService.changeToNonTempalteVm(templateVmUuid);
         if (!result.isSuccess()) {
-            log.warn("调用vmManageService.changeToNonTemplateVm()");
+            log.warn("调用vmManageService.changeToNonTemplateVm()出错");
             return false;
         }
         return result.getModel();
 
+    }
+
+    /**
+     * 返回镜像格式，类型为StoreFormat,如果不是系统规定的格式，返回null
+     * 
+     * @param filePath
+     * @return
+     */
+    public StoreFormat getImageFormat(String filePath) {
+        MyCloudResult<StoreFormat> result = this.vmManageService.getImageFormat(filePath);
+        if (!result.isSuccess()) {
+            log.warn("调用vmManageService.getImageFormat()出错");
+            return null;
+        }
+        return result.getModel();
     }
 
 }

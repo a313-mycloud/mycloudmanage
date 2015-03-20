@@ -10,6 +10,7 @@ package org.dlut.mycloudmanage.controller.admin;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,11 +22,17 @@ import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
+import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
+import org.dlut.mycloudmanage.common.utils.MemUtil;
 import org.dlut.mycloudmanage.common.utils.MyJsonUtils;
 import org.dlut.mycloudmanage.controller.common.BaseController;
 import org.dlut.mycloudserver.client.common.Pagination;
+import org.dlut.mycloudserver.client.common.storemanage.StoreFormat;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
+import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
+import org.dlut.mycloudserver.client.common.vmmanage.NetworkTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
+import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,28 +146,67 @@ public class ImageController extends BaseController {
 
     @RequestMapping(value = UrlConstant.ADMIN_IMAGE_ADD, method = RequestMethod.POST)
     public String addImage(HttpServletRequest request, HttpServletResponse response, ModelMap model,
-                           MultipartFile imageFile) throws IOException {
+                           MultipartFile imageFile) {
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return this.goErrorPage(errorDesc);
+        }
+        //获取当前用户帐号
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
+
         //如果只是上传一个文件，则只需要MultipartFile类型接收文件即可，而且无需显式指定@RequestParam注解
         //如果想上传多个文件，那么这里就要用MultipartFile[]类型来接收文件，并且还要指定@RequestParam注解
         //并且上传多个文件时，前台表单中的所有<input type="file"/>的name都应该是myfiles，否则参数里的myfiles无法获取到所有上传的文件
-
+        //需要在pom.xml中配置apache-common
         if (imageFile.isEmpty()) {
             log.error("上传文件为空");
             return this.goErrorPage("上传文件为空");
         }
-        log.info("文件长度: " + imageFile.getSize());
-        log.info("文件类型: " + imageFile.getContentType());
-        log.info("文件名称: " + imageFile.getName());
-        log.info("文件原名: " + imageFile.getOriginalFilename());
-        //如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中
-String destPath = request.getSession().getServletContext().getRealPath("/");
-        //这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的
-        log.info("-" + destPath);
-        File destFile = new File("");
-        imageFile.transferTo(destFile);
+        //判断文件类型是否符合要求
+        log.info("上传文件长度: " + imageFile.getSize());
+        log.info("上传文件类型: " + imageFile.getContentType());
+        log.info("上传文件原名: " + imageFile.getOriginalFilename());
+        String uploadFilePath = MyPropertiesUtil.getValue("uploadDir");
+        String uploadFileName = UUID.randomUUID().toString();
+        try {
+            //这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的
+            FileUtils.copyInputStreamToFile(imageFile.getInputStream(), new File(uploadFilePath, uploadFileName));
+        } catch (IOException e) {
+            log.error(e.getMessage());
+            return this.goErrorPage("上传镜像文件失败");
+        }
+        log.info("上传文件" + uploadFileName + "到" + uploadFilePath + "成功");
+        StoreFormat uploadFileFormat = this.vmBiz.getImageFormat(uploadFilePath + uploadFileName);
+        if (uploadFileFormat == null) {
+            log.error("上传的文件格式不正确");
+            return this.goErrorPage("上传的文件格式不正确");
+        }
+        log.info(uploadFileFormat.getDesc());
 
-        FileUtils.copyFile(destFile, new File(destPath, imageFile.getOriginalFilename()));
-        log.info("上传文件成功");
-        return "redirect:" + UrlConstant.ADMIN_IMAGE_LIST;
+        File fromFileDir = new File(uploadFilePath + uploadFileName);
+        File toFileDir = new File(MyPropertiesUtil.getValue("imageDir") + uploadFileName);
+        if (!fromFileDir.renameTo(toFileDir)) {
+            log.error("镜像" + uploadFileName + "移动到images失败");
+            return this.goErrorPage("上传镜像文件失败");
+        }
+        VmDTO vmDTO = new VmDTO();
+        vmDTO.setDesc("原始");
+        vmDTO.setImageFormat(uploadFileFormat);
+        vmDTO.setImageTotalSize(imageFile.getSize());
+        vmDTO.setImageUuid(uploadFileName);
+        vmDTO.setIsPublicTemplate(true);
+        vmDTO.setIsTemplateVm(true);
+        vmDTO.setShowPassword(MyPropertiesUtil.getValue("initialPassword"));
+        vmDTO.setUserAccount(userDTO.getAccount());
+        vmDTO.setVmName(imageFile.getOriginalFilename());
+        vmDTO.setVmMemory(MemUtil.getMem(2048, MemUnitEnum.MB));
+        vmDTO.setVmVcpu(2);
+        vmDTO.setClassId(0);
+        vmDTO.setParentVmUuid("");
+        vmDTO.setShowType(ShowTypeEnum.SPICE);
+        vmDTO.setVmNetworkType(NetworkTypeEnum.NAT);
+        if (StringUtils.isBlank(this.vmBiz.createVm(vmDTO)))
+            return this.goErrorPage("上传镜像文件失败");
+        return this.imageList(request, response, model, 1);
     }
 }

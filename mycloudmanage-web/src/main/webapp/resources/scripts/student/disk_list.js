@@ -1,26 +1,26 @@
 
 $(document).ready(function(){	
 	$(".add").click(function(){
-	   add('/student/disk/add.do',{"diskName":$("#diskName").val(),"diskSize":$("#diskSize").val(),"diskDesc":$("#diskDesc").val()},'/student/disk/list?currentPage=1');
+	   add('/student/disk/add.do',{diskName:$("#diskName").val(),diskSize:$("#diskSize").val(),diskDesc:$("#diskDesc").val()},'/student/disk/list?currentPage=1');
 	});
 	
 	
 	$(".remove").click(function(){
-	   remove('/student/disk/remove.do',{"diskUuid":$(this).attr('diskUuid')},'/student/disk/list?currentPage=1');
+	   remove('/student/disk/remove.do',{diskUuid:$(this).attr('diskUuid')},'/student/disk/list?currentPage=1');
 	});
 	
 	$(".attach").click(function(){
-	   attach('/student/disk/attach.do',{"diskUuid":$("#diskUuid").val(),"vmUuid":$("#vmUuid").val()},'/student/disk/list?currentPage=1');
+	   attach('/student/disk/attach.do',{diskUuid:$("#diskUuid").val(),vmUuid:$("#vmUuid").val()},'/student/disk/list?currentPage=1');
 	});
 	$(".resetEdit").click(function(){	
 		$("#vmUuid").val($("#preVmUuid").val());
 	});	
 	$(".unload").click(function(){
-	   unload('/student/disk/unload.do',{"diskUuid":$(this).attr('diskUuid')},'/student/disk/list?currentPage=1');
+	   unload('/student/disk/unload.do',{diskUuid:$(this).attr('diskUuid')},'/student/disk/list?currentPage=1');
 	});
 	
 	$(".edit").click(function(){
-	    edit('/student/tvm/edit.do',{"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/student/tvm/list?currentPage=1");
+	    edit('/student/tvm/edit.do',{vmUuid:$("#vmUuid").val(),vmName:$("#vmName").val(),showType:$("#showType").val(),vmDesc:$("#vmDesc").val(),showPassword:$("#vmPassword").val(),vmVcpu:$("#vmVcpu").val(),vmMemory:$("#vmMemory").val()},"/student/tvm/list?currentPage=1");
 	});
 	
 	$(".prePage").click(function(){

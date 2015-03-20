@@ -5,15 +5,15 @@
 
 $(document).ready(function(){	
 	$(".remove").click(function(){
-	   remove('/teacher/vm/remove.do',{"vmUuid":$(this).attr('vmUuid')},'/teacher/vm/list?currentPage=1');
+	   remove('/teacher/vm/remove.do',{vmUuid:$(this).attr('vmUuid')},'/teacher/vm/list?currentPage=1');
 	});
 	$(".convert").click(function(){
 		console.log($(this).attr('vmUuid'));
-		convert('/teacher/vm/convert.do',{"vmUuid":$(this).attr('vmUuid')},'/teacher/vm/list?currentPage=1');
+		convert('/teacher/vm/convert.do',{vmUuid:$(this).attr('vmUuid')},'/teacher/vm/list?currentPage=1');
 	});
 	$(".edit").click(function(){
 		if(confirm("编辑后需要重启方能生效，确定编辑？")){
-	    edit('/teacher/vm/edit.do',{"vmNetworkType":$("#vmNetworkType").val(),"vmUuid":$("#vmUuid").val(),"vmName":$("#vmName").val(),"showType":$("#showType").val(),"vmDesc":$("#vmDesc").val(),"showPassword":$("#vmPassword").val(),"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val()},"/teacher/vm/list?currentPage=1");
+	    edit('/teacher/vm/edit.do',{vmNetworkType:$("#vmNetworkType").val(),vmUuid:$("#vmUuid").val(),vmName:$("#vmName").val(),showType:$("#showType").val(),vmDesc:$("#vmDesc").val(),showPassword:$("#vmPassword").val(),vmVcpu:$("#vmVcpu").val(),vmMemory:$("#vmMemory").val()},"/teacher/vm/list?currentPage=1");
 	}
 	});
 	$(".resetEdit").click(function(){
@@ -31,9 +31,9 @@ $(document).ready(function(){
 	});	
 	
 	$(".add").click(function(){
-		add('/teacher/vm/add.do',{"vmName":$("#vmName").val(),"vmDesc":$("#vmDesc").val(),
-		"vmVcpu":$("#vmVcpu").val(),"vmMemory":$("#vmMemory").val(),"srcVmUuid":$("#srcVmUuid").val(),
-		"showType":$("#showType").val(),"showPassword":$("#vmPassword").val(),"vmNetworkType":$("#vmNetworkType").val()},"/teacher/vm/list?currentPage=1");
+		add('/teacher/vm/add.do',{vmName:$("#vmName").val(),vmDesc:$("#vmDesc").val(),
+		vmVcpu:$("#vmVcpu").val(),vmMemory:$("#vmMemory").val(),srcVmUuid:$("#srcVmUuid").val(),
+		showType:$("#showType").val(),showPassword:$("#vmPassword").val(),vmNetworkType:$("#vmNetworkType").val()},"/teacher/vm/list?currentPage=1");
 		
 	});
 	
@@ -47,10 +47,10 @@ $(document).ready(function(){
 		 $("#password").val("");
 	});	
 	$(".start").click(function(){
-		start('/teacher/vm/start.do',{"vmUuid":$(this).attr("vmUuid")},"/teacher/vm/list?currentPage="+$("#page").attr("currentPage"));
+		start('/teacher/vm/start.do',{vmUuid:$(this).attr("vmUuid")},"/teacher/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});
 	$(".shutdown").click(function(){
-		shutdown('/teacher/vm/shutdown.do',{"vmUuid":$(this).attr("vmUuid")},"/teacher/vm/list?currentPage="+$("#page").attr("currentPage"));
+		shutdown('/teacher/vm/shutdown.do',{vmUuid:$(this).attr("vmUuid")},"/teacher/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});
 	$(".prePage").click(function(){
 	     showPrePage("/teacher/vm/list",$("#page").attr("currentPage"));

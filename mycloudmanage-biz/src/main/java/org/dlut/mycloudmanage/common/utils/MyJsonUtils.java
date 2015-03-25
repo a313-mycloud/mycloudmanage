@@ -31,7 +31,7 @@ public class MyJsonUtils {
 		json.put("isAuth", isAuth);
 		json.put("isSuccess", isSuccess);
 		json.put("message", mess);
-		json.put("date", data);
+		json.put("data", data);
 		return json.toString();
 	}
 
@@ -40,7 +40,7 @@ public class MyJsonUtils {
 		json.put("isAuth", true);
 		json.put("isSuccess", true);
 		json.put("message", mess);
-		json.put("date", "");
+		json.put("data", "");
 		return json.toString();
 	}
 
@@ -49,7 +49,7 @@ public class MyJsonUtils {
 		json.put("isAuth", true);
 		json.put("isSuccess", false);
 		json.put("message", mess);
-		json.put("date", "");
+		json.put("data", "");
 		return json.toString();
 	}
 }

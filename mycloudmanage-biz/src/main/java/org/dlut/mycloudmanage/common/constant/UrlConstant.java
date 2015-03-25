@@ -81,7 +81,7 @@ public class UrlConstant {
      */
     public static final String ADMIN_IMAGE_LIST            = "/admin/image/list";
     public static final String ADMIN_IMAGE_REMOVE          = "/admin/image/remove.do";
-    public static final String ADMIN_IMAGE_ADD_FORM        = "/admin/image/add/form";
+    public static final String ADMIN_IMAGE_UPLOAD_LIST        = "/admin/image/upload/list";
     public static final String ADMIN_IMAGE_ADD             = "/admin/image/add.do";
 
     /************** 以上为管理员相关 **********************/

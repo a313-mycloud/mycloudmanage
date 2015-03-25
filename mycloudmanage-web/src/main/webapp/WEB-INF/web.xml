@@ -21,7 +21,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener
 		</listener-class>
 	</listener>
-
+	
 	<!-- POST中文乱码过滤器 -->
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
@@ -51,6 +51,7 @@
 		<servlet-name>mycloud</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
 
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>

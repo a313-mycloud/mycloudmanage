@@ -1,9 +1,12 @@
 /**
- *  *
- * @author xuyizhen Dec 7, 2014 10:47 AM
+ * 
  */
+ $(document).ready(function(){	
+ 	$(".addImage").click(function(){
+		add('/admin/image/add.do',{fileName:$(this).attr('fileName')},"/admin/image/list?currentPage=1");
+	});
 
-$(document).ready(function(){	
+	
 	$(".remove").click(function() {
 			if(confirm("该镜像可能有无数个子镜像，确定删除？")){
 					remove("/admin/image/remove.do",{vmUuid:$(this).attr('vmUuid')},"/admin/image/list?currentPage=1");
@@ -20,6 +23,6 @@ $(document).ready(function(){
 	});
 	$(".lastPage").click(function(){
 	     showLastPage("/admin/image/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
-	});
-	
+	});	
 });
+ 

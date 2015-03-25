@@ -20,7 +20,7 @@
 								<tr>
 									<td colspan="5">
 										<div class=" align-left">
-											<a class="button" href="/admin/image/add/form" >添加虚拟机镜像</a>
+											<a class="button" href="/admin/image/upload/list" >已上传镜像文件列表</a>
 									    </div>   
 									 
 									    

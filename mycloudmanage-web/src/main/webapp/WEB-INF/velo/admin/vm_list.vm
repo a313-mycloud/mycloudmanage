@@ -85,7 +85,7 @@
                                          
                                           <!--转换按钮-->
 										 <a  class="convert" vmUuid="$!{vm.vmUuid}">
-										 <image src="/resources/images/icons/convert.gif"  alt="转换" title="转换">
+										 <image src="/resources/images/icons/convert.gif"  alt="转换为镜像" title="转换为镜像">
                                          </a>
                                          
                                          <!--web显示-->

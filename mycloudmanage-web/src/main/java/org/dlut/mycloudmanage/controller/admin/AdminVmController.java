@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * 类TeacherVmController.java的实现描述：TODO 类实现描述
+ * 类AdminVmController.java的实现描述：TODO 类实现描述
  * 
  * @author xuyizhen 2014年12月24日 下午8:40:36
  */
@@ -89,14 +89,14 @@ public class AdminVmController extends BaseVmController {
      * @return
      */
     @Override
-    @RequestMapping(value = UrlConstant.TEACHER_VM_EDIT_FORM)
+    @RequestMapping(value = UrlConstant.ADMIN_VM_EDIT_FORM)
     public String editForm(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid) {
         String result = super.editForm(request, response, model, vmUuid);
         if (!result.equals("default"))
             return result;
-        this.setShowMenuList(RoleEnum.TEACHER, MenuEnum.TEACHER_VM_LIST, model);
-        model.put("screen", "teacher/vm_edit_form");
-        model.put("js", "teacher/vm_list");
+        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_VM_LIST, model);
+        model.put("screen", "admin/vm_edit_form");
+        model.put("js", "admin/vm_list");
 
         return "default";
 
@@ -117,7 +117,7 @@ public class AdminVmController extends BaseVmController {
      */
 
     @Override
-    @RequestMapping(value = UrlConstant.TEACHER_VM_EDIT, produces = { "application/json;charset=UTF-8" })
+    @RequestMapping(value = UrlConstant.ADMIN_VM_EDIT, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String vmEdit(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid,
                          String vmName, String showType, String vmDesc, String showPassword, String vmVcpu,
@@ -137,7 +137,7 @@ public class AdminVmController extends BaseVmController {
      * @return
      */
     @Override
-    @RequestMapping(value = UrlConstant.TEACHER_VM_START, produces = { "application/json;charset=UTF-8" })
+    @RequestMapping(value = UrlConstant.ADMIN_VM_START, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String vmStart(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid) {
         return super.vmStart(request, response, model, vmUuid);
@@ -153,13 +153,13 @@ public class AdminVmController extends BaseVmController {
      * @return
      */
     @Override
-    @RequestMapping(value = UrlConstant.TEACHER_VM_SHUTDOWN, produces = { "application/json;charset=UTF-8" })
+    @RequestMapping(value = UrlConstant.ADMIN_VM_SHUTDOWN, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String vmShutDown(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid) {
         return super.vmShutDown(request, response, model, vmUuid);
     }
 
-    @RequestMapping(value = UrlConstant.TEACHER_VM_ADD_FORM)
+    @RequestMapping(value = UrlConstant.ADMIN_VM_ADD_FORM)
     public String addVmForm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         String errorDesc = setDefaultEnv(request, response, model);
         if (errorDesc != null) {
@@ -172,9 +172,9 @@ public class AdminVmController extends BaseVmController {
         queryVmCondition.setLimit(1000);
         List<VmDTO> vms = this.vmBiz.query(queryVmCondition).getList();
         model.put("vmList", vms);
-        this.setShowMenuList(RoleEnum.TEACHER, MenuEnum.TEACHER_VM_LIST, model);
-        model.put("screen", "teacher/vm_add_form");
-        model.put("js", "teacher/vm_list");
+        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_VM_LIST, model);
+        model.put("screen", "admin/vm_add_form");
+        model.put("js", "admin/vm_list");
         return "default";
     }
 
@@ -191,7 +191,7 @@ public class AdminVmController extends BaseVmController {
      * @param vmDesc 允许为空
      * @return
      */
-    @RequestMapping(value = UrlConstant.TEACHER_VM_ADD, produces = { "application/json;charset=UTF-8" })
+    @RequestMapping(value = UrlConstant.ADMIN_VM_ADD, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String addVm(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmName,
                         String vmVcpu, String vmMemory, String srcVmUuid, String showType, String showPassword,
@@ -249,7 +249,7 @@ public class AdminVmController extends BaseVmController {
 
         destVm.setClassId(0);// 在没有绑定课程的情况下，默认为0
         if (StringUtils.isBlank(vmDesc))
-            destVm.setDesc("老师" + userDTO.getAccount() + "创建");
+            destVm.setDesc("管理员" + userDTO.getAccount() + "创建");
         else
             destVm.setDesc(vmDesc);
         destVm.setIsTemplateVm(false);
@@ -261,7 +261,7 @@ public class AdminVmController extends BaseVmController {
         return MyJsonUtils.getSuccessJsonString(json, "虚拟机创建成功");
     }
 
-    @RequestMapping(value = UrlConstant.TEACHER_VM_CONVERT, produces = { "application/json;charset=UTF-8" })
+    @RequestMapping(value = UrlConstant.ADMIN_VM_CONVERT, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String convert(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid) {
         JSONObject json = new JSONObject();
@@ -274,13 +274,13 @@ public class AdminVmController extends BaseVmController {
             return MyJsonUtils.getFailJsonString(json, "要操作的虚拟机不存在");
         }
 
-        if (this.vmBiz.changeToTemplateVm(vmUuid)) {
+        if (this.vmBiz.changeToPublicTemplateVm(vmUuid)) {
             return MyJsonUtils.getSuccessJsonString(json, "转换成功");
         }
         return MyJsonUtils.getFailJsonString(json, "转换失败");
     }
 
-    @RequestMapping(value = UrlConstant.TEACHER_VM_REMOVE, produces = { "application/json;charset=UTF-8" })
+    @RequestMapping(value = UrlConstant.ADMIN_VM_REMOVE, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String removeVm(HttpServletRequest request, HttpServletResponse response, ModelMap model, String vmUuid) {
         JSONObject json = new JSONObject();

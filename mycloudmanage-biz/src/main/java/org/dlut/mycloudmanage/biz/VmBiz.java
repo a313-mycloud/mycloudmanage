@@ -245,6 +245,21 @@ public class VmBiz {
         }
         return result.getModel();
     }
+    
+    /**
+     * 将虚拟机转化为公有模板虚拟机
+     * 
+     * @param vmUuid
+     * @return
+     */
+    public boolean changeToPublicTemplateVm(String vmUuid) {
+        MyCloudResult<Boolean> result = this.vmManageService.changeToPublicTemplateVm(vmUuid);
+        if (!result.isSuccess()) {
+            log.warn("调用vmManageService.changeToTemplateVm()出错");
+            return false;
+        }
+        return result.getModel();
+    }
 
     /**
      * 将模板虚拟机变为非模板虚拟机，此接口会将所有从该模板虚拟机克隆的虚拟机全部删除

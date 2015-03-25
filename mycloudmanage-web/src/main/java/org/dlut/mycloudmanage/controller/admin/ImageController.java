@@ -209,23 +209,28 @@ public class ImageController extends BaseController {
 	   File fileList[]=dir.listFiles();
        System.out.println("已上传的格式正确的镜像文件");
        List<FileVO> rightImage=new ArrayList<FileVO>();
-       //将所有符合格式的文件的绝对地址放到rightImage中
-       for(int i=0;i<fileList.length;i++){
-	       	if(fileList[i].isFile()){
-	       		    StoreFormat storeFormat=this.vmBiz.getImageFormat(fileList[i].getAbsolutePath());
-		       		if(storeFormat!=null){
-		       			FileVO fileVO=new FileVO();
-		       			fileVO.setFileFormat(storeFormat.getDesc());
-		       			fileVO.setFileName(fileList[i].getName());
-		       			fileVO.setFileSize(MemUtil.getMem(fileList[i].length(), MemUnitEnum.MB));
-			       		rightImage.add(fileVO);
-			       		System.out.println(fileList[i].getAbsolutePath());
-			       	  }
-			       	 else{
-			       			log.info(fileList[i].getAbsolutePath()+"格式不正确");
-			       	  }
-	       	}		
+       if(fileList.length<=0){
+    	   rightImage.add(new FileVO());
        }
-       return rightImage;
+       else{
+	       //将所有符合格式的文件的绝对地址放到rightImage中
+	       for(int i=0;i<fileList.length;i++){
+		       	if(fileList[i].isFile()){
+		       		    StoreFormat storeFormat=this.vmBiz.getImageFormat(fileList[i].getAbsolutePath());
+			       		if(storeFormat!=null){
+			       			FileVO fileVO=new FileVO();
+			       			fileVO.setFileFormat(storeFormat.getDesc());
+			       			fileVO.setFileName(fileList[i].getName());
+			       			fileVO.setFileSize(MemUtil.getMem(fileList[i].length(), MemUnitEnum.MB));
+				       		rightImage.add(fileVO);
+				       		System.out.println(fileList[i].getAbsolutePath());
+				       	  }
+				       	 else{
+				       			log.info(fileList[i].getAbsolutePath()+"格式不正确");
+				       	  }
+		       	}		
+	       }
+       }
+	   return rightImage;
    }
 }

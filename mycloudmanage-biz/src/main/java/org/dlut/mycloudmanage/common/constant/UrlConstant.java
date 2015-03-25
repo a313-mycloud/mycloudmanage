@@ -83,9 +83,23 @@ public class UrlConstant {
     public static final String ADMIN_IMAGE_REMOVE          = "/admin/image/remove.do";
     public static final String ADMIN_IMAGE_UPLOAD_LIST        = "/admin/image/upload/list";
     public static final String ADMIN_IMAGE_ADD             = "/admin/image/add.do";
+    
+    /**
+     * 管理员-虚拟机-操作
+     */
+    public static final String ADMIN_VM_LIST             = "/admin/vm/list";
+    public static final String ADMIN_VM_EDIT_FORM        = "/admin/vm/edit/form";
+    public static final String ADMIN_VM_EDIT             = "/admin/vm/edit.do";
+    public static final String ADMIN_VM_START            = "/admin/vm/start.do";
+    public static final String ADMIN_VM_SHUTDOWN         = "/admin/vm/shutdown.do";
+    public static final String ADMIN_VM_ADD_FORM         = "/admin/vm/add/form";
+    public static final String ADMIN_VM_ADD              = "/admin/vm/add.do";
+    public static final String ADMIN_VM_CONVERT          = "/admin/vm/convert.do";
+    public static final String ADMIN_VM_REMOVE           = "/admin/vm/remove.do";
 
     /************** 以上为管理员相关 **********************/
 
+    
     /************** 以下为学生相关 **********************/
     /**
      * 学生角色登陆后的默认页

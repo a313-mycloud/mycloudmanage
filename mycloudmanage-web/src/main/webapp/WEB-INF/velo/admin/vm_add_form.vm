@@ -1,0 +1,80 @@
+<div id="main-content"> <!-- Main Content Section with everything -->	
+<div class="content-box"><!-- Start Content Box -->
+<div class="content-box-content">
+<div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
+						
+						
+						
+						   <form>
+						  <fieldset>
+						   <p>
+						   <label >虚拟机名称</label>
+						   <input  class="text-input small-input" type="text"  id="vmName" name="vmName">
+						   </p>
+						   
+						 
+						   				  
+						   <p>
+						   <label>核心数</label>
+						   <input class="text-input small-input" type="text"  id="vmVcpu" name="vmVcpu">
+						   </p>
+						   
+						   <p>
+						   <label>内存（MB）</label>
+						   <input class="text-input small-input" type="text"  id="vmMemory" name="vmMemory">
+						   </p>
+						  
+						   <p>
+						   <label>模板虚拟机</label>
+						   <select id="srcVmUuid" name="srcVmUuid" class="small-input">
+						   #foreach($vm in $!vmList)
+						   <option value="$!vm.vmUuid">$!{vm.vmName}</option>
+						   #end 
+						   </select>
+						   </p>
+						   
+						   <p>
+						   <label>访问方式</label>
+						       <select id="showType"  name="showType" class="small-input"> 
+						         <option value="1">SPICE</option>
+						         <option value="2">VNC</option>
+						         <option value="3">WEB</option>
+						       </select>
+						   </p>
+						   
+						    <p>
+						   <label>网络类型</label>
+						       <select id="vmNetworkType"  name="vmNetworkType" class="small-input"> 
+						         <option value="1">NAT</option>
+						         <option value="2">桥接</option>
+						       </select>
+						   </p>
+						   
+						   <p>
+						       <label>远程访问密码</label> 
+						       <input class="text-input small-input" type="text"  id="vmPassword" name="vmPassword">
+						       
+						   </p>
+						   
+						 	 
+						 	 
+						   <p>
+						   <label >虚拟机描述(可选)</label>
+						   <input  class="text-input medium-input"  id="vmDesc" name="vmDesc">
+						   </p>
+						   
+						   <p>
+						           <a class="button add" >添加</a>
+						           <a class="button reset" >重置</a>
+						   </p>
+						
+						   </fieldset>
+						   
+						   <form>
+						
+						
+					</div> <!-- End #tab2 -->    
+				</div> <!-- End .content-box-content -->
+			</div> <!-- End .content-box -->		
+</div> <!-- End #main-content -->
+

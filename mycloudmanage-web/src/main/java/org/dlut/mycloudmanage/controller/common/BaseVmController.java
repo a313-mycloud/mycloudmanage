@@ -60,8 +60,8 @@ public class BaseVmController extends BaseController {
 
         if (currentPage == null)
             currentPage = 1;
-
         int PAGESIZE = Integer.parseInt(MyPropertiesUtil.getValue("pagesize"));
+        
         QueryVmCondition queryVmCondition = new QueryVmCondition();
         queryVmCondition.setUserAccount(userDTO.getAccount());
         queryVmCondition.setLimit(PAGESIZE);

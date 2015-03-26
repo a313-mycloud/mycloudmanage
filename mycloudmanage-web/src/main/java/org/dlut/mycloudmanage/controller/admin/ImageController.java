@@ -206,13 +206,9 @@ public class ImageController extends BaseController {
  * @return
  */
    private List<FileVO> getRightImage(File dir){
-	   File fileList[]=dir.listFiles();
+	   File [] fileList=dir.listFiles();
        System.out.println("已上传的格式正确的镜像文件");
        List<FileVO> rightImage=new ArrayList<FileVO>();
-       if(fileList.length<=0){
-    	   rightImage.add(new FileVO());
-       }
-       else{
 	       //将所有符合格式的文件的绝对地址放到rightImage中
 	       for(int i=0;i<fileList.length;i++){
 		       	if(fileList[i].isFile()){
@@ -230,7 +226,6 @@ public class ImageController extends BaseController {
 				       	  }
 		       	}		
 	       }
-       }
 	   return rightImage;
    }
 }

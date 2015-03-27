@@ -58,6 +58,11 @@
 									<td>$!disk.vmName</td>
 									
 									<td>
+									     <!--编辑按钮-->
+										 <a  href="/student/disk/edit/form?diskUuid=$!disk.diskUuid">
+										 <image src="/resources/images/icons/pencil.png">
+                                         </a>
+									
 									     #if($!{disk.vmName}=="--")
 									     <!--挂载按钮-->
 										 <a   href="/student/disk/attach/form?diskUuid=$!{disk.diskUuid}"> 

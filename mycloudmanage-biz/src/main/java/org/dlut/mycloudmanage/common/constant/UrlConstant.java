@@ -96,6 +96,19 @@ public class UrlConstant {
     public static final String ADMIN_VM_ADD              = "/admin/vm/add.do";
     public static final String ADMIN_VM_CONVERT          = "/admin/vm/convert.do";
     public static final String ADMIN_VM_REMOVE           = "/admin/vm/remove.do";
+    
+    /**
+     * 管理员-虚拟硬盘-操作
+     */
+    public static final String ADMIN_DISK_LIST           = "/admin/disk/list";
+    public static final String ADMIN_DISK_REMOVE         = "/admin/disk/remove.do";
+    public static final String ADMIN_DISK_ATTACH_FORM    = "/admin/disk/attach/form";
+    public static final String ADMIN_DISK_ATTACH         = "/admin/disk/attach.do";
+    public static final String ADMIN_DISK_UNLOAD         = "/admin/disk/unload.do";
+    public static final String ADMIN_DISK_ADD_FORM       = "/admin/disk/add/form";
+    public static final String ADMIN_DISK_ADD            = "/admin/disk/add";
+    public static final String ADMIN_DISK_EDIT_FORM            = "/admin/disk/edit/form";
+    public static final String ADMIN_DISK_EDIT            = "/admin/disk/edit.do";
 
     /************** 以上为管理员相关 **********************/
 
@@ -124,6 +137,8 @@ public class UrlConstant {
     public static final String STUDENT_DISK_UNLOAD         = "/student/disk/unload.do";
     public static final String STUDENT_DISK_ADD_FORM       = "/student/disk/add/form";
     public static final String STUDENT_DISK_ADD            = "/student/disk/add";
+    public static final String STUDENT_DISK_EDIT_FORM            = "/student/disk/edit/form";
+    public static final String STUDENT_DISK_EDIT            = "/student/disk/edit.do";
 
     /************** 以上为学生相关 **********************/
 
@@ -161,6 +176,8 @@ public class UrlConstant {
     public static final String TEACHER_DISK_UNLOAD         = "/teacher/disk/unload.do";
     public static final String TEACHER_DISK_ADD_FORM       = "/teacher/disk/add/form";
     public static final String TEACHER_DISK_ADD            = "/teacher/disk/add";
+    public static final String TEACHER_DISK_EDIT_FORM            = "/teacher/disk/edit/form";
+    public static final String TEACHER_DISK_EDIT            = "/teacher/disk/edit.do";
     /**
      * 教师-课程虚拟机-操作
      */

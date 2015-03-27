@@ -26,6 +26,7 @@ import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
 import org.dlut.mycloudmanage.common.utils.MemUtil;
 import org.dlut.mycloudmanage.common.utils.MyJsonUtils;
 import org.dlut.mycloudmanage.common.utils.MyStringUtils;
+import org.dlut.mycloudmanage.controller.common.BaseController;
 import org.dlut.mycloudmanage.controller.common.BaseVmController;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.storemanage.DiskDTO;
@@ -49,7 +50,7 @@ import com.alibaba.fastjson.JSONObject;
  * @author xuyizhen 2014年12月24日 下午8:40:36
  */
 @Controller
-public class TeacherDiskController extends BaseVmController {
+public class TeacherDiskController extends BaseController {
     private static Logger log = LoggerFactory.getLogger(TeacherDiskController.class);
     @Resource(name = "diskBiz")
     private DiskBiz       diskBiz;
@@ -277,5 +278,62 @@ public class TeacherDiskController extends BaseVmController {
         if (this.diskBiz.createDisk(diskDTO) != null)
             return MyJsonUtils.getSuccessJsonString(json, "");
         return MyJsonUtils.getFailJsonString(json, "创建失败");
+    }
+    
+    @RequestMapping(value = UrlConstant.TEACHER_DISK_EDIT_FORM)
+    public String editForm(HttpServletRequest request, HttpServletResponse response, ModelMap model, String diskUuid) {
+    	 String errorDesc = this.setDefaultEnv(request, response, model);
+         if (errorDesc != null) {
+             return this.goErrorPage(errorDesc);
+         }
+         //获取当前用户帐号
+         UserDTO userDTO = (UserDTO) model.get("loginUser");
+         if(StringUtils.isBlank(diskUuid))
+        	 return this.goErrorPage("硬盘id不能为空");
+         QueryDiskCondition queryDiskCondition=new QueryDiskCondition();
+         queryDiskCondition.setDiskUuid(diskUuid);
+         queryDiskCondition.setUserAccount(userDTO.getAccount());
+         if(this.diskBiz.countQuery(queryDiskCondition)<=0)
+        	 return this.goErrorPage("当前账户不存在该硬盘");
+         
+         DiskDTO diskDTO=this.diskBiz.getDiskByUuid(diskUuid);
+         model.put("disk",diskDTO);
+         this.setShowMenuList(RoleEnum.TEACHER, MenuEnum.TEACHER_DISK_LIST, model);
+        model.put("screen", "teacher/disk_edit_form");
+        model.put("js", "teacher/disk_list");
+        return "default";
+
+    }
+    
+   
+    @RequestMapping(value = UrlConstant.TEACHER_DISK_EDIT, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public String diskEdit(HttpServletRequest request, HttpServletResponse response, ModelMap model, 
+                         String diskUuid, String diskName) {
+    	 String errorDesc = this.setDefaultEnv(request, response, model);
+         if (errorDesc != null) {
+             return this.goErrorPage(errorDesc);
+         }
+         //获取当前用户帐号
+         UserDTO userDTO = (UserDTO) model.get("loginUser");
+         JSONObject json=new JSONObject();
+         
+         if(StringUtils.isBlank(diskUuid))
+        	 return this.goErrorPage("硬盘id不能为空");
+         if(StringUtils.isBlank(diskName))
+        	 return this.goErrorPage("硬盘名字不能为空");
+         QueryDiskCondition queryDiskCondition=new QueryDiskCondition();
+         queryDiskCondition.setDiskUuid(diskUuid);
+         queryDiskCondition.setUserAccount(userDTO.getAccount());
+         if(this.diskBiz.countQuery(queryDiskCondition)<=0)
+        	 return MyJsonUtils.getFailJsonString(json,"当前账户不存在该硬盘");
+         DiskDTO diskDTO=this.diskBiz.getDiskByUuid(diskUuid);
+         if(diskDTO==null)
+        	 return MyJsonUtils.getFailJsonString(json,"获得硬盘错误");
+         diskDTO.setDiskName(diskName);
+         if(!this.diskBiz.updateDisk(diskDTO))
+        	 return MyJsonUtils.getFailJsonString(json,"更新硬盘信息失败");
+        return MyJsonUtils.getSuccessJsonString(json,"更新成功");
+
     }
 }

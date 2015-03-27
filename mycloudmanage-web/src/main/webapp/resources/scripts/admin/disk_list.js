@@ -1,38 +1,38 @@
 
 $(document).ready(function(){	
 	$(".add").click(function(){
-	   add('/teacher/disk/add.do',{diskName:$("#diskName").val(),diskSize:$("#diskSize").val(),diskDesc:$("#diskDesc").val()},'/teacher/disk/list?currentPage=1');
+	   add('/admin/disk/add.do',{diskName:$("#diskName").val(),diskSize:$("#diskSize").val(),diskDesc:$("#diskDesc").val()},'/admin/disk/list?currentPage=1');
 	});
 	
 	
 	$(".remove").click(function(){
-	   remove('/teacher/disk/remove.do',{diskUuid:$(this).attr('diskUuid')},'/teacher/disk/list?currentPage=1');
+	   remove('/admin/disk/remove.do',{diskUuid:$(this).attr('diskUuid')},'/admin/disk/list?currentPage=1');
 	});
 	$(".edit").click(function(){
-	   edit('/teacher/disk/edit.do',{diskName:$("#diskName").val()},'/teacher/disk/list?currentPage=1');
+	   edit('/admin/disk/edit.do',{diskUuid:$("#diskUuid").val(),diskName:$("#diskName").val()},'/admin/disk/list?currentPage=1');
 	});
 	
 	$(".attach").click(function(){
-	   attach('/teacher/disk/attach.do',{diskUuid:$("#diskUuid").val(),vmUuid:$("#vmUuid").val()},'/teacher/disk/list?currentPage=1');
+	   attach('/admin/disk/attach.do',{diskUuid:$("#diskUuid").val(),vmUuid:$("#vmUuid").val()},'/admin/disk/list?currentPage=1');
 	});
 	$(".resetEdit").click(function(){	
 		$("#diskName").val($("#preName").val());
 	});	
 	$(".unload").click(function(){
-	   unload('/teacher/disk/unload.do',{diskUuid:$(this).attr('diskUuid')},'/teacher/disk/list?currentPage=1');
+	   unload('/admin/disk/unload.do',{diskUuid:$(this).attr('diskUuid')},'/admin/disk/list?currentPage=1');
 	});
 	
 	$(".prePage").click(function(){
-	     showPrePage("/teacher/disk/list",$("#page").attr("currentPage"));
+	     showPrePage("/admin/disk/list",$("#page").attr("currentPage"));
 	});
 	$(".nextPage").click(function(){
-	     showNextPage("/teacher/disk/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
+	     showNextPage("/admin/disk/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
 	$(".firstPage").click(function(){
-	     showFirstPage("/teacher/disk/list",$("#page").attr("currentPage"));
+	     showFirstPage("/admin/disk/list",$("#page").attr("currentPage"));
 	});
 	$(".lastPage").click(function(){
-	     showLastPage("/teacher/disk/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
+	     showLastPage("/admin/disk/list",$("#page").attr("currentPage"),$("#page").attr("totalPage"));
 	});
 	
 	

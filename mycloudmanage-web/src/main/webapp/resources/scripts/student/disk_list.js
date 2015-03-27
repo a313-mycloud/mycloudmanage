@@ -13,16 +13,15 @@ $(document).ready(function(){
 	   attach('/student/disk/attach.do',{diskUuid:$("#diskUuid").val(),vmUuid:$("#vmUuid").val()},'/student/disk/list?currentPage=1');
 	});
 	$(".resetEdit").click(function(){	
-		$("#vmUuid").val($("#preVmUuid").val());
+		$("#diskName").val($("#preName").val());
 	});	
 	$(".unload").click(function(){
 	   unload('/student/disk/unload.do',{diskUuid:$(this).attr('diskUuid')},'/student/disk/list?currentPage=1');
 	});
 	
 	$(".edit").click(function(){
-	    edit('/student/tvm/edit.do',{vmUuid:$("#vmUuid").val(),vmName:$("#vmName").val(),showType:$("#showType").val(),vmDesc:$("#vmDesc").val(),showPassword:$("#vmPassword").val(),vmVcpu:$("#vmVcpu").val(),vmMemory:$("#vmMemory").val()},"/student/tvm/list?currentPage=1");
+	   edit('/student/disk/edit.do',{diskUuid:$("#diskUuid").val(),diskName:$("#diskName").val()},'/student/disk/list?currentPage=1');
 	});
-	
 	$(".prePage").click(function(){
 	     showPrePage("/student/disk/list",$("#page").attr("currentPage"));
 	});

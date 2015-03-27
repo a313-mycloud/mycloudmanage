@@ -25,7 +25,7 @@
 								<tr>
 									<td colspan="6">
 										<div class="align-left">
-											<a class="button" href="/teacher/disk/add/form" >添加</a>
+											<a class="button" href="/admin/disk/add/form" >添加</a>
 										</div>
 										
 									     <div class="pagination">
@@ -59,12 +59,13 @@
 									
 									<td>
 									     <!--编辑按钮-->
-										 <a  href="/teacher/disk/edit/form?diskUuid=$!disk.diskUuid">
+										 <a  href="/admin/disk/edit/form?diskUuid=$!disk.diskUuid">
 										 <image src="/resources/images/icons/pencil.png">
                                          </a>
+                                         
 									     #if($!{disk.vmName}=="--")
 									     <!--挂载按钮-->
-										 <a   href="/teacher/disk/attach/form?diskUuid=$!{disk.diskUuid}"> 
+										 <a   href="/admin/disk/attach/form?diskUuid=$!{disk.diskUuid}"> 
 										 <image src="/resources/images/icons/context-attach.gif" alt="挂载" title="挂载">
                                          </a>
                                          #else

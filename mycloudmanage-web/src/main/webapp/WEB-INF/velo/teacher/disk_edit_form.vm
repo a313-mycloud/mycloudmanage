@@ -1,0 +1,32 @@
+<div id="main-content"> <!-- Main Content Section with everything -->	
+<div class="content-box"><!-- Start Content Box -->
+<div class="content-box-content">
+<div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
+						
+						
+						 <form>
+						 <fieldset>
+						   <input type="hidden"  id="diskUuid" value="$!disk.diskUuid"/>
+						   <input type="hidden"  id="preName" value="$!disk.diskName"/>
+		
+						   <p>
+						   <label> 硬盘名称</label>
+						   <input class="text-input small-input" type="text"  id="diskName" value="$!disk.diskName">
+						   </p>
+						   
+						   <p>
+						   <a class="button edit" >修改</a>
+						   <a class="button resetEdit" >重置</a>
+						   </p>
+						   </fieldset>
+						   </form>
+					
+						
+						
+						
+						
+					</div> <!-- End #tab2 -->    
+				</div> <!-- End .content-box-content -->
+			</div> <!-- End .content-box -->		
+</div> <!-- End #main-content -->
+

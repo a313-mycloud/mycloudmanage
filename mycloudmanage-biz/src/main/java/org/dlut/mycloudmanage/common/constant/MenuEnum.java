@@ -30,7 +30,8 @@ public enum MenuEnum {
     ADMIN_CLASS_LIST("课程管理", UrlConstant.ADMIN_CLASS_LIST, RoleEnum.ADMIN),
     ADMIN_IMAGE_LIST("镜像管理", UrlConstant.ADMIN_IMAGE_LIST, RoleEnum.ADMIN),
     ADMIN_VM_LIST("虚拟机管理", UrlConstant.ADMIN_VM_LIST, RoleEnum.ADMIN),
-    ADMIN_HOST_LIST("物理机管理", UrlConstant.ADMIN_HOST_LIST, RoleEnum.ADMIN);
+    ADMIN_HOST_LIST("物理机管理", UrlConstant.ADMIN_HOST_LIST, RoleEnum.ADMIN),
+    ADMIN_DISK_LIST("虚拟硬盘管理", UrlConstant.ADMIN_DISK_LIST, RoleEnum.ADMIN);
 
     private String   name;
     private String   route;

@@ -5,7 +5,7 @@
  * use it only in accordance with the terms of the license agreement you entered
  * into with etao.com .
  */
-package org.dlut.mycloudmanage.controller.student;
+package org.dlut.mycloudmanage.controller.admin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,7 @@ import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
 import org.dlut.mycloudmanage.common.utils.MemUtil;
 import org.dlut.mycloudmanage.common.utils.MyJsonUtils;
 import org.dlut.mycloudmanage.common.utils.MyStringUtils;
+import org.dlut.mycloudmanage.controller.common.BaseController;
 import org.dlut.mycloudmanage.controller.common.BaseVmController;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.storemanage.DiskDTO;
@@ -44,13 +45,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * 类StudentDiskController.java的实现描述：TODO 类实现描述
+ * 类AdminDiskController.java的实现描述：TODO 类实现描述
  * 
- * @author xuyizhen 2015年3月10日 上午9:23:08
+ * @author xuyizhen 2014年12月24日 下午8:40:36
  */
 @Controller
-public class StudentDiskController extends BaseVmController {
-    private static Logger log = LoggerFactory.getLogger(StudentDiskController.class);
+public class AdminDiskController extends BaseController {
+    private static Logger log = LoggerFactory.getLogger(AdminDiskController.class);
     @Resource(name = "diskBiz")
     private DiskBiz       diskBiz;
 
@@ -58,7 +59,7 @@ public class StudentDiskController extends BaseVmController {
     private VmBiz         vmBiz;
 
     /**
-     * 学生-虚拟硬盘-显示列表
+     * 教师-虚拟硬盘-显示列表
      * 
      * @param request
      * @param response
@@ -66,7 +67,7 @@ public class StudentDiskController extends BaseVmController {
      * @param currentPage
      * @return
      */
-    @RequestMapping(value = UrlConstant.STUDENT_DISK_LIST)
+    @RequestMapping(value = UrlConstant.ADMIN_DISK_LIST)
     public String diskList(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer currentPage) {
 
         String errorDesc = this.setDefaultEnv(request, response, model);
@@ -119,16 +120,16 @@ public class StudentDiskController extends BaseVmController {
         model.put("disks", disks);//不同的查询页面对应不同的查询列表
         model.put("totalPage", pageDiskDTO.getTotalPage());//不同的查询页面对应不同的总页数
         model.put("currentPage", currentPage);
-        this.setShowMenuList(RoleEnum.STUDENT, MenuEnum.STUDENT_DiSK_LIST, model);
-        model.put("screen", "student/disk_list");
-        model.put("js", "student/disk_list");
+        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_DISK_LIST, model);
+        model.put("screen", "admin/disk_list");
+        model.put("js", "admin/disk_list");
         return "default";
     }
 
     /**
-     * 学生-虚拟硬盘-删除 处理异步请求，返回JSON
+     * 教师-虚拟硬盘-删除 处理异步请求，返回JSON
      */
-    @RequestMapping(value = UrlConstant.STUDENT_DISK_REMOVE, produces = { "application/json;charset=UTF-8" })
+    @RequestMapping(value = UrlConstant.ADMIN_DISK_REMOVE, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String removeDisk(String diskUuid) {
 
@@ -151,7 +152,7 @@ public class StudentDiskController extends BaseVmController {
      * @param diskUuid
      * @return
      */
-    @RequestMapping(value = UrlConstant.STUDENT_DISK_ATTACH_FORM)
+    @RequestMapping(value = UrlConstant.ADMIN_DISK_ATTACH_FORM)
     public String attachForm(HttpServletRequest request, HttpServletResponse response, ModelMap model, String diskUuid) {
         String errorDesc = this.setDefaultEnv(request, response, model);
         if (errorDesc != null) {
@@ -182,9 +183,9 @@ public class StudentDiskController extends BaseVmController {
         }
         model.put("vms", vms);
         model.put("diskDTO", this.diskBiz.getDiskByUuid(diskUuid));
-        this.setShowMenuList(RoleEnum.STUDENT, MenuEnum.STUDENT_DiSK_LIST, model);
-        model.put("screen", "student/disk_attach_form");
-        model.put("js", "student/disk_list");
+        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_DISK_LIST, model);
+        model.put("screen", "admin/disk_attach_form");
+        model.put("js", "admin/disk_list");
         return "default";
 
     }
@@ -197,7 +198,7 @@ public class StudentDiskController extends BaseVmController {
      * @param vmUuid
      * @return
      */
-    @RequestMapping(value = UrlConstant.STUDENT_DISK_ATTACH, produces = { "application/json;charset=UTF-8" })
+    @RequestMapping(value = UrlConstant.ADMIN_DISK_ATTACH, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String attach(HttpServletRequest request, HttpServletResponse response, ModelMap model, String diskUuid,
                          String vmUuid) {
@@ -219,7 +220,7 @@ public class StudentDiskController extends BaseVmController {
         return MyJsonUtils.getSuccessJsonString(json, "操作成功");
     }
 
-    @RequestMapping(value = UrlConstant.STUDENT_DISK_UNLOAD, produces = { "application/json;charset=UTF-8" })
+    @RequestMapping(value = UrlConstant.ADMIN_DISK_UNLOAD, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String unload(HttpServletRequest request, HttpServletResponse response, ModelMap model, String diskUuid) {
 
@@ -232,7 +233,7 @@ public class StudentDiskController extends BaseVmController {
         return MyJsonUtils.getSuccessJsonString(json, "操作成功");
     }
 
-    @RequestMapping(value = UrlConstant.STUDENT_DISK_ADD_FORM)
+    @RequestMapping(value = UrlConstant.ADMIN_DISK_ADD_FORM)
     public String addForm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         String errorDesc = this.setDefaultEnv(request, response, model);
         if (errorDesc != null) {
@@ -241,14 +242,14 @@ public class StudentDiskController extends BaseVmController {
         //获取当前用户帐号
         UserDTO userDTO = (UserDTO) model.get("loginUser");
 
-        this.setShowMenuList(RoleEnum.STUDENT, MenuEnum.STUDENT_DiSK_LIST, model);
-        model.put("screen", "student/disk_add_form");
-        model.put("js", "student/disk_list");
+        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_DISK_LIST, model);
+        model.put("screen", "admin/disk_add_form");
+        model.put("js", "admin/disk_list");
         return "default";
 
     }
 
-    @RequestMapping(value = UrlConstant.STUDENT_DISK_ADD, produces = { "application/json;charset=UTF-8" })
+    @RequestMapping(value = UrlConstant.ADMIN_DISK_ADD, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String add(HttpServletRequest request, HttpServletResponse response, ModelMap model, String diskName,
                       String diskSize, String dizkDesc) {
@@ -278,7 +279,9 @@ public class StudentDiskController extends BaseVmController {
             return MyJsonUtils.getSuccessJsonString(json, "");
         return MyJsonUtils.getFailJsonString(json, "创建失败");
     }
-    @RequestMapping(value = UrlConstant.STUDENT_DISK_EDIT_FORM)
+    
+
+    @RequestMapping(value = UrlConstant.ADMIN_DISK_EDIT_FORM)
     public String editForm(HttpServletRequest request, HttpServletResponse response, ModelMap model, String diskUuid) {
     	 String errorDesc = this.setDefaultEnv(request, response, model);
          if (errorDesc != null) {
@@ -297,14 +300,14 @@ public class StudentDiskController extends BaseVmController {
          DiskDTO diskDTO=this.diskBiz.getDiskByUuid(diskUuid);
          model.put("disk",diskDTO);
          this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_DISK_LIST, model);
-        model.put("screen", "student/disk_edit_form");
-        model.put("js", "student/disk_list");
+        model.put("screen", "admin/disk_edit_form");
+        model.put("js", "admin/disk_list");
         return "default";
 
     }
     
    
-    @RequestMapping(value = UrlConstant.STUDENT_DISK_EDIT, produces = { "application/json;charset=UTF-8" })
+    @RequestMapping(value = UrlConstant.ADMIN_DISK_EDIT, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String diskEdit(HttpServletRequest request, HttpServletResponse response, ModelMap model, 
                          String diskUuid, String diskName) {
@@ -334,4 +337,6 @@ public class StudentDiskController extends BaseVmController {
         return MyJsonUtils.getSuccessJsonString(json,"更新成功");
 
     }
+
+  
 }

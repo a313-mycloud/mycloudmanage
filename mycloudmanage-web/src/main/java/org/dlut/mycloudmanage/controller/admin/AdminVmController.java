@@ -161,15 +161,18 @@ public class AdminVmController extends BaseVmController {
 
     @RequestMapping(value = UrlConstant.ADMIN_VM_ADD_FORM)
     public String addVmForm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-        String errorDesc = setDefaultEnv(request, response, model);
-        if (errorDesc != null) {
-            return goErrorPage(errorDesc);
-        }
+    	 String errorDesc = this.setDefaultEnv(request, response, model);
+         if (errorDesc != null) {
+             return this.goErrorPage(errorDesc);
+         }
+         //获取当前用户帐号
+         UserDTO userDTO = (UserDTO) model.get("loginUser");
         QueryVmCondition queryVmCondition = new QueryVmCondition();
         queryVmCondition.setIsTemplateVm(true);
         //包括IsPublicTemplateVm为true和false  的情况，true为管理员创建的模板虚拟机，所有用户可见，false为当前用户创建，仅自己可见
         queryVmCondition.setOffset(0);
         queryVmCondition.setLimit(1000);
+        queryVmCondition.setUserAccount(userDTO.getAccount());
         List<VmDTO> vms = this.vmBiz.query(queryVmCondition).getList();
         model.put("vmList", vms);
         this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_VM_LIST, model);

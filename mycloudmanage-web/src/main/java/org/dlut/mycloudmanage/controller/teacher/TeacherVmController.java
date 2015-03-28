@@ -165,11 +165,13 @@ public class TeacherVmController extends BaseVmController {
         if (errorDesc != null) {
             return goErrorPage(errorDesc);
         }
+        UserDTO userDTO = (UserDTO) model.get("loginUser");
         QueryVmCondition queryVmCondition = new QueryVmCondition();
         queryVmCondition.setIsTemplateVm(true);
         //包括IsPublicTemplateVm为true和false  的情况，true为管理员创建的模板虚拟机，所有用户可见，false为当前用户创建，仅自己可见
         queryVmCondition.setOffset(0);
         queryVmCondition.setLimit(1000);
+        queryVmCondition.setUserAccount(userDTO.getAccount());
         List<VmDTO> vms = this.vmBiz.query(queryVmCondition).getList();
         model.put("vmList", vms);
         this.setShowMenuList(RoleEnum.TEACHER, MenuEnum.TEACHER_VM_LIST, model);

@@ -172,7 +172,6 @@ public class ImageController extends BaseController {
             log.error("镜像" + fileName + "移动到images失败");
             return MyJsonUtils.getFailJsonString(json,"添加镜像文件失败");
         }
-        System.out.println("++++++++++++++++");
         VmDTO vmDTO = new VmDTO();
         vmDTO.setDesc("原始");
         StoreFormat storeFormat=this.vmBiz.getImageFormat(toFile.getAbsolutePath());

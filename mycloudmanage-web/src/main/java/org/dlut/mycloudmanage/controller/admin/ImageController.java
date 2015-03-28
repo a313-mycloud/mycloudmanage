@@ -161,7 +161,6 @@ public class ImageController extends BaseController {
         JSONObject json=new JSONObject();
     	String uploadPath = MyPropertiesUtil.getValue("uploadDir");
         File file=new File(uploadPath+fileName);
-        System.out.print(file.getAbsolutePath()+"=====================");
         if(!file.exists()){
         	log.error("已上传目录中没有该文件");
         	return MyJsonUtils.getFailJsonString(json, "已上传目录中没有该文件");

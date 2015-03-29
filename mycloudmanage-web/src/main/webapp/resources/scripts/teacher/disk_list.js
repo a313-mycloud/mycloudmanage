@@ -9,7 +9,7 @@ $(document).ready(function(){
 	   remove('/teacher/disk/remove.do',{diskUuid:$(this).attr('diskUuid')},'/teacher/disk/list?currentPage=1');
 	});
 	$(".edit").click(function(){
-	   edit('/teacher/disk/edit.do',{diskName:$("#diskName").val()},'/teacher/disk/list?currentPage=1');
+	   edit('/admin/disk/edit.do',{diskUuid:$("#diskUuid").val(),diskName:$("#diskName").val()},'/admin/disk/list?currentPage=1');
 	});
 	
 	$(".attach").click(function(){

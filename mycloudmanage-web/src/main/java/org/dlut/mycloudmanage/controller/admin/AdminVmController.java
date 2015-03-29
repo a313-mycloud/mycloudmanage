@@ -167,13 +167,30 @@ public class AdminVmController extends BaseVmController {
          }
          //获取当前用户帐号
          UserDTO userDTO = (UserDTO) model.get("loginUser");
-        QueryVmCondition queryVmCondition = new QueryVmCondition();
-        queryVmCondition.setIsTemplateVm(true);
-        //包括IsPublicTemplateVm为true和false  的情况，true为管理员创建的模板虚拟机，所有用户可见，false为当前用户创建，仅自己可见
-        queryVmCondition.setOffset(0);
-        queryVmCondition.setLimit(1000);
-        queryVmCondition.setUserAccount(userDTO.getAccount());
-        List<VmDTO> vms = this.vmBiz.query(queryVmCondition).getList();
+         //系统级别母板
+         QueryVmCondition queryVmCondition = new QueryVmCondition();
+         queryVmCondition.setIsTemplateVm(true);
+         queryVmCondition.setIsPublicTemplate(true);
+         //包括IsPublicTemplateVm为true和false  的情况，true为管理员创建的模板虚拟机，所有用户可见，false为当前用户创建，仅自己可见
+         queryVmCondition.setOffset(0);
+         queryVmCondition.setLimit(1000);
+         Pagination<VmDTO> pagination=this.vmBiz.query(queryVmCondition);
+         if(pagination==null)
+         	return this.goErrorPage("查询模板列表失败");
+         List<VmDTO> vms = pagination.getList();
+         
+       //当前用户级别母板
+         QueryVmCondition queryVmCondition1=new QueryVmCondition();
+         queryVmCondition1.setIsTemplateVm(true);
+         queryVmCondition1.setIsPublicTemplate(false);
+         queryVmCondition1.setUserAccount(userDTO.getAccount());
+         queryVmCondition1.setOffset(0);
+         queryVmCondition1.setLimit(1000);
+         Pagination<VmDTO> pagination1=this.vmBiz.query(queryVmCondition1);
+         if(pagination1==null)
+         	return this.goErrorPage("查询模板列表失败");
+         vms.addAll(pagination1.getList());
+         
         model.put("vmList", vms);
         this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_VM_LIST, model);
         model.put("screen", "admin/vm_add_form");

@@ -29,6 +29,7 @@ import org.dlut.mycloudserver.client.common.usermanage.QueryUserCondition;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserCreateReqDTO;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
+import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -390,13 +391,36 @@ public class ClassController extends BaseController {
             }
             log.info("创建学生用户" + account + "--" + username + "成功");
         }
-
+        //为该学生添加对应课程的虚拟机
+        Pagination<VmDTO> pagination=this.classBiz.getTemplateVmsInOneClass(classId, 0,1000);
+        if(pagination!=null){
+        	List<VmDTO> vmDTOs=pagination.getList();
+        	for(VmDTO srcVmDTO:vmDTOs){
+        		VmDTO destVmDTO = new VmDTO();
+	            destVmDTO.setVmName(srcVmDTO.getVmName());
+	            destVmDTO.setVmVcpu(srcVmDTO.getVmVcpu());
+	            destVmDTO.setVmMemory(srcVmDTO.getVmMemory());
+	            destVmDTO.setShowType(srcVmDTO.getShowType());
+	            destVmDTO.setShowPassword(srcVmDTO.getShowPassword());
+	            destVmDTO.setClassId(classId);
+	            destVmDTO.setUserAccount(account);
+	            destVmDTO.setVmNetworkType(srcVmDTO.getVmNetworkType());
+	            destVmDTO.setIsTemplateVm(false);
+	            destVmDTO.setIsPublicTemplate(false);
+	            destVmDTO.setDesc("克隆自" + this.classBiz.getClassById(classId).getClassName());
+	            if (StringUtils.isBlank(this.vmBiz.cloneVm(destVmDTO, srcVmDTO.getVmUuid()))) {
+	                log.error( account+ "关联" + srcVmDTO.getVmName()+ "模板虚拟机失败");
+	            }
+        	}
+        }   
+       //将学生与课程相互关联
         if (!this.classBiz.addStudentInOneClass(account, classId)) {
             log.error("添加学生--" + account + "--" + username + "--到课程《" + classDTO.getClassName() + "》失败");
             return MyJsonUtils.getFailJsonString(json,
                     "添加学生" + account + "--" + username + "到课程《" + classDTO.getClassName() + "》失败");
         }
         log.info("添加学生" + account + "--" + username + "到课程《" + classDTO.getClassName() + "》成功");
+        
         return MyJsonUtils.getSuccessJsonString(json, "添加成功");
         /** 以上应该使用事物 ****/
     }

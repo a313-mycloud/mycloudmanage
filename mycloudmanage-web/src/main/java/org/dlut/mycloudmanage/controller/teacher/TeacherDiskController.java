@@ -133,16 +133,23 @@ public class TeacherDiskController extends BaseController {
     @ResponseBody
     public String removeDisk(String diskUuid) {
 
-        JSONObject json = new JSONObject();
-        if (this.diskBiz.getDiskByUuid(diskUuid) == null) {
-            return MyJsonUtils.getFailJsonString(json, "要删除的虚拟硬盘不存在");
-        }
-        if (this.diskBiz.deleteDiskByUuid(diskUuid)) {
-            log.info("删除" + diskUuid + "成功");
-            return MyJsonUtils.getSuccessJsonString(json, "删除成功");
-        }
-        log.info("删除" + diskUuid + "失败");
-        return MyJsonUtils.getFailJsonString(json, "删除失败");
+    	 JSONObject json = new JSONObject();
+         DiskDTO diskDTO= this.diskBiz.getDiskByUuid(diskUuid);
+         if (diskDTO == null) {
+             return MyJsonUtils.getFailJsonString(json, "要删除的虚拟硬盘不存在");
+         }
+         //先将硬盘从关联的虚拟机上卸载
+         if(!StringUtils.isBlank(diskDTO.getAttachVmUuid())){
+             	if(!this.vmBiz.detachDisk(diskUuid)){
+             		log.info("卸载" + diskUuid + "失败");
+                     return MyJsonUtils.getFailJsonString(json, "删除失败");
+             	}
+         }
+         if (!this.diskBiz.deleteDiskByUuid(diskUuid)) {
+         	log.info("删除" + diskUuid + "失败");
+             return MyJsonUtils.getFailJsonString(json, "删除失败");   
+         }
+         return MyJsonUtils.getSuccessJsonString(json, "删除成功");
     }
 
     /**

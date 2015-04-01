@@ -34,9 +34,12 @@
 									<td>$!file.fileFormat</td>
 									<td>$!filePath</td>
 									<td>
-										 <a class="addImage" fileName="$!file.fileName">
+						
+                                         
+                                         <a href="/admin/image/upload/form?fileName=$!file.fileName">
 										 <img src="/resources/images/icons/add_image.gif" alt="添加为模板" title="添加为模板">
-                                         </a> 
+                                         </a>
+                                          
 									</td>
 								</tr>
 								#end

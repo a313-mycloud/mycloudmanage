@@ -12,9 +12,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
@@ -24,11 +26,14 @@ import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
 import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
 import org.dlut.mycloudmanage.common.utils.MemUtil;
 import org.dlut.mycloudmanage.common.utils.MyJsonUtils;
+import org.dlut.mycloudmanage.common.utils.MyStringUtils;
 import org.dlut.mycloudmanage.controller.common.BaseController;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.storemanage.StoreFormat;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
+import org.dlut.mycloudserver.client.common.vmmanage.InterfaceTypeEnum;
+import org.dlut.mycloudserver.client.common.vmmanage.MasterDiskBusTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.NetworkTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
@@ -39,7 +44,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -140,6 +144,30 @@ public class ImageController extends BaseController {
         model.put("js", "admin/image_list");
         return "default";
     }
+    
+    @RequestMapping(value = UrlConstant.ADMIN_IMAGE_UPLOAD_FORM)
+    public String uploadImageForm(HttpServletRequest request, HttpServletResponse response, ModelMap model,String fileName){
+    	 String errorDesc = this.setDefaultEnv(request, response, model);
+         if (errorDesc != null) {
+             return this.goErrorPage(errorDesc);
+         }
+         //获取当前用户帐号
+         UserDTO userDTO = (UserDTO) model.get("loginUser");
+     	String uploadPath = MyPropertiesUtil.getValue("uploadDir");
+         File file=new File(uploadPath+fileName);
+         if(!file.exists()){
+         	log.error("已上传目录中没有该文件");
+         	return this.goErrorPage("已上传目录中没有该文件");
+         }
+        
+         model.put("fileName",fileName);
+        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_IMAGE_LIST, model);
+        model.put("screen", "admin/image_upload_form");
+        model.put("js", "admin/image_list");
+        return "default";
+    }
+    
+    
   /**
    * 添加已经上传的文件为模板
    * @param request
@@ -150,7 +178,7 @@ public class ImageController extends BaseController {
    */
     @RequestMapping(value = UrlConstant.ADMIN_IMAGE_ADD, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
-    public String addImage(HttpServletRequest request, HttpServletResponse response, ModelMap model,String fileName) {
+    public String addImage(HttpServletRequest request, HttpServletResponse response, ModelMap model,String fileName,String diskBusType,String interfaceType) {
     	 String errorDesc = this.setDefaultEnv(request, response, model);
          if (errorDesc != null) {
              return this.goErrorPage(errorDesc);
@@ -165,7 +193,17 @@ public class ImageController extends BaseController {
         	log.error("已上传目录中没有该文件");
         	return MyJsonUtils.getFailJsonString(json, "已上传目录中没有该文件");
         }
-
+        if(!MyStringUtils.isInteger(diskBusType))
+        	return MyJsonUtils.getFailJsonString(json,"总线类型格式不正确");
+        if(!MyStringUtils.isInteger(interfaceType))
+        	return MyJsonUtils.getFailJsonString(json,"接口类型格式不正确");
+        InterfaceTypeEnum interfaceTypeEnum=InterfaceTypeEnum.getInterfaceTypeByValue(Integer.parseInt(interfaceType));
+        MasterDiskBusTypeEnum masterDiskBusTypeEnum=MasterDiskBusTypeEnum.getMasterDiskBusTypeByValue(Integer.parseInt(diskBusType));
+        if(interfaceTypeEnum==null)
+        	return MyJsonUtils.getFailJsonString(json,"接口类型不存在");
+        if(masterDiskBusTypeEnum==null)
+        	return MyJsonUtils.getFailJsonString(json,"总线类型不存在");
+        //将文件重命名，并且从upload移动到images中
         String fileUuid=UUID.randomUUID().toString();
         File toFile = new File(MyPropertiesUtil.getValue("imageDir") + fileUuid);
         if (!file.renameTo(toFile)) {
@@ -191,6 +229,8 @@ public class ImageController extends BaseController {
         vmDTO.setParentVmUuid("");
         vmDTO.setShowType(ShowTypeEnum.SPICE);
         vmDTO.setVmNetworkType(NetworkTypeEnum.NAT);
+        vmDTO.setInterfaceType(interfaceTypeEnum);
+        vmDTO.setMasterDiskBusType(masterDiskBusTypeEnum);
         if (StringUtils.isBlank(this.vmBiz.createVm(vmDTO))){
         	log.error("添加镜像文件失败");
         	return MyJsonUtils.getFailJsonString(json,"添加镜像文件失败");

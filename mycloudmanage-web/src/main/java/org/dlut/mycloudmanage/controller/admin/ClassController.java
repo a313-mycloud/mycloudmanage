@@ -29,6 +29,7 @@ import org.dlut.mycloudserver.client.common.usermanage.QueryUserCondition;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserCreateReqDTO;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
+import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,9 +124,16 @@ public class ClassController extends BaseController {
         //删除当前课程的所有关联的模板虚拟机
         if (!this.classBiz.deleteAllTemplateVmInOneClass(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");
+        
         //删除当前课程的所有虚拟机(学生)
-        if (!this.vmBiz.deleteVmByClassId(classId))
-            return MyJsonUtils.getFailJsonString(json, "删除失败");
+        QueryVmCondition queryVmCondition=new QueryVmCondition();
+        queryVmCondition.setClassId(classId);
+        if(this.vmBiz.countQuery(queryVmCondition)>0)
+        {
+        	if (!this.vmBiz.deleteVmByClassId(classId))
+        		return MyJsonUtils.getFailJsonString(json, "删除失败");
+        }
+            
         //删除当前课程
         if (!this.classBiz.deleteClass(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");

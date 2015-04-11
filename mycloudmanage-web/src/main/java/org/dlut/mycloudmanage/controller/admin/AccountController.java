@@ -32,6 +32,7 @@ import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserCreateReqDTO;
 import org.dlut.mycloudserver.client.common.usermanage.UserDTO;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
+import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -233,14 +234,23 @@ public class AccountController extends BaseController {
             }
         }
         // 如果用户存在虚拟机，删除该用户的虚拟机
-        QueryVmCondition queryVmCondition=new QueryVmCondition();
+        QueryVmCondition queryVmCondition = new QueryVmCondition();
         queryVmCondition.setUserAccount(account);
-        if(this.vmBiz.query(queryVmCondition).getList().size()>0){
-	        if (!this.vmBiz.deleteVmByUserAccount(account)) {
-	            log.error("从vm表中删除账户" + account + "的虚拟机失败");
-	            return MyJsonUtils.getFailJsonString(json, "账户删除失败");
-	        }
-        } 
+        queryVmCondition.setOffset(0);
+        queryVmCondition.setLimit(1000);
+        Pagination<VmDTO> pagination = this.vmBiz.query(queryVmCondition);
+        if (pagination == null) {
+            return MyJsonUtils.getFailJsonString(json, "账户删除失败");
+        }
+        for (VmDTO vmDTO : pagination.getList()) {
+            this.vmBiz.deleteVm(vmDTO.getVmUuid());
+        }
+        //        if (this.vmBiz.query(queryVmCondition).getList().size() > 0) {
+        //            if (!this.vmBiz.deleteVmByUserAccount(account)) {
+        //                log.error("从vm表中删除账户" + account + "的虚拟机失败");
+        //                return MyJsonUtils.getFailJsonString(json, "账户删除失败");
+        //            }
+        //        }
         //删除该用户的账号
         if (!this.userBiz.deleteUserByAccount(account)) {
             log.error("从user表中删除账户" + account + "失败");

@@ -124,16 +124,19 @@ public class ClassController extends BaseController {
         //删除当前课程的所有关联的模板虚拟机
         if (!this.classBiz.deleteAllTemplateVmInOneClass(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");
-        
+
         //删除当前课程的所有虚拟机(学生)
-        QueryVmCondition queryVmCondition=new QueryVmCondition();
+        QueryVmCondition queryVmCondition = new QueryVmCondition();
         queryVmCondition.setClassId(classId);
-        if(this.vmBiz.countQuery(queryVmCondition)>0)
-        {
-        	if (!this.vmBiz.deleteVmByClassId(classId))
-        		return MyJsonUtils.getFailJsonString(json, "删除失败");
+        queryVmCondition.setOffset(0);
+        queryVmCondition.setLimit(1000);
+        Pagination<VmDTO> pagination = this.vmBiz.query(queryVmCondition);
+        if (pagination == null) {
+            return MyJsonUtils.getFailJsonString(json, "删除失败");
         }
-            
+        for (VmDTO vmDTO : pagination.getList()) {
+            this.vmBiz.deleteVm(vmDTO.getVmUuid());
+        }
         //删除当前课程
         if (!this.classBiz.deleteClass(classId))
             return MyJsonUtils.getFailJsonString(json, "删除失败");
@@ -381,6 +384,14 @@ public class ClassController extends BaseController {
         if (StringUtils.isBlank(username))
             username = "";
 
+        //查看该账户是否已经关联课程
+        Pagination<UserDTO> pagination1 = this.classBiz.getStudentsInOneClass(classId, 0, 1000);
+        if (pagination1 == null)
+            return MyJsonUtils.getFailJsonString(json, "创建学生用户" + account + "失败");
+        for (UserDTO userDTO1 : pagination1.getList())
+            if (account.equals(userDTO1.getAccount()))
+                return MyJsonUtils.getFailJsonString(json, "该学生已经存在");
+
         /** 以下应该使用事物 ****/
         QueryUserCondition queryUserCondition = new QueryUserCondition();
         queryUserCondition.setAccount(account);
@@ -400,35 +411,35 @@ public class ClassController extends BaseController {
             log.info("创建学生用户" + account + "--" + username + "成功");
         }
         //为该学生添加对应课程的虚拟机
-        Pagination<VmDTO> pagination=this.classBiz.getTemplateVmsInOneClass(classId, 0,1000);
-        if(pagination!=null){
-        	List<VmDTO> vmDTOs=pagination.getList();
-        	for(VmDTO srcVmDTO:vmDTOs){
-        		VmDTO destVmDTO = new VmDTO();
-	            destVmDTO.setVmName(srcVmDTO.getVmName());
-	            destVmDTO.setVmVcpu(srcVmDTO.getVmVcpu());
-	            destVmDTO.setVmMemory(srcVmDTO.getVmMemory());
-	            destVmDTO.setShowType(srcVmDTO.getShowType());
-	            destVmDTO.setShowPassword(srcVmDTO.getShowPassword());
-	            destVmDTO.setClassId(classId);
-	            destVmDTO.setUserAccount(account);
-	            destVmDTO.setVmNetworkType(srcVmDTO.getVmNetworkType());
-	            destVmDTO.setIsTemplateVm(false);
-	            destVmDTO.setIsPublicTemplate(false);
-	            destVmDTO.setDesc("克隆自" + this.classBiz.getClassById(classId).getClassName());
-	            if (StringUtils.isBlank(this.vmBiz.cloneVm(destVmDTO, srcVmDTO.getVmUuid()))) {
-	                log.error( account+ "关联" + srcVmDTO.getVmName()+ "模板虚拟机失败");
-	            }
-        	}
-        }   
-       //将学生与课程相互关联
+        Pagination<VmDTO> pagination = this.classBiz.getTemplateVmsInOneClass(classId, 0, 1000);
+        if (pagination != null) {
+            List<VmDTO> vmDTOs = pagination.getList();
+            for (VmDTO srcVmDTO : vmDTOs) {
+                VmDTO destVmDTO = new VmDTO();
+                destVmDTO.setVmName(srcVmDTO.getVmName());
+                destVmDTO.setVmVcpu(srcVmDTO.getVmVcpu());
+                destVmDTO.setVmMemory(srcVmDTO.getVmMemory());
+                destVmDTO.setShowType(srcVmDTO.getShowType());
+                destVmDTO.setShowPassword(srcVmDTO.getShowPassword());
+                destVmDTO.setClassId(classId);
+                destVmDTO.setUserAccount(account);
+                destVmDTO.setVmNetworkType(srcVmDTO.getVmNetworkType());
+                destVmDTO.setIsTemplateVm(false);
+                destVmDTO.setIsPublicTemplate(false);
+                destVmDTO.setDesc("克隆自" + this.classBiz.getClassById(classId).getClassName());
+                if (StringUtils.isBlank(this.vmBiz.cloneVm(destVmDTO, srcVmDTO.getVmUuid()))) {
+                    log.error(account + "关联" + srcVmDTO.getVmName() + "模板虚拟机失败");
+                }
+            }
+        }
+        //将学生与课程相互关联
         if (!this.classBiz.addStudentInOneClass(account, classId)) {
             log.error("添加学生--" + account + "--" + username + "--到课程《" + classDTO.getClassName() + "》失败");
             return MyJsonUtils.getFailJsonString(json,
                     "添加学生" + account + "--" + username + "到课程《" + classDTO.getClassName() + "》失败");
         }
         log.info("添加学生" + account + "--" + username + "到课程《" + classDTO.getClassName() + "》成功");
-        
+
         return MyJsonUtils.getSuccessJsonString(json, "添加成功");
         /** 以上应该使用事物 ****/
     }

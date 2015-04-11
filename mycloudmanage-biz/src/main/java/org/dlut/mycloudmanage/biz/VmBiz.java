@@ -155,7 +155,7 @@ public class VmBiz {
     }
 
     /**
-     * 删除虚拟机
+     * 此接口功能有问题，不能使用
      * 
      * @param vmUuid
      * @return
@@ -171,6 +171,8 @@ public class VmBiz {
     }
 
     /**
+     * 此接口功能有问题，不能使用
+     * 
      * @param userAccount
      * @return
      */
@@ -245,7 +247,7 @@ public class VmBiz {
         }
         return result.getModel();
     }
-    
+
     /**
      * 将虚拟机转化为公有模板虚拟机
      * 

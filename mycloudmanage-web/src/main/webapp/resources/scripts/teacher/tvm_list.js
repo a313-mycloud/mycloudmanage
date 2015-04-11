@@ -39,11 +39,13 @@ $(document).ready(function(){
 });
 function convert(url,data,replace){
 	if(confirm("相关的课程将不能再使用该虚拟机，确定转换？")){
+	   showdiv("正在转换虚拟机，请稍后!");
 		$.ajax({
 		 url:url,
 		 data:data,
 		 dataType:"json",
 		 success:function(data){
+		 closediv();
 		 	if(!data.isLogin){
 		 		alert("请登陆");
 		 		window.location.replace("/login");
@@ -61,6 +63,7 @@ function convert(url,data,replace){
 		 	}
 		 },
 		 error:function(data,status){
+		    closediv();
 		 	alert(status);
 		 } 
 	});		

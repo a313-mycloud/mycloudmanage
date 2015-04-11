@@ -8,7 +8,6 @@ $(document).ready(function(){
 	   remove('/admin/vm/remove.do',{vmUuid:$(this).attr('vmUuid')},'/admin/vm/list?currentPage=1');
 	});
 	$(".convert").click(function(){
-		console.log($(this).attr('vmUuid'));
 		convert('/admin/vm/convert.do',{vmUuid:$(this).attr('vmUuid')},'/admin/vm/list?currentPage=1');
 	});
 	$(".edit").click(function(){

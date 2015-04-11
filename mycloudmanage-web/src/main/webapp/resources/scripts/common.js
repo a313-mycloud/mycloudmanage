@@ -10,12 +10,13 @@
  */
 function remove(url,data,replace){
 	if(confirm("确定删除？")){
+	    showdiv("正在删除，请稍后!");
 		$.ajax({
 		 url:url,
 		 data:data,
 		 dataType:"json",
 		 success:function(data){
-		 	
+		 	closediv();
 		 	if(!data.isLogin){
 		 		alert("请登陆");
 		 		window.location.replace("/login");
@@ -33,6 +34,7 @@ function remove(url,data,replace){
 		 	}
 		 },
 		 error:function(data,status){
+		    closediv();
 		 	alert(status);
 		 } 
 	});		

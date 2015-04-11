@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.dlut.mycloudmanage.biz.ClassBiz;
+import org.dlut.mycloudmanage.biz.DiskBiz;
 import org.dlut.mycloudmanage.biz.UserBiz;
 import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
@@ -27,6 +28,8 @@ import org.dlut.mycloudmanage.controller.common.LoginController;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.classmanage.ClassDTO;
 import org.dlut.mycloudserver.client.common.classmanage.QueryClassCondition;
+import org.dlut.mycloudserver.client.common.storemanage.DiskDTO;
+import org.dlut.mycloudserver.client.common.storemanage.QueryDiskCondition;
 import org.dlut.mycloudserver.client.common.usermanage.QueryUserCondition;
 import org.dlut.mycloudserver.client.common.usermanage.RoleEnum;
 import org.dlut.mycloudserver.client.common.usermanage.UserCreateReqDTO;
@@ -60,6 +63,9 @@ public class AccountController extends BaseController {
 
     @Resource(name = "vmBiz")
     private VmBiz           vmBiz;
+
+    @Resource(name = "diskBiz")
+    private DiskBiz         diskBiz;
 
     @Resource(name = "classController")
     private ClassController classController;
@@ -209,8 +215,18 @@ public class AccountController extends BaseController {
         queryUserCondition.setAccount(account);
         if (this.userBiz.countQuery(queryUserCondition) <= 0)
             return MyJsonUtils.getFailJsonString(json, "账号不存在");
-        //以下应该使用事务
+        return this.removeAccountMethod(json, account);
 
+    }
+
+    /**
+     * 删除课程事务
+     * 
+     * @param json
+     * @param account
+     * @return
+     */
+    private String removeAccountMethod(JSONObject json, String account) {
         if (this.userBiz.getUserByAccount(account).getRole().getStatus() == RoleEnum.STUDENT.getStatus()) {
             if (!this.classBiz.deleteStudentAllClass(account)) {
                 log.error("从student_class表中删除课程失败");
@@ -233,6 +249,7 @@ public class AccountController extends BaseController {
                 }
             }
         }
+
         // 如果用户存在虚拟机，删除该用户的虚拟机
         QueryVmCondition queryVmCondition = new QueryVmCondition();
         queryVmCondition.setUserAccount(account);
@@ -245,18 +262,26 @@ public class AccountController extends BaseController {
         for (VmDTO vmDTO : pagination.getList()) {
             this.vmBiz.deleteVm(vmDTO.getVmUuid());
         }
-        //        if (this.vmBiz.query(queryVmCondition).getList().size() > 0) {
-        //            if (!this.vmBiz.deleteVmByUserAccount(account)) {
-        //                log.error("从vm表中删除账户" + account + "的虚拟机失败");
-        //                return MyJsonUtils.getFailJsonString(json, "账户删除失败");
-        //            }
-        //        }
+
+        // 删除该用户的硬盘
+        QueryDiskCondition queryDiskCondition = new QueryDiskCondition();
+        queryDiskCondition.setUserAccount(account);
+        queryDiskCondition.setOffset(0);
+        queryDiskCondition.setLimit(1000);
+        Pagination<DiskDTO> pagination1 = this.diskBiz.query(queryDiskCondition);
+        if (pagination1 == null)
+            return MyJsonUtils.getFailJsonString(json, "账户删除失败");
+        for (DiskDTO diskDTO : pagination1.getList())
+            this.diskBiz.deleteDiskByUuid(diskDTO.getDiskUuid());
+
         //删除该用户的账号
+
         if (!this.userBiz.deleteUserByAccount(account)) {
             log.error("从user表中删除账户" + account + "失败");
             return MyJsonUtils.getFailJsonString(json, "账户删除失败");
         }
+
         return MyJsonUtils.getSuccessJsonString(json, "账户删除成功");
-        //以上应该使用事务
     }
+
 }

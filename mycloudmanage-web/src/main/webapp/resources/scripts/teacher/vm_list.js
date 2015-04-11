@@ -17,9 +17,7 @@ $(document).ready(function(){
 	}
 	});
 	$(".resetEdit").click(function(){
-		console.log($("#preName").val());
-		console.log($("#preShowType").val());
-		console.log($("#preVmNetworkType").val());
+		
 		$("#vmName").val($("#preName").val());
 		$("#showType").val($("#preShowType").val());
 		$("#vmDesc").val($("#preVmDesc").val());

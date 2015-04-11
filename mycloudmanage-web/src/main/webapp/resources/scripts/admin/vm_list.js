@@ -76,11 +76,13 @@ $(document).ready(function(){
  */
 function shutdown(url,data,replace){
 	if(confirm("请先确认虚拟机内无数据操作，否则可能丢失数据，确定关闭？")){
+	    showdiv("正在关闭虚拟机，请稍后！");
 		$.ajax({
 		 url:url,
 		 data:data,
 		 dataType:"json",
 		 success:function(data){
+		    closediv();
 		 	if(!data.isLogin){
 		 		alert("请登陆");
 		 		window.location.replace("/login");
@@ -98,6 +100,7 @@ function shutdown(url,data,replace){
 		 	}
 		 },
 		 error:function(data,status){
+		    closediv();
 		 	alert(status);
 		 } 
 	});		
@@ -110,11 +113,13 @@ function shutdown(url,data,replace){
  * @param {} replace
  */
 function start(url,data,replace){
+    showdiv("正在启动虚拟机，请稍后！");
 	$.ajax({
 		 url:url,
 		 data:data,
 		 dataType:"json",
 		 success:function(data){
+		    closediv();
 		 	if(!data.isLogin){
 		 		alert("请登陆Login");
 		 		window.location.replace("/login");
@@ -132,6 +137,7 @@ function start(url,data,replace){
 		 	}
 		 },
 		 error:function(data,status){
+		    closediv();
 		 	alert(status);
 		 } 
 	});	
@@ -146,11 +152,13 @@ function hidePass(){
 } 
 function convert(url,data,replace){
 	if(confirm("转换前需要关闭虚拟机，确定转换？")){
+	    showdiv("正在转换虚拟机，请稍后！");
 		$.ajax({
 		 url:url,
 		 data:data,
 		 dataType:"json",
 		 success:function(data){
+		    closediv();
 		 	if(!data.isLogin){
 		 		alert("请登陆");
 		 		window.location.replace("/login");
@@ -168,6 +176,7 @@ function convert(url,data,replace){
 		 	}
 		 },
 		 error:function(data,status){
+		    closediv();
 		 	alert(status);
 		 } 
 	});		

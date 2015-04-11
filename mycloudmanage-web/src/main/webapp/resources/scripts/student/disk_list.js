@@ -1,6 +1,7 @@
 
 $(document).ready(function(){	
 	$(".add").click(function(){
+	   //showdiv("正在初始化硬盘，请稍后！");   
 	   add('/student/disk/add.do',{diskName:$("#diskName").val(),diskSize:$("#diskSize").val(),diskBusType:$("#diskBusType").val(),diskDesc:$("#diskDesc").val()},'/student/disk/list?currentPage=1');
 	});
 	

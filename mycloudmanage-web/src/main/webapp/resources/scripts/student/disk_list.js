@@ -47,12 +47,13 @@ $(document).ready(function(){
  */
 function attach(url,data,replace){
 	if(confirm("确定挂载？")){
+	    showdiv("挂载中，请稍后！");
 		$.ajax({
 		 url:url,
 		 data:data,
 		 dataType:"json",
 		 success:function(data){
-		 	
+		 	closediv();
 		 	if(!data.isLogin){
 		 		alert("请登陆");
 		 		window.location.replace("/login");
@@ -70,6 +71,7 @@ function attach(url,data,replace){
 		 	}
 		 },
 		 error:function(data,status){
+		   closediv();
 		 	alert(status);
 		 } 
 	});		
@@ -83,12 +85,13 @@ function attach(url,data,replace){
  */
 function unload(url,data,replace){
 	if(confirm("请先关闭该硬盘关联的虚拟机，否则可能丢失数据，确定卸载？")){
+	shoediv("正在卸载，请稍后！");
 		$.ajax({
 		 url:url,
 		 data:data,
 		 dataType:"json",
 		 success:function(data){
-		 	
+		 	closediv();
 		 	if(!data.isLogin){
 		 		alert("请登陆");
 		 		window.location.replace("/login");
@@ -106,6 +109,7 @@ function unload(url,data,replace){
 		 	}
 		 },
 		 error:function(data,status){
+		    closediv();
 		 	alert(status);
 		 } 
 	});		

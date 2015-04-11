@@ -1,15 +1,12 @@
 
 $(document).ready(function(){	
 	$(".add").click(function(){
-	   add('/teacher/disk/add.do',{diskName:$("#diskName").val(),diskSize:$("#diskSize").val(),diskDesc:$("#diskDesc").val()},'/teacher/disk/list?currentPage=1');
+	   add('/teacher/disk/add.do',{diskName:$("#diskName").val(),diskSize:$("#diskSize").val(),diskBusType:$("#diskBusType").val(),diskDesc:$("#diskDesc").val()},'/teacher/disk/list?currentPage=1');
 	});
 	
 	
 	$(".remove").click(function(){
 	   remove('/teacher/disk/remove.do',{diskUuid:$(this).attr('diskUuid')},'/teacher/disk/list?currentPage=1');
-	});
-	$(".edit").click(function(){
-	   edit('/teacher/disk/edit.do',{diskUuid:$("#diskUuid").val(),diskName:$("#diskName").val()},'/teacher/disk/list?currentPage=1');
 	});
 	
 	$(".attach").click(function(){
@@ -22,6 +19,9 @@ $(document).ready(function(){
 	   unload('/teacher/disk/unload.do',{diskUuid:$(this).attr('diskUuid')},'/teacher/disk/list?currentPage=1');
 	});
 	
+	$(".edit").click(function(){
+	   edit('/teacher/disk/edit.do',{diskUuid:$("#diskUuid").val(),diskName:$("#diskName").val()},'/teacher/disk/list?currentPage=1');
+	});
 	$(".prePage").click(function(){
 	     showPrePage("/teacher/disk/list",$("#page").attr("currentPage"));
 	});

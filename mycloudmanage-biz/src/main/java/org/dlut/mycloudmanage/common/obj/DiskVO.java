@@ -8,6 +8,7 @@
 package org.dlut.mycloudmanage.common.obj;
 
 import org.dlut.mycloudserver.client.common.storemanage.StoreFormat;
+import org.dlut.mycloudserver.client.common.vmmanage.MasterDiskBusTypeEnum;
 
 /**
  * 类DiskVO.java的实现描述：TODO 类实现描述
@@ -18,39 +19,41 @@ public class DiskVO {
     /**
      * 硬盘uuid
      */
-    private String      diskUuid;
+    private String                diskUuid;
 
     /**
      * 硬盘名称
      */
-    private String      diskName;
+    private String                diskName;
 
     /**
      * 硬盘的总大小MB
      */
-    private String      diskTotalSize;
+    private String                diskTotalSize;
 
     /**
      * 硬盘已使用的大小
      */
-    private String      diskUsedSize;
+    private String                diskUsedSize;
 
     /**
      * 硬盘路径
      */
-    private String      diskPath;
+    private String                diskPath;
 
     /**
      * 硬盘镜像格式
      */
-    private StoreFormat diskFormat;
+    private StoreFormat           diskFormat;
+
+    private MasterDiskBusTypeEnum diskBusType;
 
     /**
      * 所挂载的虚拟机名称
      */
-    private String      vmName;
+    private String                vmName;
 
-    private String      diskDesc;
+    private String                diskDesc;
 
     public String getDiskUuid() {
         return diskUuid;
@@ -114,6 +117,14 @@ public class DiskVO {
 
     public void setDiskDesc(String diskDesc) {
         this.diskDesc = diskDesc;
+    }
+
+    public MasterDiskBusTypeEnum getDiskBusType() {
+        return diskBusType;
+    }
+
+    public void setDiskBusType(MasterDiskBusTypeEnum diskBusType) {
+        this.diskBusType = diskBusType;
     }
 
 }

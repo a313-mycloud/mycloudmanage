@@ -19,6 +19,17 @@
 						   <input class="text-input small-input" type="text"  id="diskSize" name="diskSize">
 						   </p>
 						   
+						   
+						   			  
+						   <p>
+						   <label>硬盘总线类型</label>
+						   <select class="text-input small-input" type="text"  id="diskBusType" name="diskBusType">
+						   #foreach($!diskBusType in $!diskBusTypes)
+						      <option value="$!diskBusType.value">$!diskBusType.desc</option>
+						   #end
+						   </select>
+						   </p>
+						   
 						   <p>
 						   <label>硬盘描述</label>
 						   <input class="text-input medium-input" type="text"  id="diskDesc" name="diskDesc">

@@ -1,7 +1,7 @@
 
 $(document).ready(function(){	
 	$(".add").click(function(){
-	   add('/student/disk/add.do',{diskName:$("#diskName").val(),diskSize:$("#diskSize").val(),diskDesc:$("#diskDesc").val()},'/student/disk/list?currentPage=1');
+	   add('/student/disk/add.do',{diskName:$("#diskName").val(),diskSize:$("#diskSize").val(),diskBusType:$("#diskBusType").val(),diskDesc:$("#diskDesc").val()},'/student/disk/list?currentPage=1');
 	});
 	
 	

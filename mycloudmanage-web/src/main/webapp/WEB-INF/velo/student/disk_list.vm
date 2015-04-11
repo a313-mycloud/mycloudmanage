@@ -13,8 +13,8 @@
 								   <th>硬盘名称</th>
 								   <th>总大小</th>
 								   <th>已使用大小</th>
-								 
 								   <th>硬盘镜像格式</th>
+								   <th>硬盘总线类型</th>
 								   <th>挂载到的虚拟机</th>
 											   
 								   <th>操作</th>
@@ -55,6 +55,7 @@
 									<td>$!{disk.diskUsedSize}MB</td>
 									
 									<td>$!disk.diskFormat</td>
+									<td>$!disk.diskBusType.desc</td>
 									<td>$!disk.vmName</td>
 									
 									<td>

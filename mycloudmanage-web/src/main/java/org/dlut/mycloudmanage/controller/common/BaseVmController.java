@@ -29,6 +29,8 @@ import org.dlut.mycloudserver.client.common.vmmanage.NetworkTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.ModelMap;
 
 import com.alibaba.fastjson.JSONObject;
@@ -39,15 +41,16 @@ import com.alibaba.fastjson.JSONObject;
  * @author xuyizhen Dec 16, 2014 6:51:22 PM
  */
 public class BaseVmController extends BaseController {
+    private static Logger log = LoggerFactory.getLogger(BaseVmController.class);
 
     @Resource(name = "vmBiz")
-    private VmBiz    vmBiz;
+    private VmBiz         vmBiz;
 
     @Resource(name = "classBiz")
-    private ClassBiz classBiz;
+    private ClassBiz      classBiz;
 
     @Resource(name = "hostBiz")
-    private HostBiz  hostBiz;
+    private HostBiz       hostBiz;
 
     public String vmList(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer currentPage) {
 
@@ -61,7 +64,7 @@ public class BaseVmController extends BaseController {
         if (currentPage == null)
             currentPage = 1;
         int PAGESIZE = Integer.parseInt(MyPropertiesUtil.getValue("pagesize"));
-        
+
         QueryVmCondition queryVmCondition = new QueryVmCondition();
         queryVmCondition.setUserAccount(userDTO.getAccount());
         queryVmCondition.setLimit(PAGESIZE);

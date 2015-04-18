@@ -73,7 +73,7 @@
 										 <image src="/resources/images/icons/start.png"  alt="开启" title="开启">
                                          </a>
                                          
-										 #else if($!vm.vmStatus.status==1)
+										 #elseif($!vm.vmStatus.status==1)
 										 <a class="shutdown" vmUuid="$!vm.vmUuid">
 										 <image src="/resources/images/icons/shutdown.png" alt="关闭" title="关闭">
                                          </a>

@@ -11,6 +11,7 @@ $(document).ready(function(){
 	});
 	
 	$(".attach").click(function(){
+			console.log(" use for test:student_disk_attach");
 	   attach('/student/disk/attach.do',{diskUuid:$("#diskUuid").val(),vmUuid:$("#vmUuid").val()},'/student/disk/list?currentPage=1');
 	});
 	$(".resetEdit").click(function(){	

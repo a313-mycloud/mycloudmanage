@@ -10,6 +10,7 @@ $(document).ready(function(){
 	});
 	
 	$(".attach").click(function(){
+			console.log(" use for test:teacher_disk_attach");
 	   attach('/teacher/disk/attach.do',{diskUuid:$("#diskUuid").val(),vmUuid:$("#vmUuid").val()},'/teacher/disk/list?currentPage=1');
 	});
 	$(".resetEdit").click(function(){	

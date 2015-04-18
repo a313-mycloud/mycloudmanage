@@ -45,9 +45,11 @@ $(document).ready(function(){
 		 $("#password").val("");
 	});	
 	$(".start").click(function(){
+			console.log(" use for test:teacher_vm_start");
 		start('/teacher/vm/start.do',{vmUuid:$(this).attr("vmUuid")},"/teacher/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});
 	$(".shutdown").click(function(){
+			console.log(" use for test:teacher_vm_shutdown");
 		shutdown('/teacher/vm/shutdown.do',{vmUuid:$(this).attr("vmUuid")},"/teacher/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});
 	$(".prePage").click(function(){

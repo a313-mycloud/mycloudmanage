@@ -27,9 +27,11 @@ $(document).ready(function(){
 	
 	
 	$(".start").click(function(){
+			console.log(" use for test:student_vm_start");
 		start('/student/vm/start.do',{"vmUuid":$(this).attr("vmUuid")},"/student/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});
 	$(".shutdown").click(function(){
+			console.log(" use for test:student_vm_shutdown");
 		shutdown('/student/vm/shutdown.do',{"vmUuid":$(this).attr("vmUuid")},"/student/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});
 	$(".prePage").click(function(){

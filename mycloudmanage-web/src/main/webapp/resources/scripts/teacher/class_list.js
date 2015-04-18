@@ -36,11 +36,13 @@ $(document).ready(function(){
  * @param {} replace
  */
 function bind(url,data,replace){
+	 showdiv("正在操作，请稍后!");
 	$.ajax({
 		 url:url,
 		 data:data,
 		 dataType:"json",
 		 success:function(data){
+		 	closediv();
 		 	if(!data.isLogin){
 		 		alert("请登陆");
 		 		window.location.replace("/login");
@@ -58,6 +60,7 @@ function bind(url,data,replace){
 		 	}
 		 },
 		 error:function(data,status){
+		 	closediv();
 		 	alert(status);
 		 } 
 	});	
@@ -71,11 +74,13 @@ function bind(url,data,replace){
  */
 function unbind(url,data,replace){
 	if(confirm("此操作将会删除所有以此虚拟机为模板的学生虚拟机，确定转换？")){
+		 showdiv("正在操作，请稍后!");
 	$.ajax({
 		 url:url,
 		 data:data,
 		 dataType:"json",
 		 success:function(data){
+		 	closediv();
 		 	if(!data.isLogin){
 		 		alert("请登陆");
 		 		window.location.replace("/login");
@@ -93,6 +98,7 @@ function unbind(url,data,replace){
 		 	}
 		 },
 		 error:function(data,status){
+		 	closediv();
 		 	alert(status);
 		 } 
 	});	

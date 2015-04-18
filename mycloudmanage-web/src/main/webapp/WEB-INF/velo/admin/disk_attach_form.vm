@@ -16,11 +16,15 @@
 						  
 						   <p>
 						   <label >要挂载的虚拟机</label>
-						       <select id="vmUuid"  class="medium-input" > 
-						         #foreach($vm in $!vms)
-						         <option value="$!vm.vmUuid">$!vm.vmName</option>
-						         #end
-						       </select>
+						       
+						
+						    <select id="vmUuid"  class="medium-input" >
+						                #foreach($vm in $!vms)
+								         <option value="$!vm.vmUuid">$!vm.vmName</option>
+								         #end
+						    </select>
+						   
+						    
 						   </p>
 						   
 						   

@@ -161,10 +161,7 @@ public class BaseDiskController extends BaseController {
 
         List<VmVO> vms = new ArrayList<VmVO>();
         List<VmDTO> vmDTOs = this.vmBiz.query(queryVmCondition).getList();
-        if (vmDTOs.size() <= 0) {
-        	  model.put("vms", null);
-        }
-        else{
+        if (vmDTOs.size()> 0) { 
         	for (VmDTO vmDTO : vmDTOs) {
                 VmVO vmVO = new VmVO();
                 vmVO.setVmName(vmDTO.getVmName());
@@ -172,8 +169,8 @@ public class BaseDiskController extends BaseController {
                 vmVO.setVmUuid(vmDTO.getVmUuid());
                 vms.add(vmVO);
             }
-            model.put("vms", vms);
         }
+        model.put("vms", vms);
         model.put("diskDTO", this.diskBiz.getDiskByUuid(diskUuid));
         return "default";
 

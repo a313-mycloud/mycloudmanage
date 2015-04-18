@@ -236,7 +236,8 @@ function showdiv(str) {
     msgObj.style.border = "1px solid " + bordercolor;
     msgObj.style.width = msgw + "px";
     msgObj.style.height = msgh + "px";
-    msgObj.style.top = (document.documentElement.scrollTop + (sHeight - msgh) / 2) + "px";
+    //msgObj.style.top = (document.documentElement.scrollTop + (sHeight - msgh) / 2) + "px";
+    msgObj.style.top = (document.documentElement.scrollTop + (sHeight - msgh) / 4) + "px";
     msgObj.style.left = (sWidth - msgw) / 2 + "px";
     var title = document.createElement("h4");
     title.setAttribute("id", "msgTitle");

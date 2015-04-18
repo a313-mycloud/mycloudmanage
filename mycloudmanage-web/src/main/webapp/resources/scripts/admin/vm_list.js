@@ -3,10 +3,13 @@
  * @author xuyizhen Dec 7, 2014 10:47 AM
  */
 
-$(document).ready(function(){	
+$(document).ready(
+function(){	
+	//删除虚拟机
 	$(".remove").click(function(){
 	   remove('/admin/vm/remove.do',{vmUuid:$(this).attr('vmUuid')},'/admin/vm/list?currentPage=1');
 	});
+	
 	$(".convert").click(function(){
 		convert('/admin/vm/convert.do',{vmUuid:$(this).attr('vmUuid')},'/admin/vm/list?currentPage=1');
 	});
@@ -16,9 +19,6 @@ $(document).ready(function(){
 	}
 	});
 	$(".resetEdit").click(function(){
-		console.log($("#preName").val());
-		console.log($("#preShowType").val());
-		console.log($("#preVmNetworkType").val());
 		$("#vmName").val($("#preName").val());
 		$("#showType").val($("#preShowType").val());
 		$("#vmDesc").val($("#preVmDesc").val());
@@ -45,10 +45,14 @@ $(document).ready(function(){
 		 $("#showType").val("");
 		 $("#password").val("");
 	});	
+	
 	$(".start").click(function(){
+		console.log(" use for test:admin_vm_start");
 		start('/admin/vm/start.do',{vmUuid:$(this).attr("vmUuid")},"/admin/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});
+	
 	$(".shutdown").click(function(){
+		console.log(" use for test:admin_vm_shutdown");
 		shutdown('/admin/vm/shutdown.do',{vmUuid:$(this).attr("vmUuid")},"/admin/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});
 	$(".prePage").click(function(){
@@ -66,7 +70,8 @@ $(document).ready(function(){
 	
 	
 	
-});
+}
+);
 /**
  * 异步关闭虚拟机
  * @param {} url

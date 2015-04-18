@@ -55,10 +55,14 @@
 						         #if($!vm.showType.value==2) 
 						         selected 
 						         #end>VNC</option>
-						           <option value="3"
+						         
+						         	#* 不使用         <option value="3"
 						         #if($!vm.showType.value==3) 
 						         selected 
 						         #end>WEB</option>
+						         *#
+						         
+						   
 						       </select>
 						   </p>
 						   

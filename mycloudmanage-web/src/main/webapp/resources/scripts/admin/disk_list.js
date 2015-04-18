@@ -10,6 +10,7 @@ $(document).ready(function(){
 	});
 	
 	$(".attach").click(function(){
+		console.log(" use for test:admin_disk_attach");
 	   attach('/admin/disk/attach.do',{diskUuid:$("#diskUuid").val(),vmUuid:$("#vmUuid").val()},'/admin/disk/list?currentPage=1');
 	});
 	$(".resetEdit").click(function(){	

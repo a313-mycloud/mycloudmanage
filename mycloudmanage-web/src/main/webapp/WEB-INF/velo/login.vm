@@ -2,21 +2,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Simpla Admin | Sign In</title>
+		<title>MyCloud | Sign In</title>
 		<link rel="stylesheet" href="resources/css/reset.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="resources/css/style.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="resources/css/invalid.css" type="text/css" media="screen" />
-		<script type="text/javascript" src="resources/scripts/jquery-1.3.2.min.js"></script>
-		<script type="text/javascript" src="resources/scripts/simpla.jquery.configuration.js"></script>
+#*		<script type="text/javascript" src="resources/scripts/jquery-1.3.2.min.js"></script> *#
+#*		<script type="text/javascript" src="resources/scripts/simpla.jquery.configuration.js"></script> *#
 		<script type="text/javascript" src="resources/scripts/facebox.js"></script>
-		<script type="text/javascript" src="resources/scripts/jquery.wysiwyg.js"></script>
+		<script type="text/javascript" src="resources/scripts/jquery.min.js"></script> 
+#*		<script type="text/javascript" src="resources/scripts/jquery.wysiwyg.js"></script>  *#
 	</head>
 <body id="login">
 	<div id="login-wrapper" class="png_bg">
 		<div id="login-top">
 			<h1>MyCloud</h1>
 			<!-- Logo (221px width) -->
-			<img id="logo" src="resources/images/logo.png" alt="MyCloud logo" />
+			<img id="logo" src="resources/images/66.png"  alt="MyCloud logo" />
 		</div>
 		<!-- End #logn-top -->
 		<div id="login-content">

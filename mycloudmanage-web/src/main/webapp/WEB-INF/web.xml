@@ -97,4 +97,16 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.ico</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.exe</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.msi</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.pdf</url-pattern>
+	</servlet-mapping>
 </web-app>

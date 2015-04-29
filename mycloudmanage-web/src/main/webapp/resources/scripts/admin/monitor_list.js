@@ -3,7 +3,6 @@ $(document).ready(function(){
 });
 
 function refresh() {
-    console.log("fffffffffff");
 	$.ajax({
 		 url:"/admin/monitor/getlist.do",
 		 data:"",
@@ -57,5 +56,9 @@ function createTrByPerformanceMonitorDTO(performanceMonitorDTO) {
 	tr.find(".usedMem").html(performanceMonitorDTO.usedMem);
 	tr.find(".sendRate").html(performanceMonitorDTO.sendRate);
 	tr.find(".receiveRate").html(performanceMonitorDTO.receiveRate);
+	var remove_btn = tr.find(".remove");
+	remove_btn.click(function(){
+		remove('/admin/monitor/remove.do',{"id": performanceMonitorDTO.id},'/admin/monitor/list?currentPage=1');
+	});
 	return tr;
 }

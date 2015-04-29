@@ -116,6 +116,9 @@ public class UrlConstant {
      */
     public static final String ADMIN_MONITOR_LIST          = "/admin/monitor/list";
     public static final String ADMIN_MONITOR_GETLIST       = "/admin/monitor/getlist.do";
+    public static final String ADMIN_MONITOR_ADD_FORM      = "/admin/monitor/add/form";
+    public static final String ADMIN_MONITOR_ADD           = "/admin/monitor/add.do";
+    public static final String ADMIN_MONITOR_REMOVE        = "/admin/monitor/remove.do";
 
     /************** 以上为管理员相关 **********************/
 

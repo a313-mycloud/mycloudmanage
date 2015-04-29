@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dlut.mycloudmanage.biz.PerformanceMonitorBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
@@ -45,7 +46,12 @@ public class MonitorController extends BaseController {
     private PerformanceMonitorBiz performanceMonitorBiz;
 
     @RequestMapping(value = UrlConstant.ADMIN_MONITOR_LIST)
-    public String monitorList(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+    public String monitorList(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+                              Integer currentPage) {
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        model.put("currentPage", currentPage);
         String errorDesc = this.setDefaultEnv(request, response, model);
         if (errorDesc != null) {
             return this.goErrorPage(errorDesc);
@@ -88,8 +94,62 @@ public class MonitorController extends BaseController {
             monitorData.put("receiveRate", performanceMonitorDTO.getReceiveRate());
             data.add(monitorData);
         }
-        String res = MyJsonUtils.getSuccessJsonString(json, "获取数据成功", data.toString());
-        System.out.println(res);
         return MyJsonUtils.getSuccessJsonString(json, "获取数据成功", data.toString());
+    }
+
+    @RequestMapping(value = UrlConstant.ADMIN_MONITOR_ADD_FORM)
+    public String monitorAddForm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        String errorDesc = this.setDefaultEnv(request, response, model);
+        if (errorDesc != null) {
+            return this.goErrorPage(errorDesc);
+        }
+
+        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_MONITOR_LIST, model);
+        model.put("screen", "admin/monitor_add_form");
+        model.put("js", "admin/monitor_add");
+        return "default";
+    }
+
+    @RequestMapping(value = UrlConstant.ADMIN_MONITOR_ADD, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public String monitorAdd(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+                             String aliaseName, String ip) {
+
+        JSONObject json = new JSONObject();
+
+        if (StringUtils.isBlank(aliaseName)) {
+            return MyJsonUtils.getFailJsonString(json, "名不能为空");
+        }
+
+        if (StringUtils.isBlank(ip)) {
+            return MyJsonUtils.getFailJsonString(json, "ip不能为空");
+        }
+
+        PerformanceMonitorDTO performanceMonitorDTO = new PerformanceMonitorDTO();
+        performanceMonitorDTO.setAliaseName(aliaseName);
+        performanceMonitorDTO.setIp(ip);
+        performanceMonitorDTO.setInterfaceName("eth0");
+        performanceMonitorDTO.setSshUserName("luojie");
+        performanceMonitorDTO.setSshPassword("10041104");
+        int id = performanceMonitorBiz.createPerformanceMonitor(performanceMonitorDTO);
+        if (id == 0) {
+            return MyJsonUtils.getFailJsonString(json, "创建失败");
+        }
+        return MyJsonUtils.getSuccessJsonString(json, "");
+    }
+
+    @RequestMapping(value = UrlConstant.ADMIN_MONITOR_REMOVE, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public String monitorRemove(HttpServletRequest request, HttpServletResponse response, ModelMap model, Integer id) {
+        JSONObject json = new JSONObject();
+
+        if (id == null) {
+            return MyJsonUtils.getFailJsonString(json, "id不能为空");
+        }
+
+        if (!performanceMonitorBiz.deletePerformanceMonitor(id)) {
+            return MyJsonUtils.getFailJsonString(json, "删除失败");
+        }
+        return MyJsonUtils.getSuccessJsonString(json, "");
     }
 }

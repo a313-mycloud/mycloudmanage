@@ -128,9 +128,6 @@ public class MonitorController extends BaseController {
         PerformanceMonitorDTO performanceMonitorDTO = new PerformanceMonitorDTO();
         performanceMonitorDTO.setAliaseName(aliaseName);
         performanceMonitorDTO.setIp(ip);
-        performanceMonitorDTO.setInterfaceName("eth0");
-        performanceMonitorDTO.setSshUserName("luojie");
-        performanceMonitorDTO.setSshPassword("10041104");
         int id = performanceMonitorBiz.createPerformanceMonitor(performanceMonitorDTO);
         if (id == 0) {
             return MyJsonUtils.getFailJsonString(json, "创建失败");

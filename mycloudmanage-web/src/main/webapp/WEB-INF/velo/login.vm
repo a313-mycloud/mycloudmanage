@@ -17,7 +17,7 @@
 		<div id="login-top">
 			<h1>MyCloud</h1>
 			<!-- Logo (221px width) -->
-			<img id="logo" src="resources/images/66.png"  alt="MyCloud logo" />
+			<img id="logo" src="resources/images/logo.png"  alt="MyCloud logo" />
 		</div>
 		<!-- End #logn-top -->
 		<div id="login-content">

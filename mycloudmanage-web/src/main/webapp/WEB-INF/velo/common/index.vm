@@ -21,11 +21,11 @@
 								<tr><td ><a href="/resources/software/spice32.msi">spice客户端下载(win32)</a></td></tr>
 								
 								#if($!{loginUser.role.status}==1)
-								<tr><td><a href="#">学生使用手册下载</a></td></tr>
+								<tr><td><a href="/resources/software/studentUser.docx">学生使用手册下载</a></td></tr>
 								#elseif($!{loginUser.role.status}==2)
-								<tr><td><a href="#">教师使用手册下载</a></td></tr>
+								<tr><td><a href="/resources/software/teacherUser.docx">教师使用手册下载</a></td></tr>
 								#else
-								<tr><td> <a href="#">管理员使用手册下载</a></td></tr>
+								<tr><td> <a href="/resources/software/adminUser.docx">管理员使用手册下载</a></td></tr>
 							    <tr><td><a href="/resources/software/spice-tools.exe">虚拟机界面增强工具</a></tr></td>
 								#end
 							</tfoot>

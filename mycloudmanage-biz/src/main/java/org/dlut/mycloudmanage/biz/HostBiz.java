@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HostBiz {
-	private static Logger log = LoggerFactory.getLogger(UserBiz.class);
+	private static Logger log = LoggerFactory.getLogger(HostBiz.class);
 
 	@Resource(name = "hostManageService")
 	private IHostManageService hostManageService;

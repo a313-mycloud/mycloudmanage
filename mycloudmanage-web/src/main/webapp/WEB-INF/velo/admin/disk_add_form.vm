@@ -3,45 +3,61 @@
 <div class="content-box-content">
 <div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
 						
-						
-						
-						   <form>
-						  <fieldset>
-						   <p>
-						   <label >硬盘名称</label>
-						   <input  class="text-input small-input" type="text"  id="diskName" name="diskName">
-						   </p>
-						   
+					
+						   <table >
+							<thead>
+								<tr>
+								  <th>创建虚拟硬盘</th>
+								</tr>
+							</thead>
+					
+							<tfoot>
+								<tr>
+									<td colspan="1">
+										<div class=" align-left">
+											   <a class="button add" >添加</a>
+						                      <a class="button reset" >重置</a>
+									    </div>   
+									</td>
+								</tr>
+							</tfoot>
 						 
-						   				  
-						   <p>
-						   <label>硬盘大小（MB）</label>
-						   <input class="text-input small-input" type="text"  id="diskSize" name="diskSize">
-						   </p>
-						   
-						   
-						   			  
-						   <p>
-						   <label>硬盘总线类型</label>
-						   <select class="text-input small-input" type="text"  id="diskBusType" name="diskBusType">
-						   #foreach($!diskBusType in $!diskBusTypes)
-						      <option value="$!diskBusType.value">$!diskBusType.desc</option>
-						   #end
-						   </select>
-						   </p>
-						   
-						   <p>
-						   <label>硬盘描述</label>
-						   <input class="text-input medium-input" type="text"  id="diskDesc" name="diskDesc">
-						   </p>
-						     <p>
-						           <a class="button add" >添加</a>
-						           <a class="button reset" >重置</a>
-						   </p>
+							<tbody >
+								<tr class="alt-row">
+								    <td>	
+								     <label >硬盘名称</label>
+						   			<input  class="text-input small-input" type="text"  id="diskName" name="diskName">
+							  	    </td>
+								</tr>
+								
+								<tr>
+								   <td>
+								   <label>硬盘大小（MB）</label>
+						           <input class="text-input small-input" type="text"  id="diskSize" name="diskSize">
+								   </td>
+								</tr>
+								
+								<tr class="alt-row">
+								    <td>	
+								     <label>硬盘总线类型</label>
+									   <select class="text-input small-input" type="text"  id="diskBusType" name="diskBusType">
+									   #foreach($!diskBusType in $!diskBusTypes)
+									      <option value="$!diskBusType.value">$!diskBusType.desc</option>
+									   #end
+									   </select>
+							  	    </td>
+								</tr>
+								
+								<tr>
+								   <td>
+								    <label>硬盘描述</label>
+								   <input class="text-input medium-input" type="text"  id="diskDesc" name="diskDesc">
+								   </td>
+								</tr>
+									
+							</tbody>
+						</table>
 						
-						   </fieldset>
-						   
-						   <form>
 						
 						
 					</div> <!-- End #tab2 -->    

@@ -6,24 +6,42 @@
 						
 	
 						 
-						 <form>
-						 	<fieldset>
-						  	<p>
-							  	<label>物理机名称</label>
-							  	<input class="text-input small-input " type="text"  id="hostName" name="hostName">
-						  	</p>
-						  	<p>
-							  	<label>物理机IP</label>
-							  	<input class="text-input small-input " type="text"  id="hostIp" name="hostIp">
-						  	</p>
-						  	
-						  	<p>
-						  	   <a class="button add"    >添加</a>
-						  	   <a class="button reset"    >重置</a>
-						  	</p>
-						 	</fieldset>
-						 </form>
 						
+						<table >
+							<thead>
+								<tr>
+								  <th>添加宿主机节点</th>
+								</tr>
+							</thead>
+					
+							<tfoot>
+								<tr>
+									<td colspan="1">
+										<div class=" align-left">
+											 <a class="button add"    >添加</a>
+						  	                 <a class="button reset"    >重置</a>
+									    </div>   
+									</td>
+								</tr>
+							</tfoot>
+						 
+							<tbody >
+								<tr class="alt-row">
+								    <td>	
+								    <label>物理机名称</label>
+							  	    <input class="text-input small-input " type="text"  id="hostName" name="hostName">
+							  	    </td>
+								</tr>
+								
+								<tr>
+								   <td>
+								   <label>物理机IP</label>
+							  	   <input class="text-input small-input " type="text"  id="hostIp" name="hostIp">
+								   </td>
+								</tr>
+									
+							</tbody>
+						</table>
 						
 						
 					

@@ -13,7 +13,7 @@
 					
 							<tfoot>
 								<tr>
-									<td colspan="1">
+									<td colspan="2">
 										<div class=" align-left">
 											   <a class="button add" >添加</a>
 						                      <a class="button reset" >重置</a>
@@ -25,21 +25,21 @@
 							<tbody >
 								<tr class="alt-row">
 								    <td>	
-								     <label >硬盘名称</label>
+								     <label >硬盘名称</label></td><td>
 						   			<input  class="text-input small-input" type="text"  id="diskName" name="diskName">
 							  	    </td>
 								</tr>
 								
 								<tr>
 								   <td>
-								   <label>硬盘大小（MB）</label>
+								   <label>硬盘大小（MB）</label></td><td>
 						           <input class="text-input small-input" type="text"  id="diskSize" name="diskSize">
 								   </td>
 								</tr>
 								
 								<tr class="alt-row">
 								    <td>	
-								     <label>硬盘总线类型</label>
+								     <label>硬盘总线类型</label></td><td>
 									   <select class="text-input small-input" type="text"  id="diskBusType" name="diskBusType">
 									   #foreach($!diskBusType in $!diskBusTypes)
 									      <option value="$!diskBusType.value">$!diskBusType.desc</option>
@@ -50,7 +50,7 @@
 								
 								<tr>
 								   <td>
-								    <label>硬盘描述</label>
+								    <label>硬盘描述</label></td><td>
 								   <input class="text-input medium-input" type="text"  id="diskDesc" name="diskDesc">
 								   </td>
 								</tr>

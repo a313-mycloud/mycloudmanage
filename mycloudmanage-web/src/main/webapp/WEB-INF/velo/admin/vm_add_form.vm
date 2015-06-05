@@ -13,7 +13,7 @@
 					
 							<tfoot>
 								<tr>
-									<td colspan="1">
+									<td colspan="2">
 										<div class=" align-left">
 											   <a class="button add" >添加</a>
 						                       <a class="button reset" >重置</a>
@@ -25,28 +25,28 @@
 							<tbody >
 								<tr class="alt-row">
 								    <td>	
-								    <label >虚拟机名称</label>
+								    <label >虚拟机名称</label></td><td>
 						           <input  class="text-input small-input" type="text"  id="vmName" name="vmName">
 							  	    </td>
 								</tr>
 								
 								<tr>
 								   <td>
-								    <label>核心数</label>
+								    <label>核心数</label></td><td>
 						            <input class="text-input small-input" type="text"  id="vmVcpu" name="vmVcpu">
 								   </td>
 								</tr>
 								
 								<tr class="alt-row">
 								<td>
-								<label>内存（MB）</label>
+								<label>内存（MB）</label></td><td>
 						       <input class="text-input small-input" type="text"  id="vmMemory" name="vmMemory">
 								</td>
 								</tr>
 								
 								<tr>
 								<td>
-								 <label>模板虚拟机</label>
+								 <label>模板虚拟机</label></td><td>
 								   <select id="srcVmUuid" name="srcVmUuid" class="small-input">
 								   #foreach($vm in $!vmList)
 								   <option value="$!vm.vmUuid">$!{vm.vmName}</option>
@@ -57,7 +57,7 @@
 								
 								<tr class="alt-row">
 								<td>
-										<label>访问方式</label>
+										<label>访问方式</label></td><td>
 								       <select id="showType"  name="showType" class="small-input"> 
 								         <option value="1">SPICE</option>
 								         <option value="2">VNC</option>
@@ -68,7 +68,7 @@
 								
 								<tr>
 								<td>
-													  <label>网络类型</label>
+													  <label>网络类型</label></td><td>
 								       <select id="vmNetworkType"  name="vmNetworkType" class="small-input"> 
 								         <option value="1">NAT</option>
 								         <option value="2">桥接</option>
@@ -78,14 +78,14 @@
 								
 								<tr class="alt-row">
 								<td>
-								   <label>远程访问密码</label> 
+								   <label>远程访问密码</label> </td><td>
 						       <input class="text-input small-input" type="text"  id="vmPassword" name="vmPassword">
 								</td>
 								</tr>
 								
 								<tr>
 								<td>
-								 <label >虚拟机描述(可选)</label>
+								 <label >虚拟机描述(可选)</label></td><td>
 						   <input  class="text-input medium-input"  id="vmDesc" name="vmDesc">
 								</td>
 								</tr>

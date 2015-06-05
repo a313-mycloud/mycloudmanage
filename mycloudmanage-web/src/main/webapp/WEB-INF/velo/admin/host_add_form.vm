@@ -16,7 +16,7 @@
 					
 							<tfoot>
 								<tr>
-									<td colspan="1">
+									<td colspan="2">
 										<div class=" align-left">
 											 <a class="button add"    >添加</a>
 						  	                 <a class="button reset"    >重置</a>
@@ -29,13 +29,15 @@
 								<tr class="alt-row">
 								    <td>	
 								    <label>物理机名称</label>
+								    </td>
+								    <td>
 							  	    <input class="text-input small-input " type="text"  id="hostName" name="hostName">
 							  	    </td>
 								</tr>
 								
 								<tr>
 								   <td>
-								   <label>物理机IP</label>
+								   <label>物理机IP</label></td><td>
 							  	   <input class="text-input small-input " type="text"  id="hostIp" name="hostIp">
 								   </td>
 								</tr>

@@ -21,7 +21,7 @@ function refresh() {
 		 		}
 		 		else{
 		 			render(JSON.parse(data.data));
-		 	//		setTimeout("refresh()", 2000);
+		 			setTimeout("refresh()", 2000);
 		 		}
 		 	}
 		 },

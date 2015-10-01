@@ -202,13 +202,13 @@ public class TeacherClassController extends BaseController {
         if (this.classBiz.getClassById(classId) == null)
             return this.goErrorPage("当前账户不存在该课程");
         QueryVmCondition queryVmCondition = new QueryVmCondition();
-        queryVmCondition.setUserAccount(userDTO.getAccount());
+//        queryVmCondition.setUserAccount(userDTO.getAccount());
         queryVmCondition.setLimit(1000);
         queryVmCondition.setOffset(0);
-        //只有老师自己创建的模板虚拟机可以用做模板
         queryVmCondition.setIsTemplateVm(true);
-        queryVmCondition.setIsPublicTemplate(false);
+        queryVmCondition.setIsPublicTemplate(true);
         Pagination<VmDTO> pageVmDTO = this.vmBiz.query(queryVmCondition);
+
         //要绑定虚拟机的课程
         model.put("class", this.classBiz.getClassById(classId));
         //可以使用的模板虚拟机

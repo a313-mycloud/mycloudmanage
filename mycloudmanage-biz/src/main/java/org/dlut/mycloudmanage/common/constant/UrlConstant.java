@@ -34,6 +34,11 @@ public class UrlConstant {
      */
     public static final String SPICE_HTML5_URL             = "/spicehtml5";
     public static final String DEFAULT_URL                 = "index";
+    
+    /**
+     * 物理机--镜像是否删除--查询页面
+     */
+    public static final String IMAGE_CAN_DELETE ="/common/imagedel.common";
 
     /***** 以上为全局常量 ******/
 
@@ -97,7 +102,7 @@ public class UrlConstant {
     public static final String ADMIN_VM_ADD                = "/admin/vm/add.do";
     public static final String ADMIN_VM_CONVERT            = "/admin/vm/convert.do";
     public static final String ADMIN_VM_REMOVE             = "/admin/vm/remove.do";
-
+    
 //    /**
 //     * 管理员-虚拟硬盘-操作
 //     */

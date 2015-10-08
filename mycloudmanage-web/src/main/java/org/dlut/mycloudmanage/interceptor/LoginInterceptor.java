@@ -53,7 +53,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                 log.warn("没有权限，拦截登陆");
                 return false;
             }
-        } else {// 客户端跳转
+        } 
+        else if(uri.endsWith(".common")|| uri.endsWith(".common/") ){//以.common/结尾的直接放行
+        }
+        else {// 客户端跳转
             if (StringUtils.isBlank(userAccount)) {
                 response.sendRedirect(UrlConstant.LOGIN_URL + "?redirect=" + UrlUtil.getCurUrl(request));
                 log.warn("用户为空，拦截登陆");

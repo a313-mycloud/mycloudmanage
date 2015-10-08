@@ -24,7 +24,7 @@ public class MyJsonUtils {
      * @param data
      * @return
      */
-    public static String getJsonString(JSONObject json, boolean isLogin, boolean isAuth, boolean isSuccess,
+    public static String  getJsonString(JSONObject json, boolean isLogin, boolean isAuth, boolean isSuccess,
                                        String mess, String data) {
         json.put("isLogin", isLogin);
         json.put("isAuth", isAuth);

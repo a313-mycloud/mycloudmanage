@@ -294,5 +294,13 @@ public class VmBiz {
         }
         return result.getModel();
     }
-
+    
+    public  boolean  isCanDelete(String ipAddress,String imageUuid){
+    	MyCloudResult<Boolean> result=this.vmManageService.isCanDelete(ipAddress, imageUuid);
+    	if(!result.isSuccess()){
+    		log.warn("调用vmManageService.isCanDelete出错");
+    		return false;
+    	}
+    	return result.getModel();
+    }
 }

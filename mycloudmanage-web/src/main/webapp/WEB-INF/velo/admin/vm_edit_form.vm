@@ -43,7 +43,7 @@
 						   </p>
 						   
 						   	  
-						   <p>
+					 						   <p  style="display: none">
 						   <label >访问方式</label>
 						       <select id="showType"  class="small-input" > 
 						           
@@ -63,6 +63,7 @@
 						         
 						       </select>
 						   </p>
+						
 						   
 						     <p>
 						   <label>网络类型</label>

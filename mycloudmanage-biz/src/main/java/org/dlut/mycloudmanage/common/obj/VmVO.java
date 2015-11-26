@@ -136,4 +136,17 @@ public class VmVO {
         this.vmNetworkType = vmNetworkType;
     }
 
+	@Override
+	public String toString() {
+		return "VmVO [vmName=" + vmName + ", vmClass=" + vmClass
+				+ ", vmStatus=" + vmStatus + ", hostIp=" + hostIp
+				+ ", showPort=" + showPort + ", showType=" + showType
+				+ ", vmUuid=" + vmUuid + ", vmVcpu=" + vmVcpu + ", vmMemory="
+				+ vmMemory + ", vmDesc=" + vmDesc + ", vmPass=" + vmPass
+				+ ", vmMacAddress=" + vmMacAddress + ", vmNetworkType="
+				+ vmNetworkType + "]";
+	}
+    
+    
+
 }

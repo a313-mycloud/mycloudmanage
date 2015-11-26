@@ -55,11 +55,11 @@
 								</td>
 								</tr>
 								
-								<tr class="alt-row">
+								<tr class="alt-row"  style="display: none">
 								<td>
 										<label>访问方式</label></td><td>
 								       <select id="showType"  name="showType" class="small-input"> 
-								         <option value="1">SPICE</option>
+								         <option value="1" selected = "selected">SPICE</option>
 								         <option value="2">VNC</option>
 								       </select>
 								</td>
@@ -69,7 +69,7 @@
 								<td>
 													  <label>网络类型</label></td><td>
 								       <select id="vmNetworkType"  name="vmNetworkType" class="small-input"> 
-								         <option value="1">NAT</option>
+								         <option value="1" selected = "selected">NAT</option>
 								         <option value="2">桥接</option>
 								       </select>
 								</td>

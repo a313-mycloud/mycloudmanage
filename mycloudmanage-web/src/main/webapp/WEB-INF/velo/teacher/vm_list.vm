@@ -14,7 +14,8 @@
 								   <th>虚拟机配置</th>
 								   <th>所属课程</th>
 								   <th>状态</th>
-								   <th>协议-地址</th>
+								   <th>访问地址</th>
+								   <th>访问方式</th>
 								   <th>MAC地址</th>
 								   <th>网络类型</th>
 								   <th>虚拟机描述</th>								   
@@ -55,7 +56,8 @@
 									<td>$!vm.vmVcpu核，$!{vm.vmMemory}MB</td>
 									<td>$!vm.vmClass</td>
 									<td>$!{vm.vmStatus.desc}</td>
-									<td>$!{vm.showType.desc}://$!vm.hostIp:$!vm.showPort</td>
+									<td>$!vm.hostIp:$!vm.showPort</td>
+-									<td>$!vm.showType.desc</td>
 									<td>$!vm.vmMacAddress</td>
 									<td>$!vm.vmNetworkType.desc</td>
 									<td>$!vm.vmDesc</td>

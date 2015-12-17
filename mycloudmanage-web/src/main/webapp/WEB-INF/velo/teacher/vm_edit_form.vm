@@ -43,7 +43,7 @@
 						   </p>
 						   
 						   	  
-						   <p style="display: none">
+						   <p >
 						   <label >访问方式</label>
 						       <select id="showType"  class="small-input" > 
 						           

@@ -55,7 +55,7 @@
 								</td>
 								</tr>
 								
-								<tr class="alt-row"  style="display: none">
+								<tr class="alt-row"  >
 								<td>
 										<label>访问方式</label></td><td>
 								       <select id="showType"  name="showType" class="small-input"> 

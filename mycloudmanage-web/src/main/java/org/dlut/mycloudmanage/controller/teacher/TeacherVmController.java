@@ -275,6 +275,7 @@ public class TeacherVmController extends BaseVmController {
         destVm.setShowPassword(showPassword);
         destVm.setMasterDiskBusType(srcVm.getMasterDiskBusType());
         destVm.setInterfaceType(srcVm.getInterfaceType());
+        destVm.setSystemType(srcVm.getSystemType());
         if (this.vmBiz.cloneVm(destVm, srcVmUuid) == null) {
             return MyJsonUtils.getFailJsonString(json, "虚拟机创建失败");
         }

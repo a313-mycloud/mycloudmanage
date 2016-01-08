@@ -3,7 +3,7 @@
  */
  $(document).ready(function(){	
  	$(".addImage").click(function(){
-		add('/admin/image/add.do',{fileName:$(this).attr('fileName'),diskBusType:$("#diskBusType").val(),interfaceType:$("#interfaceType").val()},"/admin/image/list?currentPage=1");
+		add('/admin/image/add.do',{fileName:$(this).attr('fileName'),diskBusType:$("#diskBusType").val(),interfaceType:$("#interfaceType").val(),systemType:$("#systemType").val()},"/admin/image/list?currentPage=1");
 	});
 
 	

@@ -37,6 +37,7 @@ import org.dlut.mycloudserver.client.common.vmmanage.MasterDiskBusTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.NetworkTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
+import org.dlut.mycloudserver.client.common.vmmanage.SystemTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -178,7 +179,7 @@ public class ImageController extends BaseController {
    */
     @RequestMapping(value = UrlConstant.ADMIN_IMAGE_ADD, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
-    public String addImage(HttpServletRequest request, HttpServletResponse response, ModelMap model,String fileName,String diskBusType,String interfaceType) {
+    public String addImage(HttpServletRequest request, HttpServletResponse response, ModelMap model,String fileName,String diskBusType,String interfaceType,String systemType) {
     	 String errorDesc = this.setDefaultEnv(request, response, model);
          if (errorDesc != null) {
              return this.goErrorPage(errorDesc);
@@ -197,12 +198,17 @@ public class ImageController extends BaseController {
         	return MyJsonUtils.getFailJsonString(json,"总线类型格式不正确");
         if(!MyStringUtils.isInteger(interfaceType))
         	return MyJsonUtils.getFailJsonString(json,"接口类型格式不正确");
+        if(!MyStringUtils.isInteger(systemType))
+        	return MyJsonUtils.getFailJsonString(json,"系统类型格式不正确");
         InterfaceTypeEnum interfaceTypeEnum=InterfaceTypeEnum.getInterfaceTypeByValue(Integer.parseInt(interfaceType));
         MasterDiskBusTypeEnum masterDiskBusTypeEnum=MasterDiskBusTypeEnum.getMasterDiskBusTypeByValue(Integer.parseInt(diskBusType));
+        SystemTypeEnum systemTypeEnum=SystemTypeEnum.getSystemTypeByValue(Integer.parseInt(systemType));
         if(interfaceTypeEnum==null)
         	return MyJsonUtils.getFailJsonString(json,"接口类型不存在");
         if(masterDiskBusTypeEnum==null)
         	return MyJsonUtils.getFailJsonString(json,"总线类型不存在");
+        if(systemTypeEnum==null)
+        	return MyJsonUtils.getFailJsonString(json,"系统类型不存在");
         //将文件重命名，并且从upload移动到images中
         String fileUuid=UUID.randomUUID().toString();
         File toFile = new File(MyPropertiesUtil.getValue("imageDir") + fileUuid);
@@ -231,6 +237,7 @@ public class ImageController extends BaseController {
         vmDTO.setVmNetworkType(NetworkTypeEnum.NAT);
         vmDTO.setInterfaceType(interfaceTypeEnum);
         vmDTO.setMasterDiskBusType(masterDiskBusTypeEnum);
+        vmDTO.setSystemType(systemTypeEnum);
         if (StringUtils.isBlank(this.vmBiz.createVm(vmDTO))){
         	log.error("添加镜像文件失败");
         	return MyJsonUtils.getFailJsonString(json,"添加镜像文件失败");

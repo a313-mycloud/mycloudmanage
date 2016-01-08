@@ -8,6 +8,16 @@
 						   <form>
 						  <fieldset>
 						   
+						   						   
+						   <p>
+						      <label>系统类型</label>
+						       <select id="systemType"  name="systemType" class="small-input"> 
+						         <option value="1">windows</option>
+						         <option value="2">linux</option>
+						         <option value="2">其他</option>
+						       </select>
+						   </p>
+						   
 						   <p>
 						   <label>总线类型</label>
 						       <select id="diskBusType"  name="diskBusType" class="small-input"> 
@@ -24,6 +34,7 @@
 						         <option value="2">rtl8139</option>
 						       </select>
 						   </p>
+
 						   
 						   
 						   <p>

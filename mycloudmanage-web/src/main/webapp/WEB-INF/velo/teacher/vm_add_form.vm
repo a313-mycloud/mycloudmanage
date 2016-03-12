@@ -55,34 +55,28 @@
 								</td>
 								</tr>
 								
-								<tr class="alt-row"  >
+								<tr class="alt-row" style="display:none" >
 								<td>
 										<label>访问方式</label></td><td>
-								       <select id="showType"  name="showType" class="small-input"> 
-								         <option value="1" selected = "selected">SPICE</option>
-								         <option value="2">VNC</option>
-								       </select>
+										 <input class="text-input small-input" type="text"  id="showType" name="showType"  value="1">
 								</td>
 								</tr>
 								
-								<tr>
+								<tr style="display:none">
 								<td>
-													  <label>网络类型</label></td><td>
-								       <select id="vmNetworkType"  name="vmNetworkType" class="small-input"> 
-								         <option value="1" selected = "selected">NAT</option>
-								         <option value="2">桥接</option>
-								       </select>
+										<label>网络类型</label></td><td>
+										 <input class="text-input small-input" type="text"  id="vmNetworkType" name="vmNetworkType"  value="2">
+								</td>
+								</tr>
+								
+								<tr class="alt-row" style="display:none">
+								<td>
+								   <label>远程访问密码</label> </td><td>
+						       <input class="text-input small-input" type="text"  id="vmPassword" name="vmPassword" value="123456">
 								</td>
 								</tr>
 								
 								<tr class="alt-row">
-								<td>
-								   <label>远程访问密码</label> </td><td>
-						       <input class="text-input small-input" type="text"  id="vmPassword" name="vmPassword">
-								</td>
-								</tr>
-								
-								<tr>
 								<td>
 								 <label >虚拟机描述(可选)</label></td><td>
 						   <input  class="text-input medium-input"  id="vmDesc" name="vmDesc">

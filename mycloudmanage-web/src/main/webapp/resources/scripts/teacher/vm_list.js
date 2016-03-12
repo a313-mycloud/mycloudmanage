@@ -17,15 +17,10 @@ $(document).ready(function(){
 	}
 	});
 	$(".resetEdit").click(function(){
-		
 		$("#vmName").val($("#preName").val());
-		$("#showType").val($("#preShowType").val());
 		$("#vmDesc").val($("#preVmDesc").val());
-		$("#vmPassword").val($("#preShowPassword").val());
 		$("#vmVcpu").val($("#preVmVcpu").val());
 		$("#vmMemory").val($("#preVmMemory").val());
-		$("#showType").val($("#preShowType").val());
-		$("#vmNetworkType").val($("#preVmNetworkType").val());
 	});	
 	
 	$(".add").click(function(){

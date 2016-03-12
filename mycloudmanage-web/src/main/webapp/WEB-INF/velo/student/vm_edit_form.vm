@@ -2,85 +2,54 @@
 <div class="content-box"><!-- Start Content Box -->
 <div class="content-box-content">
 <div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
-						
-						
-					
 						   
 						   <form>
 						 <fieldset>
 						   <input type="hidden"  id="vmUuid" value="$!vm.vmUuid"/>
 						   <input type="hidden"  id="preName" value="$!vm.vmName"/>
-						   <input type="hidden"  id="preShowType" value="$!vm.showType.value"/>
+						   <input type="hidden"  id="showType" value="$!vm.showType.value"/>
 						   <input type="hidden"  id="preVmDesc" value="$!vm.vmDesc"/>
-						   <input type="hidden"  id="preShowPassword" value="$!vm.vmPass"/>
+						   <input type="hidden"  id="vmPassword" value="$!vm.vmPass"/>
 						   <input type="hidden"  id="vmVcpu" value="$!vm.vmVcpu"/>
 						   <input type="hidden"  id="vmMemory" value="$!vm.vmMemory"/>
-					   <input type="hidden"  id="preVmNetworkType" value="$!vm.vmNetworkType.value"/>
+					       <input type="hidden"  id="VmNetworkType" value="$!vm.vmNetworkType.value"/>
 						    
-								
-						  
-						   
-						    <p>
-						   <label>虚拟机名称</label>
-						   <input class="text-input small-input" type="text"  id="vmName" value="$!vm.vmName">
-						   </p>
-						   
-						   
-						   	<p>
-						   <label >虚拟机描述</label>
-						   <input class="text-input medium-input" type="text"  id="vmDesc" value="$!vm.vmDesc">
-						   </p>
-						 
-						   <p>
-						   <label for="vmPassword">远程访问密码</label>
-						      <span id="box">
-						      <input class="text-input small-input" type="password"  id="vmPassword" value="$!vm.vmPass">
-						    <a href="javascript:showPass()" class="button" >显示密码</a>  
-						   </p>
-						   
-						     <p >
-						   <label >访问方式</label>
-						       <select id="showType"  class="small-input" > 
-						           
-						         <option value="1" 
-						         #if($!vm.showType.value==1) 
-						         selected 
-						         #end>SPICE</option>
-						         <option value="2"
-						         #if($!vm.showType.value==2) 
-						         selected 
-						         #end>VNC</option>
-						            <option value="3"
-						         #if($!vm.showType.value==3) 
-						         selected 
-						         #end>WEB</option>
-						     
-						       </select>
-						   </p>
-						   
-						   	     <p>
-						   <label>网络类型</label>
-						       <select id="vmNetworkType"  name="vmNetworkType"  class="small-input"> 
-						         <option value="1"
-						           #if($!vm.vmNetworkType.value==1) 
-						         selected 
-						         #end>NAT</option>
-						         <option value="2"
-						         #if($!vm.vmNetworkType.value==2) 
-						         selected 
-						         #end>桥接</option>
-						       </select>
-						   </p>
-						   
-						   		  
-						    <p>
-						   <a class="button edit" >修改</a>
-						   <a class="button resetEdit" >重置</a>
-						   </p>
-						   </fieldset>
-						   </form>
+						    
+						    <table >
+							<thead>
+								<tr>
+								  <th>修改虚拟机配置</th>
+								</tr>
+							</thead>
 					
-	
+							<tfoot>
+								<tr>
+									<td colspan="2">
+										<div class=" align-left">
+						                        <a class="button edit" >修改</a>
+						   					   <a class="button resetEdit" >重置</a>
+									    </div>   
+									</td>
+								</tr>
+							</tfoot>
+						 
+							<tbody >
+								<tr class="alt-row">
+								    <td>	
+								    <label >虚拟机名称</label></td><td>
+    					             <input class="text-input small-input" type="text"  id="vmName" value="$!vm.vmName">
+							  	    </td>
+								</tr>
+								<tr>
+								<td >
+								<label >虚拟机描述(可选)</label></td><td>
+						   		<input class="text-input medium-input" type="text"  id="vmDesc" value="$!vm.vmDesc">
+								</td>
+								</tr>
+							</tbody>
+						</table>
+						
+								
 					</div> <!-- End #tab2 -->    
 				</div> <!-- End .content-box-content -->
 			</div> <!-- End .content-box -->		

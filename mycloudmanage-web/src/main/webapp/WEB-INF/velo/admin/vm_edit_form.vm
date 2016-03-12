@@ -5,17 +5,17 @@
 						
 						   <input type="hidden"  id="vmUuid" value="$!vm.vmUuid"/>
 						   <input type="hidden"  id="preName" value="$!vm.vmName"/>
-						   <input type="hidden"  id="preShowType" value="$!vm.showType.value"/>
+						   <input type="hidden"  id="showType" value="$!vm.showType.value"/>
 						   <input type="hidden"  id="preVmDesc" value="$!vm.vmDesc"/>
-						   <input type="hidden"  id="preShowPassword" value="$!vm.vmPass"/>
+						   <input type="hidden"  id="vmPassword" value="$!vm.vmPass"/>
 						   <input type="hidden"  id="preVmVcpu" value="$!vm.vmVcpu"/>
 						   <input type="hidden"  id="preVmMemory" value="$!vm.vmMemory"/>
-					       <input type="hidden"  id="preVmNetworkType" value="$!vm.vmNetworkType.value"/>
+					       <input type="hidden"  id="vmNetworkType" value="$!vm.vmNetworkType.value"/>
 						
 						<table >
 							<thead>
 								<tr>
-								  <th>修改虚拟机</th>
+								  <th>修改虚拟机配置</th>
 								</tr>
 							</thead>
 					
@@ -49,44 +49,6 @@
 								<td>
 								<label>内存（MB）</label></td><td>
 						       <input  class="text-input small-input" type="text"  id="vmMemory" value="$!vm.vmMemory">
-								</td>
-								</tr>
-								
-								<tr style="display:none">
-								<td>
-								  <select id="showType"  class="small-input"  > 
-						         <option value="1" 
-						         #if($!vm.showType.value==1) 
-						         selected 
-						         #end>SPICE</option>
-						         <option value="2"
-						         #if($!vm.showType.value==2) 
-						         selected 
-						         #end>VNC</option>
-					     		<option value="3"
-						         #if($!vm.showType.value==3) 
-						         selected 
-						         #end>WEB</option>
-						         
-						       </select>
-								</td>
-								</tr>
-							
-								
-								<tr style="display:none">
-								<td>
-								<label>网络类型</label></td><td>
-								       <select id="vmNetworkType"  name="vmNetworkType" class="small-input"> 
-								         <!--<option value="1"  selected = "selected">NAT</option>-->
-								         <option value="2"  selected = "selected" >桥接</option>
-								       </select>
-								</td>
-								</tr>
-								
-								<tr class="alt-row" style="display:none">
-								<td>
-								   <label>远程访问密码</label> </td><td>
-						       <input class="text-input small-input" type="password"  id="vmPassword" value="$!vm.vmPass" >
 								</td>
 								</tr>
 								

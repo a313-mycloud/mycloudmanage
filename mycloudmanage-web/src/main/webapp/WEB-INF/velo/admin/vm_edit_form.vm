@@ -38,14 +38,14 @@
 						   <p>
 						   <label for="vmPassword">远程访问密码</label>
 						      <span id="box">
-						      <input class="text-input small-input" type="password"  id="vmPassword" value="$!vm.vmPass">
-						    <a href="javascript:showPass()" class="button" >显示密码</a>  
+						      <input class="text-input small-input" type="password"  id="vmPassword" value="$!vm.vmPass" style="display:none>
+						  <!--  <a href="javascript:showPass()" class="button" >显示密码</a>-->  
 						   </p>
 						   
 						   	  
 				         <p  >
 						   <label >访问方式</label>
-						       <select id="showType"  class="small-input" > 
+						       <select id="showType"  class="small-input" style="display:none > 
 						           
 						         <option value="1" 
 						         #if($!vm.showType.value==1) 
@@ -67,11 +67,8 @@
 						   
 						     <p>
 						   <label>网络类型</label>
-						       <select id="vmNetworkType"  name="vmNetworkType"  class="small-input"> 
-						         <option value="1"
-						           #if($!vm.vmNetworkType.value==1) 
-						         selected 
-						         #end>NAT</option>
+						       <select id="vmNetworkType"  name="vmNetworkType"  class="small-input" style="display:none"> 
+						      
 						         <option value="2"
 						         #if($!vm.vmNetworkType.value==2) 
 						         selected 

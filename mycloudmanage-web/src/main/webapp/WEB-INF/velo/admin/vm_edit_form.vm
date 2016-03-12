@@ -3,9 +3,6 @@
 <div class="content-box-content">
 <div class="tab-content default-tab" id="tab2"> <!-- This is the target div. id must match the href of this div's tab -->
 						
-						
-						 <form>
-						 <fieldset>
 						   <input type="hidden"  id="vmUuid" value="$!vm.vmUuid"/>
 						   <input type="hidden"  id="preName" value="$!vm.vmName"/>
 						   <input type="hidden"  id="preShowType" value="$!vm.showType.value"/>
@@ -13,40 +10,51 @@
 						   <input type="hidden"  id="preShowPassword" value="$!vm.vmPass"/>
 						   <input type="hidden"  id="preVmVcpu" value="$!vm.vmVcpu"/>
 						   <input type="hidden"  id="preVmMemory" value="$!vm.vmMemory"/>
-					   <input type="hidden"  id="preVmNetworkType" value="$!vm.vmNetworkType.value"/>
-						    
+					       <input type="hidden"  id="preVmNetworkType" value="$!vm.vmNetworkType.value"/>
+						
+						<table >
+							<thead>
+								<tr>
+								  <th>修改虚拟机</th>
+								</tr>
+							</thead>
 					
-						   
+							<tfoot>
+								<tr>
+									<td colspan="2">
+										<div class=" align-left">
+						                        <a class="button edit" >修改</a>
+						   					   <a class="button resetEdit" >重置</a>
+									    </div>   
+									</td>
+								</tr>
+							</tfoot>
+						 
+							<tbody >
+								<tr class="alt-row">
+								    <td>	
+								    <label >虚拟机名称</label></td><td>
+    					            <input class="text-input small-input" type="text"  id="vmName" value="$!vm.vmName">
+							  	    </td>
+								</tr>
 								
-						   <p>
-						   <label>虚拟机名称</label>
-						   <input class="text-input small-input" type="text"  id="vmName" value="$!vm.vmName">
-						   </p>
-						   
-						  
-						   
-						   <p>
-						   <label>虚拟机核心数</label>
-						   <input class="text-input small-input" type="text"  id="vmVcpu" value="$!vm.vmVcpu">
-						   </p>
-						   
-						    <p>
-						    <label>虚拟机内存(MB)</label>
-						   <input  class="text-input small-input" type="text"  id="vmMemory" value="$!vm.vmMemory">
-						   </p>
-						   
-						   <p>
-						   <label for="vmPassword">远程访问密码</label>
-						      <span id="box">
-						      <input class="text-input small-input" type="password"  id="vmPassword" value="$!vm.vmPass" style="display:none>
-						  <!--  <a href="javascript:showPass()" class="button" >显示密码</a>-->  
-						   </p>
-						   
-						   	  
-				         <p  >
-						   <label >访问方式</label>
-						       <select id="showType"  class="small-input" style="display:none > 
-						           
+								<tr>
+								   <td>
+								    <label>核心数</label></td><td>
+						            <input class="text-input small-input" type="text"  id="vmVcpu" value="$!vm.vmVcpu">
+								   </td>
+								</tr>
+								
+								<tr class="alt-row">
+								<td>
+								<label>内存（MB）</label></td><td>
+						       <input  class="text-input small-input" type="text"  id="vmMemory" value="$!vm.vmMemory">
+								</td>
+								</tr>
+								
+								<tr style="display:none">
+								<td>
+								  <select id="showType"  class="small-input"  > 
 						         <option value="1" 
 						         #if($!vm.showType.value==1) 
 						         selected 
@@ -55,41 +63,42 @@
 						         #if($!vm.showType.value==2) 
 						         selected 
 						         #end>VNC</option>
-						
-					     <option value="3"
+					     		<option value="3"
 						         #if($!vm.showType.value==3) 
 						         selected 
 						         #end>WEB</option>
 						         
 						       </select>
-						   </p>
-						
-						   
-						     <p>
-						   <label>网络类型</label>
-						       <select id="vmNetworkType"  name="vmNetworkType"  class="small-input" style="display:none"> 
-						      
-						         <option value="2"
-						         #if($!vm.vmNetworkType.value==2) 
-						         selected 
-						         #end>桥接</option>
-						       </select>
-						   </p>
-						   
-						    <p>
-						   <label >虚拟机描述</label>
-						   <input class="text-input medium-input" type="text"  id="vmDesc" value="$!vm.vmDesc">
-						   </p>
-						   					  
-						   <p>
-						   <a class="button edit" >修改</a>
-						   <a class="button resetEdit" >重置</a>
-						   </p>
-						   </fieldset>
-						   </form>
-					
-						
-						
+								</td>
+								</tr>
+							
+								
+								<tr style="display:none">
+								<td>
+								<label>网络类型</label></td><td>
+								       <select id="vmNetworkType"  name="vmNetworkType" class="small-input"> 
+								         <!--<option value="1"  selected = "selected">NAT</option>-->
+								         <option value="2"  selected = "selected" >桥接</option>
+								       </select>
+								</td>
+								</tr>
+								
+								<tr class="alt-row" style="display:none">
+								<td>
+								   <label>远程访问密码</label> </td><td>
+						       <input class="text-input small-input" type="password"  id="vmPassword" value="$!vm.vmPass" >
+								</td>
+								</tr>
+								
+								<tr>
+								<td >
+								<label >虚拟机描述(可选)</label></td><td>
+						   		<input  class="text-input medium-input"  id="vmDesc" name="vmDesc">
+								</td>
+								</tr>
+							
+							</tbody>
+						</table>
 						
 						
 					</div> <!-- End #tab2 -->    

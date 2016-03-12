@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.dlut.mycloudmanage.biz.ClassBiz;
 import org.dlut.mycloudmanage.biz.HostBiz;
 import org.dlut.mycloudmanage.biz.VmBiz;
-import org.dlut.mycloudmanage.common.constant.UrlConstant;
 import org.dlut.mycloudmanage.common.obj.VmVO;
 import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
 import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
@@ -32,10 +31,7 @@ import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -44,7 +40,6 @@ import com.alibaba.fastjson.JSONObject;
  * 
  * @author xuyizhen Dec 16, 2014 6:51:22 PM
  */
-
 
 public class BaseVmController extends BaseController {
     private static Logger log = LoggerFactory.getLogger(BaseVmController.class);
@@ -108,6 +103,7 @@ public class BaseVmController extends BaseController {
                 vmVO.setVmDesc(vmDTO.getDesc());
             vmVO.setVmMacAddress(vmDTO.getVmMacAddress());
             vmVO.setVmNetworkType(vmDTO.getVmNetworkType());
+            vmVO.setVmSystemType(vmDTO.getSystemType());
             vmList.add(vmVO);
         }
         model.put("vmList", vmList);
@@ -292,7 +288,5 @@ public class BaseVmController extends BaseController {
         json.put("message", "虚拟机关闭失败");
         return json.toString();
     }
-    
-  
 
 }

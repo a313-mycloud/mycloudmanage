@@ -9,6 +9,7 @@ package org.dlut.mycloudmanage.common.obj;
 
 import org.dlut.mycloudserver.client.common.vmmanage.NetworkTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.ShowTypeEnum;
+import org.dlut.mycloudserver.client.common.vmmanage.SystemTypeEnum;
 import org.dlut.mycloudserver.client.common.vmmanage.VmStatusEnum;
 
 /**
@@ -29,48 +30,9 @@ public class VmVO {
     private String          vmDesc;
     private String          vmPass;
     private String          vmMacAddress;
+    private SystemTypeEnum  vmSystemType;
 
     private NetworkTypeEnum vmNetworkType;
-
-    public String getVmPass() {
-        return vmPass;
-    }
-
-    public void setVmPass(String vmPass) {
-        this.vmPass = vmPass;
-    }
-
-    public String getVmDesc() {
-        return vmDesc;
-    }
-
-    public void setVmDesc(String vmDesc) {
-        this.vmDesc = vmDesc;
-    }
-
-    public Integer getVmVcpu() {
-        return vmVcpu;
-    }
-
-    public void setVmVcpu(Integer vmVcpu) {
-        this.vmVcpu = vmVcpu;
-    }
-
-    public String getVmMemory() {
-        return vmMemory;
-    }
-
-    public void setVmMemory(String vmMemory) {
-        this.vmMemory = vmMemory;
-    }
-
-    public String getVmUuid() {
-        return vmUuid;
-    }
-
-    public void setVmUuid(String vmUuid) {
-        this.vmUuid = vmUuid;
-    }
 
     public String getVmName() {
         return vmName;
@@ -120,12 +82,60 @@ public class VmVO {
         this.showType = showType;
     }
 
+    public String getVmUuid() {
+        return vmUuid;
+    }
+
+    public void setVmUuid(String vmUuid) {
+        this.vmUuid = vmUuid;
+    }
+
+    public Integer getVmVcpu() {
+        return vmVcpu;
+    }
+
+    public void setVmVcpu(Integer vmVcpu) {
+        this.vmVcpu = vmVcpu;
+    }
+
+    public String getVmMemory() {
+        return vmMemory;
+    }
+
+    public void setVmMemory(String vmMemory) {
+        this.vmMemory = vmMemory;
+    }
+
+    public String getVmDesc() {
+        return vmDesc;
+    }
+
+    public void setVmDesc(String vmDesc) {
+        this.vmDesc = vmDesc;
+    }
+
+    public String getVmPass() {
+        return vmPass;
+    }
+
+    public void setVmPass(String vmPass) {
+        this.vmPass = vmPass;
+    }
+
     public String getVmMacAddress() {
         return vmMacAddress;
     }
 
     public void setVmMacAddress(String vmMacAddress) {
         this.vmMacAddress = vmMacAddress;
+    }
+
+    public SystemTypeEnum getVmSystemType() {
+        return vmSystemType;
+    }
+
+    public void setVmSystemType(SystemTypeEnum vmSystemType) {
+        this.vmSystemType = vmSystemType;
     }
 
     public NetworkTypeEnum getVmNetworkType() {
@@ -136,17 +146,19 @@ public class VmVO {
         this.vmNetworkType = vmNetworkType;
     }
 
-	@Override
-	public String toString() {
-		return "VmVO [vmName=" + vmName + ", vmClass=" + vmClass
-				+ ", vmStatus=" + vmStatus + ", hostIp=" + hostIp
-				+ ", showPort=" + showPort + ", showType=" + showType
-				+ ", vmUuid=" + vmUuid + ", vmVcpu=" + vmVcpu + ", vmMemory="
-				+ vmMemory + ", vmDesc=" + vmDesc + ", vmPass=" + vmPass
-				+ ", vmMacAddress=" + vmMacAddress + ", vmNetworkType="
-				+ vmNetworkType + "]";
-	}
-    
-    
+    @Override
+    public String toString() {
+        return "VmVO [vmName=" + vmName + ", vmClass=" + vmClass + ", vmStatus=" + vmStatus + ", hostIp=" + hostIp
+                + ", showPort=" + showPort + ", showType=" + showType + ", vmUuid=" + vmUuid + ", vmVcpu=" + vmVcpu
+                + ", vmMemory=" + vmMemory + ", vmDesc=" + vmDesc + ", vmPass=" + vmPass + ", vmMacAddress="
+                + vmMacAddress + ", vmSystemType=" + vmSystemType + ", vmNetworkType=" + vmNetworkType
+                + ", getVmName()=" + getVmName() + ", getVmClass()=" + getVmClass() + ", getVmStatus()="
+                + getVmStatus() + ", getHostIp()=" + getHostIp() + ", getShowPort()=" + getShowPort()
+                + ", getShowType()=" + getShowType() + ", getVmUuid()=" + getVmUuid() + ", getVmVcpu()=" + getVmVcpu()
+                + ", getVmMemory()=" + getVmMemory() + ", getVmDesc()=" + getVmDesc() + ", getVmPass()=" + getVmPass()
+                + ", getVmMacAddress()=" + getVmMacAddress() + ", getVmSystemType()=" + getVmSystemType()
+                + ", getVmNetworkType()=" + getVmNetworkType() + ", getClass()=" + getClass() + ", hashCode()="
+                + hashCode() + ", toString()=" + super.toString() + "]";
+    }
 
 }

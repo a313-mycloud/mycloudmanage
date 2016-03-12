@@ -77,10 +77,10 @@
 								</td>
 								</tr>
 								
-								<tr>
-								<td class="alt-row">
+								<tr class="alt-row>
+								<td>
 								 <label >虚拟机描述(可选)</label></td><td>
-						   <input  class="text-input medium-input"  id="vmDesc" name="vmDesc">
+						         <input  class="text-input medium-input"  id="vmDesc" name="vmDesc">
 								</td>
 								</tr>
 								

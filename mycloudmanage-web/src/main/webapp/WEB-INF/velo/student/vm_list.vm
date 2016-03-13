@@ -54,8 +54,13 @@
 									<td>$!vm.vmVcpu核，$!{vm.vmMemory}MB</td>
 									<td>$!vm.vmClass</td>
 									<td>$!vm.vmStatus.desc</td>
-                                    <td>$vm.showPort.split(";").get(0)</td>
+                                 #if($vm.showPort.split(";").size()==2)
+									<td>$vm.showPort.split(";").get(0)</td>
 									<td>$vm.showPort.split(";").get(1).split(":").get(0)</td>
+									#else
+									<td>--</td>
+									<td>--</td>
+									#end
 										#if($!vm.vmSystemType.value==1)
 										<td>rdp</td>
 									#else

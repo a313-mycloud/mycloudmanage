@@ -208,7 +208,7 @@ function closediv() {
 function showdiv(str) {
     var msgw, msgh, bordercolor;
     msgw = 400; //提示窗口的宽度 
-    msgh = 100; //提示窗口的高度 
+    msgh = 150; //提示窗口的高度 
     bordercolor = "#e5e5e5"; //提示窗口的边框颜色 
     titlecolor = "#99CCFF"; //提示窗口的标题颜色 
 
@@ -261,6 +261,12 @@ function showdiv(str) {
     txt.setAttribute("id", "msgTxt");
     txt.innerHTML = str;
     document.getElementById("msgDiv").appendChild(txt);
+    
+    var img=document.createElement("img");
+    txt.style.margin = "1em 0"
+    img.setAttribute("id","loadPicture");
+    img.src="/resources/images/loading.gif";
+    document.getElementById("msgDiv").appendChild(img);
 }
 //屏蔽F5
 document.onkeydown = mykeydown;

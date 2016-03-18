@@ -84,12 +84,18 @@
 										 <a class="start" vmUuid="$!vm.vmUuid">
 										 <image src="/resources/images/icons/start.png"  alt="开启" title="开启">
                                          </a>
+                                    <a class="reinstall" vmUuid="$!vm.vmUuid">
+                                         <image src="/resources/images/icons/reinstall.gif" alt="重装系统" title="重装系统">
+                                         </a>
+                                         
 										#elseif($!vm.vmStatus.status==1)
 										 <a class="shutdown" vmUuid="$!vm.vmUuid">
 										 <image src="/resources/images/icons/shutdown.png" alt="关闭" title="关闭">
                                          </a>
+                                         
 										 #end
 						
+						#*
 						                 <!--web显示-->
                                          #if($!vm.vmStatus.status==1 && $!vm.showType.value==3)
                                          <a  class="" href="/spicehtml5?hostIp=$!vm.hostIp&port=$!vm.showPort" target="_blank">
@@ -100,7 +106,7 @@
 										 <image src="/resources/images/icons/web_disable.png"  alt="" title="">
                                          </a>
                                          #end
-										
+							*#			
 										 
 									</td>
 								</tr>

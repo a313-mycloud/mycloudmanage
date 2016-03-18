@@ -34,11 +34,11 @@ public class UrlConstant {
      */
     public static final String SPICE_HTML5_URL             = "/spicehtml5";
     public static final String DEFAULT_URL                 = "index";
-    
+
     /**
      * 物理机--镜像是否删除--查询页面
      */
-    public static final String IMAGE_CAN_DELETE ="/common/imagedel.common";
+    public static final String IMAGE_CAN_DELETE            = "/common/imagedel.common";
 
     /***** 以上为全局常量 ******/
 
@@ -102,7 +102,7 @@ public class UrlConstant {
     public static final String ADMIN_VM_ADD                = "/admin/vm/add.do";
     public static final String ADMIN_VM_CONVERT            = "/admin/vm/convert.do";
     public static final String ADMIN_VM_REMOVE             = "/admin/vm/remove.do";
-    
+
     /**
      * 管理员-虚拟硬盘-操作
      */
@@ -116,14 +116,14 @@ public class UrlConstant {
     public static final String ADMIN_DISK_EDIT_FORM        = "/admin/disk/edit/form";
     public static final String ADMIN_DISK_EDIT             = "/admin/disk/edit.do";
 
-//    /**
-//     * 管理员-性能监控-操作
-//     */
-//    public static final String ADMIN_MONITOR_LIST          = "/admin/monitor/list";
-//    public static final String ADMIN_MONITOR_GETLIST       = "/admin/monitor/getlist.do";
-//    public static final String ADMIN_MONITOR_ADD_FORM      = "/admin/monitor/add/form";
-//    public static final String ADMIN_MONITOR_ADD           = "/admin/monitor/add.do";
-//    public static final String ADMIN_MONITOR_REMOVE        = "/admin/monitor/remove.do";
+    //    /**
+    //     * 管理员-性能监控-操作
+    //     */
+    //    public static final String ADMIN_MONITOR_LIST          = "/admin/monitor/list";
+    //    public static final String ADMIN_MONITOR_GETLIST       = "/admin/monitor/getlist.do";
+    //    public static final String ADMIN_MONITOR_ADD_FORM      = "/admin/monitor/add/form";
+    //    public static final String ADMIN_MONITOR_ADD           = "/admin/monitor/add.do";
+    //    public static final String ADMIN_MONITOR_REMOVE        = "/admin/monitor/remove.do";
 
     /************** 以上为管理员相关 **********************/
 
@@ -140,7 +140,7 @@ public class UrlConstant {
     public static final String STUDENT_VM_EDIT             = "/student/vm/edit.do";
     public static final String STUDENT_VM_START            = "/student/vm/start.do";
     public static final String STUDENT_VM_SHUTDOWN         = "/student/vm/shutdown.do";
-
+    public static final String STUDENT_VM_REINSTALL        = "/student/vm/reinstall.do";
     /**
      * 学生-虚拟硬盘-操作
      */
@@ -173,13 +173,13 @@ public class UrlConstant {
     public static final String TEACHER_VM_ADD              = "/teacher/vm/add.do";
     public static final String TEACHER_VM_CONVERT          = "/teacher/vm/convert.do";
     public static final String TEACHER_VM_REMOVE           = "/teacher/vm/remove.do";
-//    /**
-//     * 教师-模板虚拟机-操作
-//     */
-//    public static final String TEACHER_TVM_LIST            = "/teacher/tvm/list";
-//    public static final String TEACHER_TVM_EDIT_FORM       = "/teacher/tvm/edit/form";
-//    public static final String TEACHER_TVM_EDIT            = "/teacher/tvm/edit.do";
-//    public static final String TEACHER_TVM_CONVERT         = "/teacher/tvm/convert.do";
+    //    /**
+    //     * 教师-模板虚拟机-操作
+    //     */
+    //    public static final String TEACHER_TVM_LIST            = "/teacher/tvm/list";
+    //    public static final String TEACHER_TVM_EDIT_FORM       = "/teacher/tvm/edit/form";
+    //    public static final String TEACHER_TVM_EDIT            = "/teacher/tvm/edit.do";
+    //    public static final String TEACHER_TVM_CONVERT         = "/teacher/tvm/convert.do";
     /**
      * 教师-虚拟硬盘-操作
      */

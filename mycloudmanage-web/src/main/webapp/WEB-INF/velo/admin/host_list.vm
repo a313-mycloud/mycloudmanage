@@ -47,9 +47,10 @@
 									<td>$!host.hostIp</td>
 									<td>$!host.hostStatusEnum.desc</td>
 									<td>
-										 <a   href="/admin/host/edit/form?hostId=$!host.hostId">
+					#*					 <a   href="/admin/host/edit/form?hostId=$!host.hostId">
 										 <img src="/resources/images/icons/pencil.png" alt="编辑" title="编辑">
-                                         </a>
+                                         </a> 
+                                         *#
 										 <a class="remove" hostId="$!host.hostId">
 										<img src="/resources/images/icons/cross.png" alt="删除" title="删除">
                                          </a> 

@@ -99,6 +99,7 @@
 										 <image src="/resources/images/icons/convert.gif"  alt="转换为镜像" title="转换为镜像">
                                          </a>
                                          *#
+                                         #*
                                          <!--web显示-->
                                          #if($!vm.vmStatus.status==1 && $!vm.showType.value==3)
                                          <a  class="" href="/spicehtml5?hostIp=$!vm.hostIp&port=$!vm.showPort" target="_blank">
@@ -109,7 +110,7 @@
 										 <image src="/resources/images/icons/web_disable.png"  alt="" title="web无法显示">
                                          </a>
                                          #end
-                                         
+                                         *#
 									</td>
 								</tr>
 								#end

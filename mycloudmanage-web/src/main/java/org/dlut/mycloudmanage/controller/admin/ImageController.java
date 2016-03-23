@@ -7,8 +7,6 @@
  */
 package org.dlut.mycloudmanage.controller.admin;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +18,6 @@ import org.apache.commons.lang.StringUtils;
 import org.dlut.mycloudmanage.biz.VmBiz;
 import org.dlut.mycloudmanage.common.constant.MenuEnum;
 import org.dlut.mycloudmanage.common.constant.UrlConstant;
-import org.dlut.mycloudmanage.common.obj.FileVO;
 import org.dlut.mycloudmanage.common.property.utils.MyPropertiesUtil;
 import org.dlut.mycloudmanage.common.utils.MemUnitEnum;
 import org.dlut.mycloudmanage.common.utils.MemUtil;
@@ -126,44 +123,16 @@ public class ImageController extends BaseController {
         return MyJsonUtils.getSuccessJsonString(json, "");
     }
 
-    @RequestMapping(value = UrlConstant.ADMIN_IMAGE_UPLOAD_LIST)
-    public String uploadImageList(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+    //    @RequestMapping(value = UrlConstant.ADMIN_IMAGE_ADD_FORM)
+    @RequestMapping(value = UrlConstant.ADMIN_IMAGE_ADD_FORM)
+    public String addImageForm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         String errorDesc = this.setDefaultEnv(request, response, model);
         if (errorDesc != null) {
             return this.goErrorPage(errorDesc);
         }
-        //获取当前用户帐号
-        UserDTO userDTO = (UserDTO) model.get("loginUser");
 
-        File uploadDir = new File(MyPropertiesUtil.getValue("uploadDir"));
-        List<FileVO> fileVOList = this.getRightImage(uploadDir);
-        model.put("fileList", fileVOList);
-        model.put("filePath", uploadDir.toString());
         this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_IMAGE_LIST, model);
-        model.put("screen", "admin/image_upload_list");
-        model.put("js", "admin/image_list");
-        return "default";
-    }
-
-    @RequestMapping(value = UrlConstant.ADMIN_IMAGE_UPLOAD_FORM)
-    public String uploadImageForm(HttpServletRequest request, HttpServletResponse response, ModelMap model,
-                                  String fileName) {
-        String errorDesc = this.setDefaultEnv(request, response, model);
-        if (errorDesc != null) {
-            return this.goErrorPage(errorDesc);
-        }
-        //获取当前用户帐号
-        UserDTO userDTO = (UserDTO) model.get("loginUser");
-        String uploadPath = MyPropertiesUtil.getValue("uploadDir");
-        File file = new File(uploadPath + fileName);
-        if (!file.exists()) {
-            log.error("已上传目录中没有该文件");
-            return this.goErrorPage("已上传目录中没有该文件");
-        }
-
-        model.put("fileName", fileName);
-        this.setShowMenuList(RoleEnum.ADMIN, MenuEnum.ADMIN_IMAGE_LIST, model);
-        model.put("screen", "admin/image_upload_form");
+        model.put("screen", "admin/image_add_form");
         model.put("js", "admin/image_list");
         return "default";
     }
@@ -180,7 +149,8 @@ public class ImageController extends BaseController {
     @RequestMapping(value = UrlConstant.ADMIN_IMAGE_ADD, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public String addImage(HttpServletRequest request, HttpServletResponse response, ModelMap model, String fileName,
-                           String diskBusType, String interfaceType, String systemType) {
+                           String vmVcpu, String vmMemory, String vmSize, String diskBusType, String interfaceType,
+                           String systemType) {
         String errorDesc = this.setDefaultEnv(request, response, model);
         if (errorDesc != null) {
             return this.goErrorPage(errorDesc);
@@ -189,11 +159,18 @@ public class ImageController extends BaseController {
         UserDTO userDTO = (UserDTO) model.get("loginUser");
 
         JSONObject json = new JSONObject();
-        String uploadPath = MyPropertiesUtil.getValue("uploadDir");
-        File file = new File(uploadPath + fileName);
-        if (!file.exists()) {
-            log.error("已上传目录中没有该文件");
-            return MyJsonUtils.getFailJsonString(json, "已上传目录中没有该文件");
+
+        if (StringUtils.isBlank(fileName)) {
+            return MyJsonUtils.getFailJsonString(json, "虚拟机名字不能为空");
+        }
+        if (!MyStringUtils.isInteger(vmVcpu)) {
+            return MyJsonUtils.getFailJsonString(json, "核心数需要填写一个数字");
+        }
+        if (!MyStringUtils.isInteger(vmMemory)) {
+            return MyJsonUtils.getFailJsonString(json, "内存需要填写一个数字");
+        }
+        if (!MyStringUtils.isLong(vmSize)) {
+            return MyJsonUtils.getFailJsonString(json, "vmSize需要填写一个数字");
         }
         if (!MyStringUtils.isInteger(diskBusType))
             return MyJsonUtils.getFailJsonString(json, "总线类型格式不正确");
@@ -201,6 +178,7 @@ public class ImageController extends BaseController {
             return MyJsonUtils.getFailJsonString(json, "接口类型格式不正确");
         if (!MyStringUtils.isInteger(systemType))
             return MyJsonUtils.getFailJsonString(json, "系统类型格式不正确");
+
         InterfaceTypeEnum interfaceTypeEnum = InterfaceTypeEnum
                 .getInterfaceTypeByValue(Integer.parseInt(interfaceType));
         MasterDiskBusTypeEnum masterDiskBusTypeEnum = MasterDiskBusTypeEnum.getMasterDiskBusTypeByValue(Integer
@@ -212,28 +190,25 @@ public class ImageController extends BaseController {
             return MyJsonUtils.getFailJsonString(json, "总线类型不存在");
         if (systemTypeEnum == null)
             return MyJsonUtils.getFailJsonString(json, "系统类型不存在");
-        //将文件重命名，并且从upload移动到images中
+        //将文件重命名，并且从upload移动到every host machine's images中
         String fileUuid = UUID.randomUUID().toString();
-        File toFile = new File(MyPropertiesUtil.getValue("imageDir") + fileUuid);
-        if (!file.renameTo(toFile)) {
-            log.error("镜像" + fileName + "移动到images失败");
-            return MyJsonUtils.getFailJsonString(json, "添加镜像文件失败");
-        }
+        //        File toFile = new File(MyPropertiesUtil.getValue("imageDir") + fileUuid);
+        //        if (!file.renameTo(toFile)) {
+        //            log.error("镜像" + fileName + "移动到images失败");
+        //            return MyJsonUtils.getFailJsonString(json, "添加镜像文件失败");
+        //        }
         VmDTO vmDTO = new VmDTO();
         vmDTO.setDesc("原始");
-        StoreFormat storeFormat = this.vmBiz.getImageFormat(toFile.getAbsolutePath());
-        if (storeFormat == null)
-            return MyJsonUtils.getFailJsonString(json, "添加镜像文件失败");
-        vmDTO.setImageFormat(storeFormat);
-        vmDTO.setImageTotalSize(toFile.length());
+        vmDTO.setImageFormat(StoreFormat.QCOW2);
+        vmDTO.setImageTotalSize(Long.parseLong(vmSize));
         vmDTO.setImageUuid(fileUuid);
         vmDTO.setIsPublicTemplate(true);
         vmDTO.setIsTemplateVm(true);
         vmDTO.setShowPassword(MyPropertiesUtil.getValue("initialPassword"));
         vmDTO.setUserAccount(userDTO.getAccount());
         vmDTO.setVmName(fileName);
-        vmDTO.setVmMemory(MemUtil.getMem(2048, MemUnitEnum.MB));
-        vmDTO.setVmVcpu(2);
+        vmDTO.setVmMemory(MemUtil.getMem(Integer.parseInt(vmMemory), MemUnitEnum.MB));
+        vmDTO.setVmVcpu(Integer.parseInt(vmVcpu));
         vmDTO.setClassId(0);
         vmDTO.setParentVmUuid("");
         vmDTO.setShowType(ShowTypeEnum.SPICE);
@@ -241,7 +216,7 @@ public class ImageController extends BaseController {
         vmDTO.setInterfaceType(interfaceTypeEnum);
         vmDTO.setMasterDiskBusType(masterDiskBusTypeEnum);
         vmDTO.setSystemType(systemTypeEnum);
-        if (StringUtils.isBlank(this.vmBiz.createVm(vmDTO))) {
+        if (StringUtils.isBlank(this.vmBiz.createImage(vmDTO))) {
             log.error("添加镜像文件失败");
             return MyJsonUtils.getFailJsonString(json, "添加镜像文件失败");
         }
@@ -249,32 +224,4 @@ public class ImageController extends BaseController {
         return MyJsonUtils.getSuccessJsonString(json, "添加镜像成功");
     }
 
-    /**
-     * 返回dir目录中处于第一层的所有符合镜像格式的文件的名称
-     * 
-     * @param dir
-     * @return
-     */
-    private List<FileVO> getRightImage(File dir) {
-        File[] fileList = dir.listFiles();
-        System.out.println("已上传的格式正确的镜像文件");
-        List<FileVO> rightImage = new ArrayList<FileVO>();
-        //将所有符合格式的文件的绝对地址放到rightImage中
-        for (int i = 0; i < fileList.length; i++) {
-            if (fileList[i].isFile()) {
-                StoreFormat storeFormat = this.vmBiz.getImageFormat(fileList[i].getAbsolutePath());
-                if (storeFormat != null) {
-                    FileVO fileVO = new FileVO();
-                    fileVO.setFileFormat(storeFormat.getDesc());
-                    fileVO.setFileName(fileList[i].getName());
-                    fileVO.setFileSize(MemUtil.getMem(fileList[i].length(), MemUnitEnum.MB));
-                    rightImage.add(fileVO);
-                    System.out.println(fileList[i].getAbsolutePath());
-                } else {
-                    log.info(fileList[i].getAbsolutePath() + "格式不正确");
-                }
-            }
-        }
-        return rightImage;
-    }
 }

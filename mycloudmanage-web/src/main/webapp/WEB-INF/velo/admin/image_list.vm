@@ -20,7 +20,9 @@
 								<tr>
 									<td colspan="5">
 										<div class=" align-left">
-											<a class="button" href="/admin/image/upload/list" >已上传镜像文件列表</a>
+											<a href="/admin/image/add/form">
+										 <img src="/resources/images/icons/add_image.gif" alt="添加模板" title="添加模板">
+                                         </a>
 									    </div>   
 									 
 									    

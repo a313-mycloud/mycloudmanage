@@ -28,9 +28,6 @@ $(document).ready(function(){
 			console.log(" use for test:student_vm_shutdown");
 		shutdown('/student/vm/shutdown.do',{"vmUuid":$(this).attr("vmUuid")},"/student/vm/list?currentPage="+$("#page").attr("currentPage"));
 	});
-	$(".reinstall").click(function(){
-		reinstall('/student/vm/reinstall.do',{"vmUuid":$(this).attr("vmUuid")},"/student/vm/list?currentPage="+$("#page").attr("currentPage"));
-	});
 	
 	$(".prePage").click(function(){
 	     showPrePage("/student/vm/list",$("#page").attr("currentPage"));
@@ -132,37 +129,3 @@ function hidePass(){
 } 
 
 
-
-
-function reinstall(url,data,replace){
-	if(confirm("系统中的个人文件将不再能找回，确定重装系统？")){
-        showdiv("正在为虚拟机重装系统，请稍后!");
-		$.ajax({
-		 url:url,
-		 data:data,
-		 dataType:"json",
-		 success:function(data){
-			closediv();
-		 	if(!data.isLogin){
-		 		alert("请登陆");
-		 		window.location.replace("/login");
-		 	}
-		 	else if(!data.isAuth){
-		 		alert("您没有权限");
-		 	}
-		 	else{
-		 		if(!data.isSuccess){
-		 			alert(data.message);
-		 		}
-		 		else{
-		 			window.location.replace(replace);
-		 		}
-		 	}
-		 },
-		 error:function(data,status){
-			closediv();
-		 	alert(status);
-		 } 
-	});		
-	}
-}

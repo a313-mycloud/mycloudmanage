@@ -60,6 +60,15 @@ public class VmBiz {
         return result.getModel();
     }
 
+    public String createImage(VmDTO vmDTO) {
+        MyCloudResult<String> result = this.vmManageService.createImage(vmDTO);
+        if (!result.isSuccess()) {
+            log.warn("调用vmManageService.createVm()出错，" + result.getMsgCode() + ":" + result.getMsgInfo());
+            return null;
+        }
+        return result.getModel();
+    }
+
     /**
      * 克隆虚拟机，必须设置vmName,
      * vmVcpu、vmMemory、userAccount、showType、showPassword，classId,
@@ -294,13 +303,13 @@ public class VmBiz {
         }
         return result.getModel();
     }
-    
-    public  boolean  isCanDelete(String ipAddress,String imageUuid){
-    	MyCloudResult<Boolean> result=this.vmManageService.isCanDelete(ipAddress, imageUuid);
-    	if(!result.isSuccess()){
-    		log.warn("调用vmManageService.isCanDelete出错");
-    		return false;
-    	}
-    	return result.getModel();
+
+    public boolean isCanDelete(String ipAddress, String imageUuid) {
+        MyCloudResult<Boolean> result = this.vmManageService.isCanDelete(ipAddress, imageUuid);
+        if (!result.isSuccess()) {
+            log.warn("调用vmManageService.isCanDelete出错");
+            return false;
+        }
+        return result.getModel();
     }
 }

@@ -251,6 +251,10 @@ a.remove-link:hover {
 				margin: 40px 0 0 0;
 				padding: 20px 0;
 				font-size: 12px;
+				width: 100%;
+				bottom: 0;
+				position:fixed;	
+				text-align:center;			
                 }
 /************ Lists ************/
 

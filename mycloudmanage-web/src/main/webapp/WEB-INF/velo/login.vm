@@ -60,7 +60,6 @@
 				
 				<p>
 				<input class="button" type="submit" value="登录" />
-			
 				</p>
 				</fieldset>
 			</form>
@@ -68,7 +67,10 @@
 			
 		</div>
 		<!-- End #login-content -->
+		<div  id="footer" >©版权所有：大连理工大学软件学院高性能计算与图像处理研究室&nbsp;&nbsp;&nbsp;&nbsp;地址：中国·辽宁省大连市经济技术开发区图强街321号</div>
 	</div>
 	<!-- End #login-wrapper -->
+	
+	
 </body>
 </html>

@@ -399,8 +399,8 @@ public class ClassController extends BaseController {
         //如果账号不存在，则创建学生
         String inilPassword = MyPropertiesUtil.getValue("initialPassword");
         UserCreateReqDTO userCreateReqDTO = new UserCreateReqDTO();
-        userCreateReqDTO.setAccount(account);
-        userCreateReqDTO.setUserName(username);
+        userCreateReqDTO.setAccount(account.trim());
+        userCreateReqDTO.setUserName(username.trim());
         userCreateReqDTO.setPassword(inilPassword);
         userCreateReqDTO.setRole(RoleEnum.STUDENT);
         if (this.userBiz.countQuery(queryUserCondition) <= 0) {

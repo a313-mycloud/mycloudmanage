@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import org.dlut.mycloudserver.client.common.MyCloudResult;
 import org.dlut.mycloudserver.client.common.Pagination;
 import org.dlut.mycloudserver.client.common.storemanage.StoreFormat;
+import org.dlut.mycloudserver.client.common.vmmanage.MetaData;
 import org.dlut.mycloudserver.client.common.vmmanage.QueryVmCondition;
 import org.dlut.mycloudserver.client.common.vmmanage.VmDTO;
 import org.dlut.mycloudserver.client.service.vmmanage.IVmManageService;
@@ -166,7 +167,7 @@ public class VmBiz {
     /**
      * 此接口功能有问题，不能使用
      * 
-     * @param vmUuid
+     * @param classId
      * @return
      */
     public boolean deleteVmByClassId(int classId) {
@@ -312,4 +313,14 @@ public class VmBiz {
         }
         return result.getModel();
     }
+
+    public MetaData getMetadataByIp(String vmLanIp){
+        MyCloudResult<MetaData> result = this.vmManageService.getMetadataByIp(vmLanIp);
+        if (!result.isSuccess()) {
+            log.warn("调用vmManageService.getMetadataByIp出错，" + result.getMsgCode() + ":" + result.getMsgInfo());
+            return null;
+        }
+        return result.getModel();
+    }
+
 }

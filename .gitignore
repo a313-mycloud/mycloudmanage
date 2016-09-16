@@ -1,2 +1,7 @@
 .*
 *.log
+.idea
+mycloudmanage.iml
+*/target
+*/mycloudmanage-biz.iml
+*/mycloudmanage-web.iml

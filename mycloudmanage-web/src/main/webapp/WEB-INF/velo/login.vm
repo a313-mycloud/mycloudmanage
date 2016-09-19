@@ -57,10 +57,14 @@
 				</p>
 				
 				<div class="clear"></div>
-				
+
 				<p>
 				<input class="button" type="submit" value="登录" />
 				</p>
+
+                <p>
+                    <a href="http://192.168.1.82:8082/register">注册</a>
+                </p>
 				</fieldset>
 			</form>
 			

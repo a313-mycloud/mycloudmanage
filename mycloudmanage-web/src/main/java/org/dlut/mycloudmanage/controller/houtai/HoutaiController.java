@@ -38,17 +38,18 @@ public class HoutaiController {
     public String metadataGet(HttpServletRequest request, HttpServletResponse response
             , ModelMap model) {
         JSONObject json = new JSONObject();
-        try {
-            String vmLanIp = getIpAddress(request);
+//        try {
+//            String vmLanIp = getIpAddress(request);
+        	String vmLanIp=request.getRemoteAddr();
             MetaData metadata = this.vmBiz.getMetadataByIp(vmLanIp);
             if (metadata == null)
                 return MyJsonUtils.getFailJsonString(json, "");
             return MyJsonUtils.getJsonString(json, true, true, true, "", "" + metadata.getHostName() + "," + metadata.getHostUserName() + "," +
                     metadata.getHostPassword());
-        }catch(IOException e){
-            e.printStackTrace();
-            return MyJsonUtils.getFailJsonString(json, "");
-        }
+//        }catch(IOException e){
+//            e.printStackTrace();
+//            return MyJsonUtils.getFailJsonString(json, "");
+//        }
     }
     public final static String getIpAddress(HttpServletRequest request) throws IOException {
         String ip = request.getHeader("x-forwarded-for");
